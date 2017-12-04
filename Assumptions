@@ -1,0 +1,7 @@
+- Roads and Parking Areas are only a macro definition of the area. However, in a first draft of the application, they are also the minimum level of abstraction.
+- In the first model, vehicles have only a type, but this field is inserted for future extension to many vehicles type (TIR, CAR, CYCLE ...)
+- The model constraint consist on how many cars can be contained in a route or a parking area.
+- The position of the incoming vehicles refers to the roads or parking area of the application (as if the client can compute this autonomously). In future can be a GPS position.
+- Destination of a vehicle can be a parking area or another end point (vehicle only passes through)
+- Administrator collects data in XML format (list of vehicles and their path)
+- Each node can be an end point or not. An end point is where a vehicle can enter the restricted area.
