@@ -19,7 +19,7 @@
     <echo message="Compiling the schema..." />
     <mkdir dir="gen-src" />
     <exec executable="xjc" output="xjc_log.txt">
-        <arg line="-d gen-src -p vehicle.tr vehicleTracking.xsd"/>
+        <arg line="-d gen-src -p vehicle.tr xsd/vehicleTracking.xsd"/>
     </exec>
     <echo message="Compiling the java source files..." />
     <mkdir dir="classes" />
@@ -38,14 +38,22 @@
     </java>
   </target>
 
-  <!--generate javadoc-->
+  <!--run try marshall -->
+  <target name="run-marshall" depends="compile" description="Tries to unmarshall and marshall the document">
+	    <echo message="Trying to marshall/unmarshall xml" />
+	    <java classname="Main" fork="true">
+	      <classpath refid="classpath" />
+	    </java>
+	</target>
+	
+  <!--generate javadoc
   <target name="javadoc" description="Generates javadoc" depends="compile">
     <echo message="Generating javadoc..." />
     <mkdir dir="docs/api" />
     <javadoc sourcepath="gen-src" destdir="docs/api" windowtitle="modify-marshal (formerly SampleApp2)" useexternalfile="yes">
       <fileset dir="." includes="gen-src/**/*.java" excludes="**/impl/**/*.java" />
     </javadoc>
-  </target>
+  </target>-->
 
   <!--clean-->
   <target name="clean" description="Deletes all the generated artifacts.">

@@ -1,0 +1,34 @@
+Area Model
+	Node
+		*NID
+		Name
+	
+	Road
+		endPoint
+		maxVehicle
+	
+	Parking Area
+		maxVehicle
+	
+	Connection
+		Node1 @NID
+		Node2 @NID
+
+Path (sequence, min 2)
+	Node @NID
+		sequence number
+	..
+	Node @NID
+		sequence number
+	
+Vehicle
+	*VID
+	Current_position
+	State {transit, parked}
+	Path (ref to element Path)
+	entry_time
+	last_update
+
+Car
+	/
+	

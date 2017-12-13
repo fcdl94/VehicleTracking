@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<graph 
+	xmlns="http://www.vechicleTrackingSystem.org/model" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.vechicleTrackingSystem.org/model vehicleTracking.xsd">
+  
+  <node ID="road1" xsi:type="roadType">
+    <name>street A</name>
+    <vehicleNumber>0</vehicleNumber>
+    <endpoint > true </endpoint>
+    <maxVehicle> 10 </maxVehicle>
+  </node>
+  
+   <node ID="road2" xsi:type="roadType">
+    <name>street B</name>
+    <vehicleNumber>0</vehicleNumber>
+    <maxVehicle> 10 </maxVehicle>
+  </node>
+  
+  <node ID="road3" xsi:type="roadType">
+    <name>street C</name>
+    <vehicleNumber>0</vehicleNumber>
+    <maxVehicle> 10 </maxVehicle>
+  </node>
+  
+  <node ID="road4" xsi:type="roadType">
+    <name>street D</name>
+    <vehicleNumber>0</vehicleNumber>
+    <endpoint >true </endpoint>
+    <maxVehicle> 10 </maxVehicle>
+  </node>
+  
+  <node ID="road2" xsi:type="roadType">
+    <name>street B</name>
+    <vehicleNumber>0</vehicleNumber>
+    <maxVehicle> 10 </maxVehicle>
+  </node>
+  
+  <node ID="area1" xsi:type="parkingAreaType">
+    <name>Area 1</name>
+    <vehicleNumber>0</vehicleNumber>
+    <maxVehicle> 10 </maxVehicle>
+  </node>
+  
+  <node ID="area2" xsi:type="parkingAreaType">
+    <name>Area B</name>
+    <vehicleNumber>0</vehicleNumber>
+    <maxVehicle> 10 </maxVehicle>
+  </node>
+  
+  <connection>
+    <from>road1</from>
+    <to>road2</to>
+  </connection>
+
+  <connection>
+    <from>road2</from>
+    <to>road1</to>
+  </connection>
+
+  <connection>
+    <from>road1</from>
+    <to>road3</to>
+  </connection>
+
+  <connection>
+    <from>road3</from>
+    <to>road4</to>
+  </connection>
+
+  <connection>
+    <from>road4</from>
+    <to>road2</to>
+  </connection>
+  
+  <connection>
+    <from>area1</from>
+    <to>road1</to>
+  </connection>
+  
+  <connection>
+    <from>road1</from>
+    <to>area1</to>
+  </connection>
+
+  <connection>
+    <from>road3</from>
+    <to>area1</to>
+  </connection>
+
+  <connection>
+    <from>area1</from>
+    <to>road4</to>
+  </connection>
+
+  <connection>
+    <from>road4</from>
+    <to>area2</to>
+  </connection>
+
+  <connection>
+    <from>area2</from>
+    <to>road2</to>
+  </connection>
+
+
+</graph>

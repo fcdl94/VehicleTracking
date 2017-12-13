@@ -1,0 +1,15 @@
+parsing a schema...
+compiling a schema...
+vehicle/tr/Car.java
+vehicle/tr/ConnectionType.java
+vehicle/tr/GraphType.java
+vehicle/tr/NodeInPath.java
+vehicle/tr/NodeType.java
+vehicle/tr/ObjectFactory.java
+vehicle/tr/ParkingAreaType.java
+vehicle/tr/PathFull.java
+vehicle/tr/PathType.java
+vehicle/tr/RoadType.java
+vehicle/tr/State.java
+vehicle/tr/VehicleType.java
+vehicle/tr/package-info.java
