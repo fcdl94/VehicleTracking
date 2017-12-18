@@ -5,3 +5,8 @@
 - Destination of a vehicle can be a parking area or another end point (vehicle only passes through)
 - Administrator collects data in XML format (list of vehicles and their path)
 - Each node can be an end point or not. An end point is where a vehicle can enter the restricted area.
+
+
+--12-18 UPDATE --
+- We assume that every node (both routes and parking areas) have ports in order to enter or exit it. Then links goes to one port to another one.
+- We assume that at startup vehicles can be added into the system. So at starting point the model contains the graph and a list of vehicle.

@@ -1,0 +1,27 @@
+1. Description of the conceptual structure of resources (identify the resources, with their
+hierarchical structure; use plural names for collections and singular names for resources that
+are not collections; specify the HTTP methods allowed for each resource).
+
+2.Mapping of the resources to URLs (for simplicity, use URLs that are relative to the base
+URL of the service; for resources that belong to collections, use the notation {id}, where id
+is the name of the field that identifies the resource in the collection)
+
+3. Description of each possible operation. For each resource, and for each method allowed on
+the resource, specify the allowed query string parameters and/or the allowed request body,
+the possible status codes, and, for each possible status code, the response body. For each
+allowed query string parameter, specify name and XML schema type of the value (either a
+standard XML schema simple type or one defined by you in the NfvDeployer.xsd
+schema document). For request body and response body, specify the XML element, which
+must be defined at the global level in the NfvDeployer.xsd schema document. Schema
+elements and types in this description must be referenced by name. In practice, the
+NfvDeployer.xsd schema document must include a set of global named types and a set
+of global elements. As far as possible, the definitions already developed in the schema for
+Assignment 1 should be reused. For each possible operation, a short description should also
+be added when not obvious.
+
+The web service must be designed so as to be compliant with the REST principles and conventions,
+robust, easy to be used by clients, and enabling efficient execution of all the operations for which it
+has been designed. The documentation should be self-contained (it should include all that is
+necessary for a user to know to be able to consume the service, apart from what can be deduced
+from the service itself and from the HTTP standard).
+

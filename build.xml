@@ -3,6 +3,7 @@
   Copyright 2004 Sun Microsystems, Inc. All rights reserved.
   Modified version that works with java SE distribution and without JAXB ant tasks.
 -->
+
 <project basedir="." default="run">
   <description>
         This sample application demonstrates how to modify a java content tree 
@@ -14,6 +15,11 @@
     <pathelement path="schemas" />
   </path>
 
+   <property name="out" value="xsd/xml-gen.xml" />
+   <property name="routes" value="10" />
+   <property name="areas" value="5" />
+   <property name="seed" value="0" />
+	
   <!--compile schema and Java source files-->
   <target name="compile" description="Compile all Java source files">
     <echo message="Compiling the schema..." />
@@ -42,6 +48,10 @@
   <target name="run-marshall" depends="compile" description="Tries to unmarshall and marshall the document">
 	    <echo message="Trying to marshall/unmarshall xml" />
 	    <java classname="Main" fork="true">
+		  <arg value="${out}" />
+	   	  <arg value="${routes}"/>
+	      <arg value="${areas}"/>
+	      <arg value="${seed}"/>
 	      <classpath refid="classpath" />
 	    </java>
 	</target>

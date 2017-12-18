@@ -17,52 +17,38 @@ import vehicle.tr.GraphType;
 
 public class Main {
 	
+	 private static int NUM_ROADS = 5;
+	 private static int NUM_AREAS = 5;
+	 private static int SEED = 0;
+	 
 	 public static void main( String[] args ) {
         try {
             // create a JAXBContext capable of handling classes generated into
             // the vehicle.tr package
             JAXBContext jc = JAXBContext.newInstance( "vehicle.tr" );
-            
-            /*// create an Unmarshaller
-            Unmarshaller u = jc.createUnmarshaller();
-
-            SchemaFactory sf = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
-            try {
-                Schema schema = sf.newSchema(new File("xsd/vehicleTracking.xsd"));
-                u.setSchema(schema);
-                u.setEventHandler(
-                    new ValidationEventHandler() {
-                        // allow unmarshalling to continue even if there are errors
-                        public boolean handleEvent(ValidationEvent ve) {
-                            // ignore warnings
-                            if (ve.getSeverity() != ValidationEvent.WARNING) {
-                                ValidationEventLocator vel = ve.getLocator();
-                                System.out.println("Line:Col[" + vel.getLineNumber() +
-                                    ":" + vel.getColumnNumber() +
-                                    "]:" + ve.getMessage());
-                            }
-                            return true;
-                        }
-                    }
-                );
-            } catch (org.xml.sax.SAXException se) {
-                System.out.println("Unable to validate due to following error.");
-                se.printStackTrace();
+            int roads = NUM_ROADS, areas = NUM_AREAS, seed = SEED;
+            File output;
+        	if( args.length >= 1)	
+            	output = new File(args[0]);
+        	else {
+        		//there is no arguments at all
+        		output = new File("xml-gen.xml");
+        	}
+        	
+            if( args.length >= 3) {
+            	roads = Integer.parseInt(args[1]);
+            	areas = Integer.parseInt(args[2]);
             }
+            if( args.length == 4)
+            	seed = Integer.parseInt(args[3]);
             
-            // unmarshal a vehicle tracking instance document into a tree of Java
-            // content objects composed of classes from the primer.po package
-            JAXBElement<GraphType> graph = 
-                (JAXBElement<GraphType>) u.unmarshal( new File( "xsd/model.xml" ) );
-			*/
-            
-            GraphGenerator gg = new GraphGenerator(4, 10, 25);
+            GraphGenerator gg = new GraphGenerator(roads, areas, 25, seed);
             JAXBElement<GraphType> graph = gg.createRandomGraph();
             
             //then marshall it to the console to see if it was read right
             Marshaller m = jc.createMarshaller();
             m.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE );
-            m.marshal(graph, new File("xml-gen.xml"));
+            m.marshal(graph, output);
             
         } catch( UnmarshalException ue ) {
             System.out.println( "Caught UnmarshalException" );

@@ -24,6 +24,8 @@ public class GraphGenerator {
 	 * p indicates the probability to have a node connected to another one.
 	 * P must be a number between 0 and 100. 100 means connections with all, 0 means no connections.
 	 * 
+	 * The optional parameter seed is intended to allow the generation of the same model with the same seed 
+	 * 
 	 */
 	public GraphGenerator(int parkingAreas, int routes, int p) {
 		this.parks = parkingAreas;
@@ -31,6 +33,14 @@ public class GraphGenerator {
 		this.prob = p;
 		ofactory = new ObjectFactory();
 		random = new Random();
+	}
+	
+	public GraphGenerator(int parkingAreas, int routes, int p, int seed) {
+		this.parks = parkingAreas;
+		this.routes = routes;
+		this.prob = p;
+		ofactory = new ObjectFactory();
+		random = new Random(seed);
 	}
 	
 	public JAXBElement<GraphType> createRandomGraph(){
@@ -51,7 +61,6 @@ public class GraphGenerator {
 			r = new RoadType();
 			r.setID("road"+ i);
 			r.setName("Street " + i);
-			r.setVehicleNumber(BigInteger.ZERO);
 			r.setMaxVehicle(new BigInteger(4, random));
 			r.setEndpoint( random.nextInt(100) < 20 ); //20% of probability to be an end-point
 			nodes.add(r);
@@ -61,7 +70,6 @@ public class GraphGenerator {
 			p = new ParkingAreaType();
 			p.setID("area"+ i);
 			p.setName("Parking Area " + i);
-			p.setVehicleNumber(BigInteger.ZERO);
 			p.setMaxVehicle(new BigInteger(4, random));
 			nodes.add(p);
 		}

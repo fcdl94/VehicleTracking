@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<graph xmlns="http://www.vechicleTrackingSystem.org/model">
+    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="roadType" ID="road1">
+        <name>Street 1</name>
+        <endpoint>false</endpoint>
+        <maxVehicle>0</maxVehicle>
+    </node>
+    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="roadType" ID="road2">
+        <name>Street 2</name>
+        <endpoint>false</endpoint>
+        <maxVehicle>10</maxVehicle>
+    </node>
+    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="roadType" ID="road3">
+        <name>Street 3</name>
+        <endpoint>false</endpoint>
+        <maxVehicle>6</maxVehicle>
+    </node>
+    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="roadType" ID="road4">
+        <name>Street 4</name>
+        <endpoint>false</endpoint>
+        <maxVehicle>7</maxVehicle>
+    </node>
+    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="roadType" ID="road5">
+        <name>Street 5</name>
+        <endpoint>false</endpoint>
+        <maxVehicle>14</maxVehicle>
+    </node>
+    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area1">
+        <name>Parking Area 1</name>
+        <maxVehicle>11</maxVehicle>
+    </node>
+    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area2">
+        <name>Parking Area 2</name>
+        <maxVehicle>11</maxVehicle>
+    </node>
+    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area3">
+        <name>Parking Area 3</name>
+        <maxVehicle>3</maxVehicle>
+    </node>
+    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area4">
+        <name>Parking Area 4</name>
+        <maxVehicle>13</maxVehicle>
+    </node>
+    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area5">
+        <name>Parking Area 5</name>
+        <maxVehicle>15</maxVehicle>
+    </node>
+    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area6">
+        <name>Parking Area 6</name>
+        <maxVehicle>8</maxVehicle>
+    </node>
+    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area7">
+        <name>Parking Area 7</name>
+        <maxVehicle>8</maxVehicle>
+    </node>
+    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area8">
+        <name>Parking Area 8</name>
+        <maxVehicle>7</maxVehicle>
+    </node>
+    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area9">
+        <name>Parking Area 9</name>
+        <maxVehicle>2</maxVehicle>
+    </node>
+    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area10">
+        <name>Parking Area 10</name>
+        <maxVehicle>1</maxVehicle>
+    </node>
+    <connection>
+        <from>road1</from>
+        <to>road4</to>
+    </connection>
+    <connection>
+        <from>road1</from>
+        <to>area4</to>
+    </connection>
+    <connection>
+        <from>road1</from>
+        <to>area7</to>
+    </connection>
+    <connection>
+        <from>road2</from>
+        <to>road4</to>
+    </connection>
+    <connection>
+        <from>road3</from>
+        <to>area2</to>
+    </connection>
+    <connection>
+        <from>road3</from>
+        <to>area5</to>
+    </connection>
+    <connection>
+        <from>road3</from>
+        <to>area7</to>
+    </connection>
+    <connection>
+        <from>road3</from>
+        <to>area9</to>
+    </connection>
+    <connection>
+        <from>road3</from>
+        <to>area10</to>
+    </connection>
+    <connection>
+        <from>road4</from>
+        <to>road5</to>
+    </connection>
+    <connection>
+        <from>road4</from>
+        <to>area7</to>
+    </connection>
+    <connection>
+        <from>road4</from>
+        <to>area9</to>
+    </connection>
+    <connection>
+        <from>road4</from>
+        <to>area10</to>
+    </connection>
+    <connection>
+        <from>road5</from>
+        <to>area2</to>
+    </connection>
+    <connection>
+        <from>road5</from>
+        <to>area4</to>
+    </connection>
+    <connection>
+        <from>area1</from>
+        <to>area2</to>
+    </connection>
+    <connection>
+        <from>area1</from>
+        <to>area5</to>
+    </connection>
+    <connection>
+        <from>area1</from>
+        <to>area7</to>
+    </connection>
+    <connection>
+        <from>area2</from>
+        <to>road3</to>
+    </connection>
+    <connection>
+        <from>area2</from>
+        <to>road5</to>
+    </connection>
+    <connection>
+        <from>area2</from>
+        <to>area4</to>
+    </connection>
+    <connection>
+        <from>area2</from>
+        <to>area5</to>
+    </connection>
+    <connection>
+        <from>area2</from>
+        <to>area6</to>
+    </connection>
+    <connection>
+        <from>area2</from>
+        <to>area8</to>
+    </connection>
+    <connection>
+        <from>area2</from>
+        <to>area9</to>
+    </connection>
+    <connection>
+        <from>area3</from>
+        <to>area1</to>
+    </connection>
+    <connection>
+        <from>area4</from>
+        <to>area2</to>
+    </connection>
+    <connection>
+        <from>area5</from>
+        <to>area6</to>
+    </connection>
+    <connection>
+        <from>area6</from>
+        <to>area7</to>
+    </connection>
+    <connection>
+        <from>area7</from>
+        <to>area2</to>
+    </connection>
+    <connection>
+        <from>area7</from>
+        <to>area3</to>
+    </connection>
+    <connection>
+        <from>area7</from>
+        <to>area5</to>
+    </connection>
+    <connection>
+        <from>area7</from>
+        <to>area9</to>
+    </connection>
+    <connection>
+        <from>area8</from>
+        <to>area5</to>
+    </connection>
+    <connection>
+        <from>area8</from>
+        <to>area10</to>
+    </connection>
+    <connection>
+        <from>area9</from>
+        <to>area6</to>
+    </connection>
+    <connection>
+        <from>area9</from>
+        <to>area8</to>
+    </connection>
+    <connection>
+        <from>area10</from>
+        <to>area4</to>
+    </connection>
+</graph>

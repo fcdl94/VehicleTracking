@@ -11,8 +11,8 @@ Area Model
 		maxVehicle
 	
 	Connection
-		Node1 @NID
-		Node2 @NID
+		to @NID
+		from @NID
 
 Path (sequence, min 2)
 	Node @NID
@@ -23,6 +23,7 @@ Path (sequence, min 2)
 	
 Vehicle
 	*VID
+	Plate_number
 	Current_position
 	State {transit, parked}
 	Path (ref to element Path)
