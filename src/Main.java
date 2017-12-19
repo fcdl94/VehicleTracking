@@ -13,20 +13,21 @@ import javax.xml.bind.ValidationEventLocator;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import vehicle.tr.GraphType;
+import vehicle.tr.Model;
 
 public class Main {
 	
 	 private static int NUM_ROADS = 5;
 	 private static int NUM_AREAS = 5;
 	 private static int SEED = 0;
+	 private static int VEHICLES = 0;
 	 
 	 public static void main( String[] args ) {
         try {
             // create a JAXBContext capable of handling classes generated into
             // the vehicle.tr package
             JAXBContext jc = JAXBContext.newInstance( "vehicle.tr" );
-            int roads = NUM_ROADS, areas = NUM_AREAS, seed = SEED;
+            int roads = NUM_ROADS, areas = NUM_AREAS, seed = SEED,vehicles=VEHICLES;
             File output;
         	if( args.length >= 1)	
             	output = new File(args[0]);
@@ -35,20 +36,21 @@ public class Main {
         		output = new File("xml-gen.xml");
         	}
         	
-            if( args.length >= 3) {
+            if( args.length >= 4 ) {
             	roads = Integer.parseInt(args[1]);
             	areas = Integer.parseInt(args[2]);
+            	vehicles = Integer.parseInt(args[3]);
             }
-            if( args.length == 4)
-            	seed = Integer.parseInt(args[3]);
+            if( args.length == 5)
+            	seed = Integer.parseInt(args[4]);
             
-            GraphGenerator gg = new GraphGenerator(roads, areas, 25, seed);
-            JAXBElement<GraphType> graph = gg.createRandomGraph();
+            ModelGenerator gg = new ModelGenerator(roads, areas, 25, vehicles, seed);
+            Model model = gg.createRandomModel();
             
             //then marshall it to the console to see if it was read right
             Marshaller m = jc.createMarshaller();
             m.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE );
-            m.marshal(graph, output);
+            m.marshal(model, output);
             
         } catch( UnmarshalException ue ) {
             System.out.println( "Caught UnmarshalException" );

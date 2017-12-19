@@ -19,7 +19,8 @@
    <property name="routes" value="10" />
    <property name="areas" value="5" />
    <property name="seed" value="0" />
-	
+   <property name="vehicles" value="10" />
+		
   <!--compile schema and Java source files-->
   <target name="compile" description="Compile all Java source files">
     <echo message="Compiling the schema..." />
@@ -51,6 +52,7 @@
 		  <arg value="${out}" />
 	   	  <arg value="${routes}"/>
 	      <arg value="${areas}"/>
+	      <arg value="${vehicles}"/>
 	      <arg value="${seed}"/>
 	      <classpath refid="classpath" />
 	    </java>

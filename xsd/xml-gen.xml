@@ -1,220 +1,772 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<graph xmlns="http://www.vechicleTrackingSystem.org/model">
-    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="roadType" ID="road1">
-        <name>Street 1</name>
-        <endpoint>false</endpoint>
-        <maxVehicle>0</maxVehicle>
-    </node>
-    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="roadType" ID="road2">
-        <name>Street 2</name>
-        <endpoint>false</endpoint>
-        <maxVehicle>10</maxVehicle>
-    </node>
-    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="roadType" ID="road3">
-        <name>Street 3</name>
-        <endpoint>false</endpoint>
-        <maxVehicle>6</maxVehicle>
-    </node>
-    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="roadType" ID="road4">
-        <name>Street 4</name>
-        <endpoint>false</endpoint>
-        <maxVehicle>7</maxVehicle>
-    </node>
-    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="roadType" ID="road5">
-        <name>Street 5</name>
-        <endpoint>false</endpoint>
-        <maxVehicle>14</maxVehicle>
-    </node>
-    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area1">
-        <name>Parking Area 1</name>
-        <maxVehicle>11</maxVehicle>
-    </node>
-    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area2">
-        <name>Parking Area 2</name>
-        <maxVehicle>11</maxVehicle>
-    </node>
-    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area3">
-        <name>Parking Area 3</name>
-        <maxVehicle>3</maxVehicle>
-    </node>
-    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area4">
-        <name>Parking Area 4</name>
-        <maxVehicle>13</maxVehicle>
-    </node>
-    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area5">
-        <name>Parking Area 5</name>
-        <maxVehicle>15</maxVehicle>
-    </node>
-    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area6">
-        <name>Parking Area 6</name>
-        <maxVehicle>8</maxVehicle>
-    </node>
-    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area7">
-        <name>Parking Area 7</name>
-        <maxVehicle>8</maxVehicle>
-    </node>
-    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area8">
-        <name>Parking Area 8</name>
-        <maxVehicle>7</maxVehicle>
-    </node>
-    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area9">
-        <name>Parking Area 9</name>
-        <maxVehicle>2</maxVehicle>
-    </node>
-    <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="parkingAreaType" ID="area10">
-        <name>Parking Area 10</name>
-        <maxVehicle>1</maxVehicle>
-    </node>
-    <connection>
-        <from>road1</from>
-        <to>road4</to>
-    </connection>
-    <connection>
-        <from>road1</from>
-        <to>area4</to>
-    </connection>
-    <connection>
-        <from>road1</from>
-        <to>area7</to>
-    </connection>
-    <connection>
-        <from>road2</from>
-        <to>road4</to>
-    </connection>
-    <connection>
-        <from>road3</from>
-        <to>area2</to>
-    </connection>
-    <connection>
-        <from>road3</from>
-        <to>area5</to>
-    </connection>
-    <connection>
-        <from>road3</from>
-        <to>area7</to>
-    </connection>
-    <connection>
-        <from>road3</from>
-        <to>area9</to>
-    </connection>
-    <connection>
-        <from>road3</from>
-        <to>area10</to>
-    </connection>
-    <connection>
-        <from>road4</from>
-        <to>road5</to>
-    </connection>
-    <connection>
-        <from>road4</from>
-        <to>area7</to>
-    </connection>
-    <connection>
-        <from>road4</from>
-        <to>area9</to>
-    </connection>
-    <connection>
-        <from>road4</from>
-        <to>area10</to>
-    </connection>
-    <connection>
-        <from>road5</from>
-        <to>area2</to>
-    </connection>
-    <connection>
-        <from>road5</from>
-        <to>area4</to>
-    </connection>
-    <connection>
-        <from>area1</from>
-        <to>area2</to>
-    </connection>
-    <connection>
-        <from>area1</from>
-        <to>area5</to>
-    </connection>
-    <connection>
-        <from>area1</from>
-        <to>area7</to>
-    </connection>
-    <connection>
-        <from>area2</from>
-        <to>road3</to>
-    </connection>
-    <connection>
-        <from>area2</from>
-        <to>road5</to>
-    </connection>
-    <connection>
-        <from>area2</from>
-        <to>area4</to>
-    </connection>
-    <connection>
-        <from>area2</from>
-        <to>area5</to>
-    </connection>
-    <connection>
-        <from>area2</from>
-        <to>area6</to>
-    </connection>
-    <connection>
-        <from>area2</from>
-        <to>area8</to>
-    </connection>
-    <connection>
-        <from>area2</from>
-        <to>area9</to>
-    </connection>
-    <connection>
-        <from>area3</from>
-        <to>area1</to>
-    </connection>
-    <connection>
-        <from>area4</from>
-        <to>area2</to>
-    </connection>
-    <connection>
-        <from>area5</from>
-        <to>area6</to>
-    </connection>
-    <connection>
-        <from>area6</from>
-        <to>area7</to>
-    </connection>
-    <connection>
-        <from>area7</from>
-        <to>area2</to>
-    </connection>
-    <connection>
-        <from>area7</from>
-        <to>area3</to>
-    </connection>
-    <connection>
-        <from>area7</from>
-        <to>area5</to>
-    </connection>
-    <connection>
-        <from>area7</from>
-        <to>area9</to>
-    </connection>
-    <connection>
-        <from>area8</from>
-        <to>area5</to>
-    </connection>
-    <connection>
-        <from>area8</from>
-        <to>area10</to>
-    </connection>
-    <connection>
-        <from>area9</from>
-        <to>area6</to>
-    </connection>
-    <connection>
-        <from>area9</from>
-        <to>area8</to>
-    </connection>
-    <connection>
-        <from>area10</from>
-        <to>area4</to>
-    </connection>
-</graph>
+<model xmlns="http://www.vechicleTrackingSystem.org/model">
+    <graph>
+        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road1">
+            <name>Street 1</name>
+            <ports>
+                <port>Port0</port>
+                <port>Port1</port>
+                <port>Port2</port>
+                <port>Port3</port>
+            </ports>
+            <endpoint>false</endpoint>
+            <maxVehicle>1</maxVehicle>
+        </node>
+        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road2">
+            <name>Street 2</name>
+            <ports>
+                <port>Port0</port>
+                <port>Port1</port>
+                <port>Port2</port>
+                <port>Port3</port>
+                <port>Port4</port>
+            </ports>
+            <endpoint>true</endpoint>
+            <maxVehicle>15</maxVehicle>
+        </node>
+        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road3">
+            <name>Street 3</name>
+            <ports>
+                <port>Port0</port>
+                <port>Port1</port>
+                <port>Port2</port>
+            </ports>
+            <endpoint>false</endpoint>
+            <maxVehicle>8</maxVehicle>
+        </node>
+        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road4">
+            <name>Street 4</name>
+            <ports>
+                <port>Port0</port>
+                <port>Port1</port>
+                <port>Port2</port>
+                <port>Port3</port>
+                <port>Port4</port>
+            </ports>
+            <endpoint>false</endpoint>
+            <maxVehicle>14</maxVehicle>
+        </node>
+        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road5">
+            <name>Street 5</name>
+            <ports>
+                <port>Port0</port>
+                <port>Port1</port>
+                <port>Port2</port>
+                <port>Port3</port>
+                <port>Port4</port>
+            </ports>
+            <endpoint>false</endpoint>
+            <maxVehicle>4</maxVehicle>
+        </node>
+        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road6">
+            <name>Street 6</name>
+            <ports>
+                <port>Port0</port>
+                <port>Port1</port>
+                <port>Port2</port>
+            </ports>
+            <endpoint>false</endpoint>
+            <maxVehicle>9</maxVehicle>
+        </node>
+        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road7">
+            <name>Street 7</name>
+            <ports>
+                <port>Port0</port>
+                <port>Port1</port>
+                <port>Port2</port>
+                <port>Port3</port>
+            </ports>
+            <endpoint>false</endpoint>
+            <maxVehicle>3</maxVehicle>
+        </node>
+        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road8">
+            <name>Street 8</name>
+            <ports>
+                <port>Port0</port>
+                <port>Port1</port>
+                <port>Port2</port>
+                <port>Port3</port>
+                <port>Port4</port>
+            </ports>
+            <endpoint>false</endpoint>
+            <maxVehicle>1</maxVehicle>
+        </node>
+        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road9">
+            <name>Street 9</name>
+            <ports>
+                <port>Port0</port>
+                <port>Port1</port>
+                <port>Port2</port>
+            </ports>
+            <endpoint>false</endpoint>
+            <maxVehicle>9</maxVehicle>
+        </node>
+        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road10">
+            <name>Street 10</name>
+            <ports>
+                <port>Port0</port>
+                <port>Port1</port>
+                <port>Port2</port>
+                <port>Port3</port>
+                <port>Port4</port>
+            </ports>
+            <endpoint>false</endpoint>
+            <maxVehicle>5</maxVehicle>
+        </node>
+        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ParkingArea" ID="area1">
+            <name>Parking Area 1</name>
+            <ports>
+                <port>Port0</port>
+                <port>Port1</port>
+                <port>Port2</port>
+                <port>Port3</port>
+                <port>Port4</port>
+            </ports>
+            <maxVehicle>3</maxVehicle>
+        </node>
+        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ParkingArea" ID="area2">
+            <name>Parking Area 2</name>
+            <ports>
+                <port>Port0</port>
+                <port>Port1</port>
+                <port>Port2</port>
+                <port>Port3</port>
+                <port>Port4</port>
+            </ports>
+            <maxVehicle>11</maxVehicle>
+        </node>
+        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ParkingArea" ID="area3">
+            <name>Parking Area 3</name>
+            <ports>
+                <port>Port0</port>
+                <port>Port1</port>
+                <port>Port2</port>
+                <port>Port3</port>
+                <port>Port4</port>
+            </ports>
+            <maxVehicle>4</maxVehicle>
+        </node>
+        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ParkingArea" ID="area4">
+            <name>Parking Area 4</name>
+            <ports>
+                <port>Port0</port>
+                <port>Port1</port>
+                <port>Port2</port>
+                <port>Port3</port>
+                <port>Port4</port>
+            </ports>
+            <maxVehicle>11</maxVehicle>
+        </node>
+        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ParkingArea" ID="area5">
+            <name>Parking Area 5</name>
+            <ports>
+                <port>Port0</port>
+                <port>Port1</port>
+                <port>Port2</port>
+            </ports>
+            <maxVehicle>5</maxVehicle>
+        </node>
+        <connection>
+            <from>
+                <node>Street 1</node>
+                <port>Port0</port>
+            </from>
+            <to>
+                <node>Street 9</node>
+                <port>Port1</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 1</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Parking Area 1</node>
+                <port>Port2</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 1</node>
+                <port>Port0</port>
+            </from>
+            <to>
+                <node>Parking Area 2</node>
+                <port>Port2</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 2</node>
+                <port>Port3</port>
+            </from>
+            <to>
+                <node>Street 2</node>
+                <port>Port3</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 2</node>
+                <port>Port1</port>
+            </from>
+            <to>
+                <node>Street 3</node>
+                <port>Port2</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 2</node>
+                <port>Port3</port>
+            </from>
+            <to>
+                <node>Street 5</node>
+                <port>Port2</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 2</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Parking Area 3</node>
+                <port>Port3</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 2</node>
+                <port>Port4</port>
+            </from>
+            <to>
+                <node>Parking Area 4</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 3</node>
+                <port>Port1</port>
+            </from>
+            <to>
+                <node>Street 3</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 3</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Street 6</node>
+                <port>Port1</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 3</node>
+                <port>Port0</port>
+            </from>
+            <to>
+                <node>Street 8</node>
+                <port>Port1</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 3</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Parking Area 1</node>
+                <port>Port2</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 4</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Street 5</node>
+                <port>Port2</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 4</node>
+                <port>Port4</port>
+            </from>
+            <to>
+                <node>Parking Area 5</node>
+                <port>Port2</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 5</node>
+                <port>Port0</port>
+            </from>
+            <to>
+                <node>Street 8</node>
+                <port>Port2</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 5</node>
+                <port>Port1</port>
+            </from>
+            <to>
+                <node>Parking Area 1</node>
+                <port>Port1</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 5</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Parking Area 2</node>
+                <port>Port3</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 5</node>
+                <port>Port1</port>
+            </from>
+            <to>
+                <node>Parking Area 3</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 6</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Street 2</node>
+                <port>Port3</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 6</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Street 4</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 6</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Street 8</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 6</node>
+                <port>Port0</port>
+            </from>
+            <to>
+                <node>Parking Area 3</node>
+                <port>Port2</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 7</node>
+                <port>Port1</port>
+            </from>
+            <to>
+                <node>Street 5</node>
+                <port>Port2</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 7</node>
+                <port>Port3</port>
+            </from>
+            <to>
+                <node>Street 8</node>
+                <port>Port3</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 7</node>
+                <port>Port3</port>
+            </from>
+            <to>
+                <node>Street 10</node>
+                <port>Port3</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 7</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Parking Area 2</node>
+                <port>Port1</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 7</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Parking Area 4</node>
+                <port>Port4</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 8</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Street 2</node>
+                <port>Port4</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 8</node>
+                <port>Port3</port>
+            </from>
+            <to>
+                <node>Street 7</node>
+                <port>Port3</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 8</node>
+                <port>Port4</port>
+            </from>
+            <to>
+                <node>Parking Area 3</node>
+                <port>Port4</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 9</node>
+                <port>Port1</port>
+            </from>
+            <to>
+                <node>Street 3</node>
+                <port>Port2</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 9</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Street 7</node>
+                <port>Port1</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 9</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Parking Area 1</node>
+                <port>Port3</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 9</node>
+                <port>Port1</port>
+            </from>
+            <to>
+                <node>Parking Area 4</node>
+                <port>Port2</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 10</node>
+                <port>Port3</port>
+            </from>
+            <to>
+                <node>Street 2</node>
+                <port>Port2</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 10</node>
+                <port>Port4</port>
+            </from>
+            <to>
+                <node>Street 7</node>
+                <port>Port2</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Street 10</node>
+                <port>Port4</port>
+            </from>
+            <to>
+                <node>Parking Area 5</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 1</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Street 3</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 2</node>
+                <port>Port3</port>
+            </from>
+            <to>
+                <node>Street 2</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 2</node>
+                <port>Port0</port>
+            </from>
+            <to>
+                <node>Street 4</node>
+                <port>Port1</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 2</node>
+                <port>Port1</port>
+            </from>
+            <to>
+                <node>Street 6</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 2</node>
+                <port>Port1</port>
+            </from>
+            <to>
+                <node>Street 10</node>
+                <port>Port3</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 2</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Parking Area 2</node>
+                <port>Port3</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 3</node>
+                <port>Port3</port>
+            </from>
+            <to>
+                <node>Street 1</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 3</node>
+                <port>Port0</port>
+            </from>
+            <to>
+                <node>Street 2</node>
+                <port>Port3</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 3</node>
+                <port>Port1</port>
+            </from>
+            <to>
+                <node>Street 4</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 3</node>
+                <port>Port2</port>
+            </from>
+            <to>
+                <node>Street 8</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 3</node>
+                <port>Port1</port>
+            </from>
+            <to>
+                <node>Parking Area 2</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 3</node>
+                <port>Port1</port>
+            </from>
+            <to>
+                <node>Parking Area 3</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 4</node>
+                <port>Port3</port>
+            </from>
+            <to>
+                <node>Street 1</node>
+                <port>Port3</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 4</node>
+                <port>Port4</port>
+            </from>
+            <to>
+                <node>Street 6</node>
+                <port>Port1</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 4</node>
+                <port>Port1</port>
+            </from>
+            <to>
+                <node>Street 8</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 4</node>
+                <port>Port1</port>
+            </from>
+            <to>
+                <node>Parking Area 2</node>
+                <port>Port3</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 4</node>
+                <port>Port4</port>
+            </from>
+            <to>
+                <node>Parking Area 4</node>
+                <port>Port4</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>Parking Area 5</node>
+                <port>Port0</port>
+            </from>
+            <to>
+                <node>Street 5</node>
+                <port>Port0</port>
+            </to>
+        </connection>
+    </graph>
+    <vehicles>
+        <vehicle ID="V0">
+            <currentPosition>Street 10</currentPosition>
+            <state>parked</state>
+            <plateNumber>V0P9IT</plateNumber>
+        </vehicle>
+        <vehicle ID="V1">
+            <currentPosition>Parking Area 2</currentPosition>
+            <state>parked</state>
+            <plateNumber>V1P11IT</plateNumber>
+        </vehicle>
+        <vehicle ID="V2">
+            <currentPosition>Street 2</currentPosition>
+            <state>parked</state>
+            <plateNumber>V2P1IT</plateNumber>
+        </vehicle>
+        <vehicle ID="V3">
+            <currentPosition>Parking Area 5</currentPosition>
+            <state>parked</state>
+            <plateNumber>V3P14IT</plateNumber>
+        </vehicle>
+        <vehicle ID="V4">
+            <currentPosition>Parking Area 2</currentPosition>
+            <state>parked</state>
+            <plateNumber>V4P11IT</plateNumber>
+        </vehicle>
+        <vehicle ID="V5">
+            <currentPosition>Street 1</currentPosition>
+            <state>parked</state>
+            <plateNumber>V5P0IT</plateNumber>
+        </vehicle>
+        <vehicle ID="V6">
+            <currentPosition>Street 4</currentPosition>
+            <state>parked</state>
+            <plateNumber>V6P3IT</plateNumber>
+        </vehicle>
+        <vehicle ID="V7">
+            <currentPosition>Street 7</currentPosition>
+            <state>parked</state>
+            <plateNumber>V7P6IT</plateNumber>
+        </vehicle>
+        <vehicle ID="V8">
+            <currentPosition>Parking Area 4</currentPosition>
+            <state>parked</state>
+            <plateNumber>V8P13IT</plateNumber>
+        </vehicle>
+        <vehicle ID="V9">
+            <currentPosition>Street 7</currentPosition>
+            <state>parked</state>
+            <plateNumber>V9P6IT</plateNumber>
+        </vehicle>
+    </vehicles>
+</model>

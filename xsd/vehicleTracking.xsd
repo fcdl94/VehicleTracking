@@ -14,6 +14,10 @@
 			<selector xpath="vehicleComplete/vehicle/path" />
 			<field xpath="node" />
 		</keyref>
+		<keyref name="vechicleCompleteRefKey" refer="s:nodeKey">
+			<selector xpath="vehicleComplete/vehicle" />
+			<field xpath="currentPosition" />
+		</keyref>
 	</element>
 	
 <!-- element to be load at startup, I will call it model to represent the fact that is the model of the system, representing it status at a given time -->
@@ -22,11 +26,11 @@
 		<complexType>
 			<sequence>
 				<element ref="s:graph"/>
-				<element ref="s:vehicles"/>
+				<element ref="s:vehicles" minOccurs="0"/>
 			</sequence>
 		</complexType>
 		<keyref name="vechicleRefKey" refer="s:nodeKey">
-			<selector xpath="model/vehicle" />
+			<selector xpath="model/vehicles/vehicle" />
 			<field xpath="currentPosition" />
 		</keyref>
 	</element>
@@ -37,41 +41,55 @@
 		The nodes are bound with connection which represent the edge of the graph.
 		Each arc (connection) is oriented so I assumed each connection is unidirectional (to represent one-way route)
 -->
-	<element name="graph" type="s:graphType" >
+	<element name="graph" type="s:Graph" >
 		<key name="nodeKey">
 			<selector xpath="graph/node" />
 			<field xpath="@ID" />
 		</key>
-		<keyref name="connectionNode1" refer="s:nodeKey">
-			<selector xpath="graph/connection" />
-			<field xpath="node1" />
+		<key name="portKey">
+			<selector xpath="graph/node" />
+			<field xpath="@ID" />
+			<field xpath="ports/port" />
+		</key>
+		<keyref name="connectionNodeFrom" refer="s:portKey">
+			<selector xpath="graph/connection/from" />
+			<field xpath="node" />
+			<field xpath="port" />
 		</keyref>
-		<keyref name="connectionNode2" refer="s:nodeKey">
-			<selector xpath="graph/connection" />
-			<field xpath="node2" />
+		<keyref name="connectionNodeTo" refer="s:portKey">
+			<selector xpath="graph/connection/to" />
+			<field xpath="node" />
+			<field xpath="port" />
 		</keyref>
 	</element>
 	
 	
-	<complexType name="graphType" >
+	<complexType name="Graph" >
 		<sequence>
-			<element name="node" type="s:nodeType" maxOccurs="unbounded"/>
-			<element name="connection" type="s:connectionType" maxOccurs="unbounded" />
+			<element name="node" type="s:Node" maxOccurs="unbounded"/>
+			<element name="connection" type="s:Connection" maxOccurs="unbounded" />
 		</sequence>
 	</complexType>	
 	
-	<complexType name="nodeType">
+	<complexType name="Node">
 		<sequence>
 			<element name="name" type="string" />
+			<element name="ports">
+				<complexType>
+					<sequence>
+						<element name="port" type="string" maxOccurs="unbounded"/>
+					</sequence>
+				</complexType>
+			</element>
 		</sequence>
 		<attribute name="ID" type="string" />
 	</complexType>
 	
-	<complexType name="roadType">
+	<complexType name="Road">
 	<!-- End Point represent the fact that a route can be an entry/exit point of the restricted area
 			the max vehicle constraint limits the number of car in that route-->
 		<complexContent>
-			<extension base="s:nodeType">
+			<extension base="s:Node">
 				<sequence>
 					<element name="endpoint" type="boolean" minOccurs="0" />
 					<element name="maxVehicle" type="positiveInteger" />
@@ -80,10 +98,10 @@
 		</complexContent>
 	</complexType>
    
-	<complexType name="parkingAreaType">
+	<complexType name="ParkingArea">
 	<!-- The max vehicle constraint represent the number of parking spot -->
 		<complexContent>
-			<extension base="s:nodeType">
+			<extension base="s:Node">
 				<sequence>
 					<element name="maxVehicle" type="positiveInteger" />
 				</sequence>
@@ -92,11 +110,18 @@
 	</complexType>
 	
 	
-	<complexType name="connectionType" >
+	<complexType name="Connection" >
 	 	<sequence>
-	   		<element name="from" type="string" />
-	   		<element name="to" type="string" />
+	   		<element name="from" type="s:NodeRef" />
+	   		<element name="to" type="s:NodeRef" />
 	   	</sequence>
+	</complexType>
+	
+	<complexType name="NodeRef">
+		<sequence>
+			<element name="node" type="string" />
+			<element name="port" type="string" />
+		</sequence>
 	</complexType>
 
 <!-- vehicle definition -->
@@ -116,19 +141,20 @@
 		</complexType>
 	</element>
 	
-	<element name="vehicle" type="s:vehicleType" >
+	<element name="vehicle" type="s:Vehicle" >
 		<key name="vehicleKey">
 			<selector xpath="vechicle" />
 			<field xpath="@ID" />
 		</key>
 	</element>
-	<complexType name="vehicleType" >
+	
+	<complexType name="Vehicle" >
 		<sequence>
 			<element name="currentPosition" type="string" />
-			<element name="state" type="s:state" />
-			<element ref="s:path" />
-			<element name="entry_time" type="dateTime" />
-			<element name="last_update" type="dateTime" />
+			<element name="state" type="s:State" minOccurs="0" />
+			<element ref="s:path" minOccurs="0" />
+			<element name="entry_time" type="dateTime" minOccurs="0"/>
+			<element name="last_update" type="dateTime" minOccurs="0" />
 			<element name="plateNumber" type="string" />
 		</sequence>
 		<attribute name="ID" type="string" />
@@ -136,7 +162,7 @@
 	
 	<complexType name="car">
 		<complexContent>
-			<extension base="s:vehicleType">
+			<extension base="s:Vehicle">
 				<sequence>
 					<!-- something in the future -->
 				</sequence>
@@ -144,7 +170,7 @@
 		</complexContent>
 	</complexType>
 	
-	<simpleType name="state" >
+	<simpleType name="State" >
 		<restriction base="string">
 			<enumeration value="transit" />
 			<enumeration value="parked" />
@@ -153,21 +179,20 @@
 	
 	
 <!-- PATH DEFINITION -->
-	<element name="path" type="s:pathType" />
+	<element name="path" type="s:Path" />
 	
-	<complexType name="pathType">
+	<complexType name="Path">
 		<sequence>
-			<element name="node" type="s:nodeInPath" minOccurs="2" maxOccurs="unbounded">
-			</element>
+			<element name="node" type="s:NodeInPath" maxOccurs="unbounded" />
 		</sequence>
 	</complexType>
 
-	<complexType name="nodeInPath">
-		<simpleContent>
-			<extension base="string">
+	<complexType name="NodeInPath">
+		<complexContent>
+			<extension base="s:Node">
 				<attribute name="sequenceNum" type="positiveInteger" />
 			</extension>
-		</simpleContent>
+		</complexContent>
 	</complexType>
 
 </schema>
