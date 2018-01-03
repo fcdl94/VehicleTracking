@@ -2,7 +2,6 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Random;
 
-import javax.xml.bind.JAXBElement;
 
 import vehicle.tr.Connection;
 import vehicle.tr.Graph;
@@ -78,7 +77,13 @@ public class ModelGenerator {
 		for (int i = 0; i< vehicles; i++) {
 			v = new Vehicle();
 			int pos = random.nextInt(graph.getNode().size());
-			v.setCurrentPosition( graph.getNode().get(pos).getName());
+			NodeRef nr = new NodeRef();
+
+			nr.setNode( graph.getNode().get(pos).getID());
+			int portNum = random.nextInt(graph.getNode().get(pos).getPort().size());
+			nr.setPort(  graph.getNode().get(pos).getPort().get(portNum));
+			v.setCurrentPosition(nr);
+			v.setDestination(graph.getNode().get(pos).getID());
 			v.setID("V" + i);
 			v.setState(State.PARKED);
 			v.setPlateNumber("V" + i + "P" + pos + "IT");
@@ -99,8 +104,8 @@ public class ModelGenerator {
 			
 			r.setEndpoint( random.nextInt(100) < 20 ); //20% of probability to be an end-point
 			portNum = MIN_PORT_NUM + random.nextInt(BAS_PORT_NUM);
-			r.setPorts(new Node.Ports());
-			List<String> ports = r.getPorts().getPort();
+			
+			List<String> ports = r.getPort();
 			for(int j = 0; j < portNum; j++ ) {
 				ports.add("Port"+j);
 			}
@@ -113,8 +118,7 @@ public class ModelGenerator {
 			p.setName("Parking Area " + i);
 			p.setMaxVehicle(new BigInteger(4, random));
 			portNum = MIN_PORT_NUM + random.nextInt(BAS_PORT_NUM);
-			p.setPorts(new Node.Ports());
-			List<String> ports = p.getPorts().getPort();
+			List<String> ports = p.getPort();
 			for(int j = 0; j < portNum; j++ ) {
 				ports.add("Port"+j);
 			}
@@ -132,19 +136,19 @@ public class ModelGenerator {
 		NodeRef toref, frref;
 		
 		for(Node fr : graph.getNode() ) {
-			frPorts = fr.getPorts().getPort();
+			frPorts = fr.getPort();
 			for(Node to : graph.getNode()) {
 				if(random.nextInt(100) < prob ) {
-					toPorts = to.getPorts().getPort();
+					toPorts = to.getPort();
 					ct = new Connection();
 					toref = new NodeRef();
 					frref = new NodeRef();
 					pfr = random.nextInt(frPorts.size());
 					pto = random.nextInt(toPorts.size());
 					
-					frref.setNode(fr.getName());
+					frref.setNode(fr.getID());
 					frref.setPort(frPorts.get(pfr));
-					toref.setNode(to.getName());
+					toref.setNode(to.getID());
 					toref.setPort(toPorts.get(pto));
 					
 					ct.setFrom(frref);

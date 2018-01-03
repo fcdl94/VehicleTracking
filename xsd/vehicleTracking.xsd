@@ -14,9 +14,14 @@
 			<selector xpath="vehicleComplete/vehicle/path" />
 			<field xpath="node" />
 		</keyref>
-		<keyref name="vechicleCompleteRefKey" refer="s:nodeKey">
+		<keyref name="vechicleCompleteRefKey" refer="s:portKey">
 			<selector xpath="vehicleComplete/vehicle" />
-			<field xpath="currentPosition" />
+			<field xpath="currentPosition/node" />
+			<field xpath="currentPosition/port" />
+		</keyref>
+		<keyref name="vechicleCompleteRefKeyDestination" refer="s:nodeKey">
+			<selector xpath="vehicleComplete/vehicle" />
+			<field xpath="destination" />
 		</keyref>
 	</element>
 	
@@ -49,7 +54,7 @@
 		<key name="portKey">
 			<selector xpath="graph/node" />
 			<field xpath="@ID" />
-			<field xpath="ports/port" />
+			<field xpath="port" />
 		</key>
 		<keyref name="connectionNodeFrom" refer="s:portKey">
 			<selector xpath="graph/connection/from" />
@@ -74,13 +79,7 @@
 	<complexType name="Node">
 		<sequence>
 			<element name="name" type="string" />
-			<element name="ports">
-				<complexType>
-					<sequence>
-						<element name="port" type="string" maxOccurs="unbounded"/>
-					</sequence>
-				</complexType>
-			</element>
+			<element name="port" maxOccurs="unbounded" type="string" />
 		</sequence>
 		<attribute name="ID" type="string" />
 	</complexType>
@@ -126,7 +125,8 @@
 
 <!-- vehicle definition -->
 	<!-- each vehicle has 
-		position (a string referencing the position in graph) 
+		position (a NodeRef referencing the node+port in graph)
+		destination (string that reference a node) 
 		state indicating if the vehicle is parked or in transit
 		the path that is it following
 		entry time is the time while the vehicle entered the system
@@ -150,7 +150,8 @@
 	
 	<complexType name="Vehicle" >
 		<sequence>
-			<element name="currentPosition" type="string" />
+			<element name="currentPosition" type="s:NodeRef" />
+			<element name="destination" type="string" />
 			<element name="state" type="s:State" minOccurs="0" />
 			<element ref="s:path" minOccurs="0" />
 			<element name="entry_time" type="dateTime" minOccurs="0"/>
@@ -160,7 +161,7 @@
 		<attribute name="ID" type="string" />
 	</complexType>
 	
-	<complexType name="car">
+	<complexType name="Car">
 		<complexContent>
 			<extension base="s:Vehicle">
 				<sequence>
@@ -179,6 +180,7 @@
 	
 	
 <!-- PATH DEFINITION -->
+
 	<element name="path" type="s:Path" />
 	
 	<complexType name="Path">
@@ -189,7 +191,7 @@
 
 	<complexType name="NodeInPath">
 		<complexContent>
-			<extension base="s:Node">
+			<extension base="s:NodeRef">
 				<attribute name="sequenceNum" type="positiveInteger" />
 			</extension>
 		</complexContent>
