@@ -2,18 +2,7 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Random;
 
-
-import vehicle.tr.Connection;
-import vehicle.tr.Graph;
-import vehicle.tr.Model;
-import vehicle.tr.NodeRef;
-import vehicle.tr.ObjectFactory;
-import vehicle.tr.ParkingArea;
-import vehicle.tr.Road;
-import vehicle.tr.State;
-import vehicle.tr.Vehicle;
-import vehicle.tr.Vehicles;
-import vehicle.tr.Node;
+import it.polito.dp2.vehicle.model.*;
 
 public class ModelGenerator {
 
@@ -102,12 +91,14 @@ public class ModelGenerator {
 			r.setName("Street " + i);
 			r.setMaxVehicle(new BigInteger(MAX_VEHICLES, random).add(BigInteger.ONE));
 			
-			r.setEndpoint( random.nextInt(100) < 20 ); //20% of probability to be an end-point
 			portNum = MIN_PORT_NUM + random.nextInt(BAS_PORT_NUM);
 			
 			List<String> ports = r.getPort();
 			for(int j = 0; j < portNum; j++ ) {
 				ports.add("Port"+j);
+				if(random.nextInt(100) < 5) {
+					r.setEndpoint( "Port"+j ); //5% of probability to be an end-point
+				}
 			}
 			nodes.add(r);
 		}

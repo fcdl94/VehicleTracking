@@ -26,7 +26,7 @@
     <echo message="Compiling the schema..." />
     <mkdir dir="gen-src" />
     <exec executable="xjc" output="xjc_log.txt">
-        <arg line="-d gen-src -p vehicle.tr xsd/vehicleTracking.xsd"/>
+        <arg line="-d gen-src -p it.polito.dp2.vehicle.model xsd/vehicleTracking.xsd"/>
     </exec>
     <echo message="Compiling the java source files..." />
     <mkdir dir="classes" />

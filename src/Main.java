@@ -13,7 +13,7 @@ import javax.xml.bind.ValidationEventLocator;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import vehicle.tr.Model;
+import it.polito.dp2.vehicle.model.Model;
 
 public class Main {
 	

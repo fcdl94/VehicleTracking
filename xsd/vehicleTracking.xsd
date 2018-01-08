@@ -90,7 +90,7 @@
 		<complexContent>
 			<extension base="s:Node">
 				<sequence>
-					<element name="endpoint" type="boolean" minOccurs="0" />
+					<element name="endpoint" type="string" minOccurs="0" />  <!-- Should have it unbounded endpoints?! -->
 					<element name="maxVehicle" type="positiveInteger" />
 				</sequence>
 			</extension>
