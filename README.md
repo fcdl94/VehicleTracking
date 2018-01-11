@@ -7,5 +7,5 @@ destination, and a unique identifier assigned by the service to the new vehicle.
 The area model must be specified in an XML document, for which a schema has to be designed. The service must upload the area model from the XML file at startup and it must allow administrators to collect various kinds of information about the vehicles currently in the area and their expected routes.
 
 
-#IMPORTANT
+## IMPORTANT
 In order to try the system use the build.xml file and run the compile task (auto generate classes from xsd)

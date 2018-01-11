@@ -15,18 +15,18 @@ import javax.xml.validation.SchemaFactory;
 
 import it.polito.dp2.vehicle.model.Model;
 
-public class Main {
+public class Marshal {
 	
-	 private static int NUM_ROADS = 5;
+	 private static int NUM_ROADS = 15;
 	 private static int NUM_AREAS = 5;
-	 private static int SEED = 0;
-	 private static int VEHICLES = 0;
+	 private static int SEED = 127;
+	 private static int VEHICLES = 10;
 	 
 	 public static void main( String[] args ) {
         try {
             // create a JAXBContext capable of handling classes generated into
             // the vehicle.tr package
-            JAXBContext jc = JAXBContext.newInstance( "vehicle.tr" );
+            JAXBContext jc = JAXBContext.newInstance( "it.polito.dp2.vehicle.model" );
             int roads = NUM_ROADS, areas = NUM_AREAS, seed = SEED,vehicles=VEHICLES;
             File output;
         	if( args.length >= 1)	

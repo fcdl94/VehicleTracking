@@ -73,7 +73,7 @@ public class ModelGenerator {
 			nr.setPort(  graph.getNode().get(pos).getPort().get(portNum));
 			v.setCurrentPosition(nr);
 			v.setDestination(graph.getNode().get(pos).getID());
-			v.setID("V" + i);
+			v.setID(BigInteger.valueOf(i));
 			v.setState(State.PARKED);
 			v.setPlateNumber("V" + i + "P" + pos + "IT");
 			
@@ -96,8 +96,8 @@ public class ModelGenerator {
 			List<String> ports = r.getPort();
 			for(int j = 0; j < portNum; j++ ) {
 				ports.add("Port"+j);
-				if(random.nextInt(100) < 5) {
-					r.setEndpoint( "Port"+j ); //5% of probability to be an end-point
+				if(random.nextInt(100) < 20) {
+					r.setEndpoint( "Port"+j ); //20% of probability to be an end-point
 				}
 			}
 			nodes.add(r);
@@ -108,7 +108,9 @@ public class ModelGenerator {
 			p.setID("area"+ i);
 			p.setName("Parking Area " + i);
 			p.setMaxVehicle(new BigInteger(4, random));
+			
 			portNum = MIN_PORT_NUM + random.nextInt(BAS_PORT_NUM);
+			
 			List<String> ports = p.getPort();
 			for(int j = 0; j < portNum; j++ ) {
 				ports.add("Port"+j);
@@ -129,7 +131,7 @@ public class ModelGenerator {
 		for(Node fr : graph.getNode() ) {
 			frPorts = fr.getPort();
 			for(Node to : graph.getNode()) {
-				if(random.nextInt(100) < prob ) {
+				if(random.nextInt(100) < prob && !to.equals(fr)) {
 					toPorts = to.getPort();
 					ct = new Connection();
 					toref = new NodeRef();

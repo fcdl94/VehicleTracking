@@ -158,7 +158,7 @@
 			<element name="last_update" type="dateTime" minOccurs="0" />
 			<element name="plateNumber" type="string" />
 		</sequence>
-		<attribute name="ID" type="string" />
+		<attribute name="ID" type="integer" />
 	</complexType>
 	
 	<complexType name="Car">

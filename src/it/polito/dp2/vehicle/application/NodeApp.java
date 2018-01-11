@@ -12,26 +12,40 @@ public class NodeApp {
 	protected ArrayList<Edge> edges;
 	protected LinkedList<Vehicle> vehicles;
 	protected Node node;
-	protected List<String> ports;
+	protected ArrayList<String> ports;
 	 
 	public NodeApp(Node node) {
 		this.node = node;
 		edges = new ArrayList<>();
 		vehicles = new LinkedList<>();
-		ports = node.getPort();
+		ports = new ArrayList<String>(node.getPort());
+		if(System.getenv("DEBUG") != null) {
+			System.out.println("INFO -- Added Node " + node.getName());
+		}
 	}
 	
 	public void createEdge(NodeApp other, String tPort, String oPort) {
 		if(this.containsPort(tPort)  && other.containsPort(oPort)) {
 			Edge e = new Edge(this, other, tPort, oPort);
 			edges.add(e);
+			if(System.getenv("DEBUG") != null) {
+				System.out.println("INFO -- Added Edge from " + this.node.getName() + "to " + other.node.getName());
+			}
 		}
-		System.err.println("Error - The model contains wrong references.\n\tFound creating the Edge from " + this.node.getName() + "to " + other.node.getName());
+		else {
+			System.err.println("Error - The model contains wrong references.\n\tFound creating the Edge from " + this.node.getName() + "to " + other.node.getName());
+		}
 	}
 
-	public void addVehicle(Vehicle v) {
-		if( checkConstraint() )
+	public boolean addVehicle(Vehicle v) {
+		if( checkConstraint() ) {
+			if(System.getenv("DEBUG") != null) {
+				System.out.println("INFO -- Added Vehicle " + v.getPlateNumber() + " to node " + node.getName());
+			}
 			vehicles.add(v);
+			return true;
+		}
+		return false;
 	}
 	
 	public void removeVehicle(Vehicle v) {
@@ -41,7 +55,6 @@ public class NodeApp {
 	public List<Vehicle> getVehicles(){
 		return vehicles;
 	}
-	
 	
 	/*
 	 * Useful to check if the Node contains the port (only for checking correctness)

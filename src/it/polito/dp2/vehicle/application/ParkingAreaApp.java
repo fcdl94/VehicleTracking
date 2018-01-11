@@ -3,35 +3,27 @@ package it.polito.dp2.vehicle.application;
 import java.math.BigInteger;
 
 import it.polito.dp2.vehicle.model.Node;
-import it.polito.dp2.vehicle.model.Road;
+import it.polito.dp2.vehicle.model.ParkingArea;
 
-public class RoadApp extends NodeApp{
+public class ParkingAreaApp extends NodeApp{
 
-	private Road road;
+	private ParkingArea parking;
 	private BigInteger maxVehicle;
 	
-	public RoadApp(Node node) {
+	public ParkingAreaApp(Node node) {
 		super(node);
-		if(node.getClass() == Road.class) {
-			this.road = (Road) node;
-			maxVehicle = road.getMaxVehicle();
+		if(node.getClass() == ParkingArea.class) {
+			this.parking = (ParkingArea) node;
+			maxVehicle = parking.getMaxVehicle();
 			if(System.getenv("DEBUG") != null) {
-				System.out.println("INFO -- Added Road " + node.getName());
+				System.out.println("INFO -- Added PArea " + node.getName());
 			}
 		}
 		else {
 			System.err.println("Error, road asked where the model isn't a road.");
 		}
 	}
-	
-	/*
-	 * Useful to check if the port asked for entering the system is actually an endpoint or not
-	 */
-	public boolean isEndpoint(String port) {
-		if(road.getEndpoint().equals(port)) return true;
-		else return false;
-	}
-	
+		
 	@Override
 	protected boolean checkConstraint() {
 		/*
