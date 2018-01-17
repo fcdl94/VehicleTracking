@@ -43,7 +43,5 @@ public class Edge {
 	public void setPortTo(String portTo) {
 		this.portTo = portTo;
 	}
-	
-	
-	
+		
 }

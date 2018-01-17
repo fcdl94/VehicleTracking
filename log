@@ -1,3 +1,0 @@
-1- Corretto modello delle porte (da complex Type a lista di simple Type)
-2- Aggiunta destinazione nel veicolo, rende più semplice la richiesta del servizio. Il veicolo va da current Position (da specificare all'ingresso) fino a destination. Current Position è un NodeRef (ID del nodo + nome della porta) mentre destination è un IDREF al nodo.
-3- Modello class diagram per struttura dati 

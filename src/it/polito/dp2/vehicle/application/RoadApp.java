@@ -1,6 +1,7 @@
 package it.polito.dp2.vehicle.application;
 
 import java.math.BigInteger;
+import java.util.logging.Level;
 
 import it.polito.dp2.vehicle.model.Node;
 import it.polito.dp2.vehicle.model.Road;
@@ -15,12 +16,10 @@ public class RoadApp extends NodeApp{
 		if(node.getClass() == Road.class) {
 			this.road = (Road) node;
 			maxVehicle = road.getMaxVehicle();
-			if(System.getenv("DEBUG") != null) {
-				System.out.println("INFO -- Added Road " + node.getName());
-			}
+			logger.log(Level.INFO, "Added Road " + node.getName());
 		}
 		else {
-			System.err.println("Error, road asked where the model isn't a road.");
+			logger.log(Level.SEVERE, "Road asked where the model isn't a road (" + node.getName() + ")");
 		}
 	}
 	

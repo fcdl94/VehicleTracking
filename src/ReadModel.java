@@ -12,7 +12,7 @@ import it.polito.dp2.vehicle.model.Vehicle;
 
 public class ReadModel {
 
-	public static void main(String[] args) throws JAXBException {
+	public static void main(String[] args) throws Throwable {
 		JAXBContext jc = JAXBContext.newInstance( "it.polito.dp2.vehicle.model" );
 		Unmarshaller um = jc.createUnmarshaller();
 		
@@ -28,13 +28,28 @@ public class ReadModel {
 		 
 		 System.out.println("Loaded model in VTService");
 		
+		 ReadModel rd1 = new ReadModel();
+		 ReadModel rd2 = new ReadModel();
+		 
+		 rd1.run1("VN1P2P0IT");
+		 rd2.run1("VN2P2P0IT");
+		 rd1.run2("VN3P3P1IT");
+		 rd2.run2("VN4P3P1IT");
+		 
+		 rd1.finalize();
+		 rd2.finalize();
+		 
 		 for(Vehicle v : vtservice.getVehiclesFromNode("road3")) {
 			 System.out.println("The vehicle " + v.getPlateNumber() + " have destination " + v.getDestination());
 		 }
 		
-		 
-		 
+	}
+	
+	private void run1(String plate) {
 		//New vehicle tries to enter from road3, port0 -> ENDPOINT
+		VTService vtservice = VTService.getVTService();
+		
+		
 		 Vehicle nVeh = new Vehicle();
 		 NodeRef nNodeRef = new NodeRef();
 		 nNodeRef.setNode("road3");
@@ -42,7 +57,7 @@ public class ReadModel {
 		 nVeh.setCurrentPosition(nNodeRef);
 		 nVeh.setDestination("area3");
 		 nVeh.setID(BigInteger.valueOf(0));
-		 nVeh.setPlateNumber("VN1P2P0IT");
+		 nVeh.setPlateNumber(plate);
 		 
 		 if(vtservice.createVehicle(nVeh)) {
 			 System.out.println("New vehicle added, " + vehicleToString(nVeh));
@@ -51,13 +66,35 @@ public class ReadModel {
 			 System.out.println("Unable to add new vehicle");
 		 }
 		 
-		 
-		 for(Vehicle v : vtservice.getVehiclesFromNode("road3")) {
-			 System.out.println("The vehicle " + v.getPlateNumber() + " have destination " + v.getDestination());
-		 }
+	
+		 return;
 		
-		 
 	}
+	private void run2(String plate) {
+		//New vehicle tries to enter from road3, port0 -> ENDPOINT
+		VTService vtservice = VTService.getVTService();
+		
+		 Vehicle nVeh = new Vehicle();
+		 NodeRef nNodeRef = new NodeRef();
+		 nNodeRef.setNode("road4");
+		 nNodeRef.setPort("Port1");
+		 nVeh.setCurrentPosition(nNodeRef);
+		 nVeh.setDestination("area4");
+		 nVeh.setID(BigInteger.valueOf(0));
+		 nVeh.setPlateNumber(plate);
+		 
+		 if(vtservice.createVehicle(nVeh)) {
+			 System.out.println("New vehicle added, " + vehicleToString(nVeh));
+		 }
+		 else {
+			 System.out.println("Unable to add new vehicle");
+		 }
+		 
+
+		 return;
+		
+	}
+	
 	
 	private static String vehicleToString(Vehicle v) {
 		StringBuilder sb = new StringBuilder();

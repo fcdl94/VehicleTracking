@@ -3,6 +3,8 @@ package it.polito.dp2.vehicle.application;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import it.polito.dp2.vehicle.model.Node;
 import it.polito.dp2.vehicle.model.Vehicle;
@@ -13,38 +15,35 @@ public class NodeApp {
 	protected LinkedList<Vehicle> vehicles;
 	protected Node node;
 	protected ArrayList<String> ports;
+	protected static Logger logger = Logger.getLogger(VTService.class.getName());
 	 
 	public NodeApp(Node node) {
 		this.node = node;
 		edges = new ArrayList<>();
 		vehicles = new LinkedList<>();
 		ports = new ArrayList<String>(node.getPort());
-		if(System.getenv("DEBUG") != null) {
-			System.out.println("INFO -- Added Node " + node.getName());
-		}
+		logger.log(Level.INFO, "Added Node " + node.getName());
 	}
 	
 	public void createEdge(NodeApp other, String tPort, String oPort) {
 		if(this.containsPort(tPort)  && other.containsPort(oPort)) {
 			Edge e = new Edge(this, other, tPort, oPort);
 			edges.add(e);
-			if(System.getenv("DEBUG") != null) {
-				System.out.println("INFO -- Added Edge from " + this.node.getName() + "to " + other.node.getName());
-			}
+			logger.log(Level.INFO, "Added Edge from " + this.node.getName() + "to " + other.node.getName());
 		}
 		else {
-			System.err.println("Error - The model contains wrong references.\n\tFound creating the Edge from " + this.node.getName() + "to " + other.node.getName());
+			logger.log(Level.SEVERE, "The model contains wrong references.\n\tFound creating the Edge from " + this.node.getName() + "to " + other.node.getName());
+			//should I throw an exception?
 		}
 	}
 
 	public boolean addVehicle(Vehicle v) {
 		if( checkConstraint() ) {
-			if(System.getenv("DEBUG") != null) {
-				System.out.println("INFO -- Added Vehicle " + v.getPlateNumber() + " to node " + node.getName());
-			}
+			logger.log(Level.INFO, "Added Vehicle " + v.getPlateNumber() + " to node " + node.getName());
 			vehicles.add(v);
 			return true;
 		}
+		logger.log(Level.INFO, "Unable to add vehicle " + v.getPlateNumber() + " to node " + node.getName());
 		return false;
 	}
 	
@@ -60,7 +59,7 @@ public class NodeApp {
 	 * Useful to check if the Node contains the port (only for checking correctness)
 	 * 	
 	 */
-	private boolean containsPort(String port) {
+	protected boolean containsPort(String port) {
 		if(ports.contains(port)) return true;
 		else return false;
 	}
