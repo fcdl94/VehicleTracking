@@ -1,15 +1,17 @@
 package it.polito.dp2.vehicle.application;
 
+import it.polito.dp2.vehicle.model.NodeRef;
+
 public class Edge {
 
 	private NodeApp from, to;
-	private String portFrom, portTo;
+	private NodeRef nrFrom, nrTo;
 	
-	public Edge(NodeApp from, NodeApp to, String portFrom, String portTo) {
+	public Edge(NodeApp from, NodeApp to, NodeRef fromNR, NodeRef toNR) {
 		this.from = from;
 		this.to = to;
-		this.portFrom = portFrom;
-		this.portTo = portTo;
+		this.nrFrom = fromNR;
+		this.nrTo = toNR;
 	}
 
 	public NodeApp getFrom() {
@@ -28,20 +30,20 @@ public class Edge {
 		this.to = to;
 	}
 
-	public String getPortFrom() {
-		return portFrom;
+	public NodeRef getnrFrom() {
+		return nrFrom;
 	}
 
-	public void setPortFrom(String portFrom) {
-		this.portFrom = portFrom;
+	public void setnrFrom(NodeRef nrFrom) {
+		this.nrFrom = nrFrom;
 	}
 
-	public String getPortTo() {
-		return portTo;
+	public NodeRef getnrTo() {
+		return nrTo;
 	}
 
-	public void setPortTo(String portTo) {
-		this.portTo = portTo;
+	public void setnrTo(NodeRef nrTo) {
+		this.nrTo = nrTo;
 	}
 		
 }

@@ -23,6 +23,7 @@ import it.polito.dp2.vehicle.model.Graph;
 import it.polito.dp2.vehicle.model.Model;
 import it.polito.dp2.vehicle.model.Node;
 import it.polito.dp2.vehicle.model.NodeRef;
+import it.polito.dp2.vehicle.model.PathNode;
 import it.polito.dp2.vehicle.model.Vehicle;
 import it.polito.dp2.vehicle.model.Vehicles;
 
@@ -37,7 +38,7 @@ class VTServiceTest {
 		try {
 			jc = JAXBContext.newInstance( "it.polito.dp2.vehicle.model" );
 			Unmarshaller um = jc.createUnmarshaller();
-			model = (Model) um.unmarshal( new File( "xsd/xml-gen.xml" ) );
+			model = (Model) um.unmarshal( new File( "xsd/xml-gen-test.xml" ) );
 			
 			} catch (JAXBException e) {
 			e.printStackTrace();
@@ -75,8 +76,6 @@ class VTServiceTest {
 				 }
 		 }
 		 
-		 
-		 
 		assertTrue(flag==1);
 	}
 
@@ -89,19 +88,26 @@ class VTServiceTest {
 		 nNodeRef.setNode("road3");
 		 nNodeRef.setPort("Port0");
 		 nVeh.setCurrentPosition(nNodeRef);
-		 nVeh.setDestination("area3");
+		 nVeh.setDestination("road5");
 		 nVeh.setID(BigInteger.valueOf(0));
 		 nVeh.setPlateNumber("ABABAB");
 		 
 		 try {
-		 nVeh = vtservice.createVehicle(nVeh);
-		 System.out.println("New vehicle added, " + nVeh.getPlateNumber());
+			 nVeh = vtservice.createVehicle(nVeh);
+			 System.out.println("New vehicle added, " + nVeh.getPlateNumber());
 		 }
 		 catch (BadRequestException e){
-			 System.out.println("Unable to add new vehicle");
+			 System.out.println("Unable to add new vehicle - BAD REQUEST");
+			 return;
 		 }
 		 catch (ForbiddenException e) {
-			 System.out.println("Unable to add new vehicle");
+			 System.out.println("Unable to add new vehicle - FORBIDDEN");
+			 return;
+		 }
+		 
+		 System.out.println("Vehicle goes from: ");
+		 for(PathNode pn : nVeh.getPath().getNode()) {
+			 System.out.println("\t Node " + pn.getFrom().getNode() + "  to " + pn.getTo().getNode());
 		 }
 		 
 		boolean flag = false;

@@ -1,12 +1,15 @@
 package it.polito.dp2.vehicle.application;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.ForbiddenException;
 
 import it.polito.dp2.vehicle.model.Connection;
 import it.polito.dp2.vehicle.model.Graph;
@@ -14,6 +17,7 @@ import it.polito.dp2.vehicle.model.Node;
 import it.polito.dp2.vehicle.model.NodeRef;
 import it.polito.dp2.vehicle.model.ParkingArea;
 import it.polito.dp2.vehicle.model.Path;
+import it.polito.dp2.vehicle.model.PathNode;
 import it.polito.dp2.vehicle.model.Road;
 import it.polito.dp2.vehicle.model.Vehicle;
 
@@ -22,6 +26,7 @@ public class GraphApp {
 	private ConcurrentSkipListMap<String, NodeApp> nodes;
 	private Graph graph;
 	private static Logger logger = Logger.getLogger(VTService.class.getName());
+	public static Path NO_PATH = new Path();
 	
 	public GraphApp(Graph graph) {
 		nodes = new ConcurrentSkipListMap<>();
@@ -61,7 +66,7 @@ public class GraphApp {
 	
 	
 	public Path getPath(NodeRef position, String destination) {
-		Path p = new Path();
+		Path p;
 		NodeApp from;
 		NodeApp to;
 		//evaluate all possible exception in arguments
@@ -74,15 +79,68 @@ public class GraphApp {
 		
 		if(!from.containsPort(position.getPort())) throw new BadRequestException();
 		
+		if(from==to) return NO_PATH;
+		if(!from.checkConstraint()) return NO_PATH;
 		//Now we know all data are correct, proceed with path evaluation
-		//TODO Breath First algorithm
-		
-		
+		//TODO Breadth First algorithm
+		p = BreadthFirst(from, to);
 		
 		return p;
 	}
 		
+	private Path BreadthFirst(NodeApp from, NodeApp to) {
+		//NO LOAD BALANCING AT ALL!
+		List<NodeApp> open = new LinkedList<>();
+		HashMap<String, NodeApp> closed = new HashMap<>();
+		
+		Map<NodeApp, Edge> parents = new HashMap<>();
+		NodeApp parent;
+		
+		open.add(from);
+		
+		while(!open.isEmpty()) {
+			parent = open.get(0);
+			if(parent == to) {
+				return buildSolution(from,to, parents);
+			}
+			for(Edge edg : parent.getEdges()) {
+				if(edg.getTo().checkConstraint()) { //check it is crossable
+					if(!closed.containsKey(edg.getTo().getKey())) { //check not already visited
+						if(!open.contains(edg.getTo())) { //check not already listed
+							//TODO intelligence about the load balance must be put in previous if
+							open.add(edg.getTo());
+							parents.put(edg.getTo(), edg);
+						}
+					}
+				}
+			}
+			open.remove(0);
+		}
+		return NO_PATH;
+	}
 	
+	private Path buildSolution(NodeApp from, NodeApp to,  Map<NodeApp, Edge> parents) {
+		Path p = new Path();
+		List<PathNode> pNodes = p.getNode();
+		PathNode pNode;
+		NodeApp current = to;
+		Edge e;
+		while(current != from) {
+			//TODO I must set a vehicle more in the nodes
+			pNode = new PathNode();
+			e = parents.get(current);
+			pNode.setFrom(e.getnrFrom());
+			pNode.setTo(e.getnrTo());
+			pNodes.add(0, pNode);
+			current = e.getFrom();
+		}
+		for(int i = 0; i < pNodes.size(); i++) {
+			pNodes.get(i).setSequenceNum(i);
+		}
+		
+		return p;
+	}
+
 	private void createNodeApp(Node n) {
 		if(n.getClass().equals(Road.class)) {
 			RoadApp rap = new RoadApp(n);
@@ -114,7 +172,7 @@ public class GraphApp {
 		NodeApp nap = nodes.get(c.getFrom().getNode());
 		NodeApp other = nodes.get(c.getTo().getNode());
 		
-		nap.createEdge(other, c.getFrom().getPort(), c.getTo().getPort());
+		nap.createEdge(other, c.getFrom(), c.getTo());
 		
 	}
 

@@ -39,6 +39,8 @@ public class ReadModel {
 		 rd1.finalize();
 		 rd2.finalize();
 		 
+		 
+		 
 		 for(Vehicle v : vtservice.getVehiclesFromNode("road3")) {
 			 System.out.println("The vehicle " + v.getPlateNumber() + " have destination " + v.getDestination());
 		 }
@@ -59,13 +61,8 @@ public class ReadModel {
 		 nVeh.setID(BigInteger.valueOf(0));
 		 nVeh.setPlateNumber(plate);
 		 
-		 if(vtservice.createVehicle(nVeh)) {
-			 System.out.println("New vehicle added, " + vehicleToString(nVeh));
-		 }
-		 else {
-			 System.out.println("Unable to add new vehicle");
-		 }
-		 
+		 vtservice.createVehicle(nVeh); 
+		 System.out.println("New vehicle added, " + vehicleToString(nVeh)); 
 	
 		 return;
 		
@@ -82,15 +79,8 @@ public class ReadModel {
 		 nVeh.setDestination("area4");
 		 nVeh.setID(BigInteger.valueOf(0));
 		 nVeh.setPlateNumber(plate);
-		 
-		 if(vtservice.createVehicle(nVeh)) {
-			 System.out.println("New vehicle added, " + vehicleToString(nVeh));
-		 }
-		 else {
-			 System.out.println("Unable to add new vehicle");
-		 }
-		 
-
+		 vtservice.createVehicle(nVeh);
+		 System.out.println("New vehicle added, " + vehicleToString(nVeh));
 		 return;
 		
 	}

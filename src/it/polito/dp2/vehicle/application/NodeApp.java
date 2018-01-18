@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import it.polito.dp2.vehicle.model.Node;
+import it.polito.dp2.vehicle.model.NodeRef;
 import it.polito.dp2.vehicle.model.Vehicle;
 
 public class NodeApp {
@@ -25,9 +26,9 @@ public class NodeApp {
 		logger.log(Level.INFO, "Added Node " + node.getName());
 	}
 	
-	public void createEdge(NodeApp other, String tPort, String oPort) {
-		if(this.containsPort(tPort)  && other.containsPort(oPort)) {
-			Edge e = new Edge(this, other, tPort, oPort);
+	public void createEdge(NodeApp other, NodeRef from, NodeRef to) {
+		if(this.containsPort(from.getPort())  && other.containsPort(to.getPort())) {
+			Edge e = new Edge(this, other, from, to);
 			edges.add(e);
 			logger.log(Level.INFO, "Added Edge from " + this.node.getName() + "to " + other.node.getName());
 		}
@@ -71,5 +72,13 @@ public class NodeApp {
 	 */
 	protected boolean checkConstraint() {
 		return true;
+	}
+
+	protected List<Edge> getEdges() {
+		return edges;
+	}
+
+	protected String getKey() {
+		return node.getID();
 	}
 }

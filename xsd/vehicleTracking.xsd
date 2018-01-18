@@ -185,14 +185,14 @@
 	
 	<complexType name="Path">
 		<sequence>
-			<element name="node" type="s:NodeInPath" maxOccurs="unbounded" />
+			<element name="node" type="s:PathNode" maxOccurs="unbounded" />
 		</sequence>
 	</complexType>
 
-	<complexType name="NodeInPath">
+	<complexType name="PathNode">
 		<complexContent>
-			<extension base="s:NodeRef">
-				<attribute name="sequenceNum" type="positiveInteger" />
+			<extension base="s:Connection">
+				<attribute name="sequenceNum" type="int" />
 			</extension>
 		</complexContent>
 	</complexType>

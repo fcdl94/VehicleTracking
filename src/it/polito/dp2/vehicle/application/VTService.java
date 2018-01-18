@@ -105,7 +105,7 @@ public class VTService {
 		//GET THE PATH from GraphApp and set to vehicle;
 		Path p = graphApp.getPath(v.getCurrentPosition(), v.getDestination());
 		//if path is null, vehicle is not allowed to enter the system, otherwise it can
-		if(p != null) {
+		if(p != GraphApp.NO_PATH) {
 			//request can be accepted and the vehicle can enter the system
 			nv.setPath(p);
 			//set in transit state
