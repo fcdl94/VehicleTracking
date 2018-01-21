@@ -1,6 +1,7 @@
 package it.polito.dp2.vehicle.application;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.ForbiddenException;
 
 import it.polito.dp2.vehicle.model.Connection;
 import it.polito.dp2.vehicle.model.Graph;
@@ -71,9 +71,11 @@ public class GraphApp {
 		NodeApp to;
 		//evaluate all possible exception in arguments
 		if( position==null || destination==null ) throw new BadRequestException();
+		if(position.getNode() == null || position.getPort() == null) throw new BadRequestException();
 		
 		if(!nodes.containsKey(position.getNode()) || !nodes.containsKey(destination) )
 			throw new BadRequestException();
+		
 		from = nodes.get(position.getNode());
 		to = nodes.get(destination);
 		
@@ -82,39 +84,40 @@ public class GraphApp {
 		if(from==to) return NO_PATH;
 		if(!from.checkConstraint()) return NO_PATH;
 		//Now we know all data are correct, proceed with path evaluation
-		//TODO Breadth First algorithm
+		
 		p = BreadthFirst(from, to);
 		
 		return p;
 	}
 		
 	private Path BreadthFirst(NodeApp from, NodeApp to) {
-		//NO LOAD BALANCING AT ALL!
-		List<NodeApp> open = new LinkedList<>();
-		HashMap<String, NodeApp> closed = new HashMap<>();
-		
+		List<NodeApp> queue = new LinkedList<>();
+		HashSet<String> closed = new HashSet<>();
+		HashSet<String> open = new HashSet<>();
 		Map<NodeApp, Edge> parents = new HashMap<>();
+		
 		NodeApp parent;
+		queue.add(from);
 		
-		open.add(from);
-		
-		while(!open.isEmpty()) {
-			parent = open.get(0);
+		while(!queue.isEmpty()) {
+			parent = queue.get(0);
 			if(parent == to) {
-				return buildSolution(from,to, parents);
+				return buildSolution(from, to, parents);
 			}
 			for(Edge edg : parent.getEdges()) {
 				if(edg.getTo().checkConstraint()) { //check it is crossable
-					if(!closed.containsKey(edg.getTo().getKey())) { //check not already visited
-						if(!open.contains(edg.getTo())) { //check not already listed
+					if(!closed.contains(edg.getTo().getID())) { //check not already visited
+						if(!open.contains(edg.getTo().getID())) { //check not already listed
 							//TODO intelligence about the load balance must be put in previous if
-							open.add(edg.getTo());
+							queue.add(edg.getTo());
+							open.add(edg.getTo().getID());
 							parents.put(edg.getTo(), edg);
 						}
 					}
 				}
 			}
-			open.remove(0);
+			closed.add(parent.getID());
+			queue.remove(0);
 		}
 		return NO_PATH;
 	}
@@ -126,7 +129,7 @@ public class GraphApp {
 		NodeApp current = to;
 		Edge e;
 		while(current != from) {
-			//TODO I must set a vehicle more in the nodes
+			//TODO I must add a vehicle in the nodes
 			pNode = new PathNode();
 			e = parents.get(current);
 			pNode.setFrom(e.getnrFrom());

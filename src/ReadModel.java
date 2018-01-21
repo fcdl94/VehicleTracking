@@ -16,7 +16,7 @@ public class ReadModel {
 		JAXBContext jc = JAXBContext.newInstance( "it.polito.dp2.vehicle.model" );
 		Unmarshaller um = jc.createUnmarshaller();
 		
-		 Model model = (Model) um.unmarshal( new File( "xsd/xml-gen.xml" ) );
+		 Model model = (Model) um.unmarshal( new File( "xml/xml-gen.xml" ) );
 		 
 		 System.out.println("Marhsalling done!");
 		 

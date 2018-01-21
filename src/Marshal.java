@@ -14,13 +14,15 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import it.polito.dp2.vehicle.model.Model;
+import it.polito.dp2.vehicle.model.ObjectFactory;
 
 public class Marshal {
 	
-	 private static int NUM_ROADS = 15;
-	 private static int NUM_AREAS = 5;
+	 private static int NUM_ROADS = 5;
+	 private static int NUM_AREAS = 2;
 	 private static int SEED = 127;
-	 private static int VEHICLES = 10;
+	 private static int VEHICLES = 5;
+	 private static ObjectFactory of = new ObjectFactory();
 	 
 	 public static void main( String[] args ) {
         try {
@@ -33,7 +35,7 @@ public class Marshal {
             	output = new File(args[0]);
         	else {
         		//there is no arguments at all
-        		output = new File("xml-gen.xml");
+        		output = new File("xml/xml-test.xml");
         	}
         	
             if( args.length >= 4 ) {
@@ -50,7 +52,8 @@ public class Marshal {
             //then marshall it to the console to see if it was read right
             Marshaller m = jc.createMarshaller();
             m.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE );
-            m.marshal(model, output);
+            
+            m.marshal(of.createModel(model), output);
             
         } catch( UnmarshalException ue ) {
             System.out.println( "Caught UnmarshalException" );

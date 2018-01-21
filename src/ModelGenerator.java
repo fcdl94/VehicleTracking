@@ -7,8 +7,8 @@ import it.polito.dp2.vehicle.model.*;
 public class ModelGenerator {
 
 	private static final int MIN_PORT_NUM = 3;
-	private static final int BAS_PORT_NUM = 3;
-	private static final int MAX_VEHICLES = 4;
+	private static final int BAS_PORT_NUM = 2;
+	private static final int MAX_VEHICLES = 5;
 	int parks, routes;
 	int prob;
 	int vehicles;

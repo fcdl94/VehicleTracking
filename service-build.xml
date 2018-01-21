@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project basedir="." name="rest-service-example">
+<project basedir="." name="vehicleTracking">
 	<description>
-		Script for REST Web Service Examples
+		Script for Vehicle Tracking Service
 	</description>
 	
-	<!-- Default service name property (overridden in
-	the specific ant projects that import this one -->
-	<property name="serviceName" value="time" />
-	
+	<property name="serviceName" value="vehicleTracking" />
+		
 	<property name="root.location" location="." />
 	<property name="src.dir" location="${root.location}/src" />
-	<property name="path.prefix" value="cf/dp2/rest" />
+	<property name="path.prefix" value="it/polito/dp2/vehicle" />
 	<property name="build.dir" location="${root.location}/build" />
 	<property name="lib.dir" location="${root.location}/lib" />
 	<property name="resources.dir" location="${root.location}/${serviceName}/WebContent" />
@@ -47,6 +45,14 @@
 		<mkdir dir="${gen-war.dir}"/>
 	</target>  
 	
+	 <!--compile schema and Java source files-->
+	<target name="generate_classes" description="Generate the model from xsd">
+	 <echo message="Compiling the schema..." />
+	  <exec executable="xjc" output="xjc_log.txt">
+	      <arg line="-d src -p it.polito.dp2.vehicle.model xsd/vehicleTracking.xsd"/>
+	  </exec>
+	</target>
+	
 	<target name="build.service" depends="init" description="Build the service">
 		<javac debug="on" 
 	       fork="true"
@@ -56,7 +62,7 @@
 		   source="${source}"
 		   target="${target}"
 	 	>
-			<include name="${path.prefix}/${serviceName}/**/*.java"/>
+			<include name="${path.prefix}/**/*.java"/>
 			<classpath>
 				<path refid="classpath" />
 			</classpath>
@@ -73,6 +79,8 @@
     	<copy toDir="${gen-tomcat-service.dir}/WEB-INF/classes" overwrite="true">
         	<fileset dir="${build.dir}"/>
       	</copy>
+		<!-- copy xsd to WEB-INF/classes/xsd directory -->
+    	<copy file="xds/vehicleTracking.xsd" toDir="${gen-tomcat-service.dir}/WEB-INF/classes/xsd" overwrite="true" />
 		<!-- copy lib files to WEB-INF/lib directory -->
     	<copy toDir="${gen-tomcat-service.dir}/WEB-INF/lib" overwrite="true">
         	<fileset dir="${lib.dir}">

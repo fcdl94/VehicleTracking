@@ -78,7 +78,7 @@ public class NodeApp {
 		return edges;
 	}
 
-	protected String getKey() {
+	protected String getID() {
 		return node.getID();
 	}
 }

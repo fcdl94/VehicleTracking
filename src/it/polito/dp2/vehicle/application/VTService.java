@@ -1,5 +1,9 @@
 package it.polito.dp2.vehicle.application;
 
+import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -10,9 +14,19 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+
+import org.xml.sax.SAXException;
+
 
 import it.polito.dp2.vehicle.model.Model;
 import it.polito.dp2.vehicle.model.NodeRef;
@@ -21,8 +35,7 @@ import it.polito.dp2.vehicle.model.State;
 import it.polito.dp2.vehicle.model.Vehicle;
 
 public class VTService {
-//TODO make this a persistence class
-	
+
 	private ConcurrentSkipListMap<BigInteger, Vehicle> vehicles;
 	private Model model;
 	private GraphApp graphApp;
@@ -30,11 +43,52 @@ public class VTService {
 	private static Logger logger = Logger.getLogger(VTService.class.getName());
 	
 	// Singleton PATTERN
-	private static VTService istance;
+	private static VTService istance = new VTService();
 
 	private VTService() {
 		vehicles = new ConcurrentSkipListMap<>();
 		currVehicleIndex = BigInteger.valueOf(0);
+		
+		InputStream fsr = null;
+		InputStream schemaStream = null;
+		try {				
+			fsr = VTService.class.getResourceAsStream("/xml/xml-gen.xml");
+			if (fsr == null) {
+				logger.log(Level.SEVERE, "xml directory file Not found.");
+				throw new IOException();
+			}
+			schemaStream = VTService.class.getResourceAsStream("/xsd/vehicleTracking.xsd");
+			if (schemaStream == null) {
+				logger.log(Level.SEVERE, "xml schema file Not found.");
+				throw new IOException();
+			}
+            JAXBContext jc = JAXBContext.newInstance( "it.polito.dp2.vehicle.model" );
+            Unmarshaller u = jc.createUnmarshaller();
+            SchemaFactory sf = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
+            Schema schema = sf.newSchema(new StreamSource(schemaStream));
+            u.setSchema(schema);
+            JAXBElement<Model> element = (JAXBElement<Model>) u.unmarshal( fsr );
+            
+            Model model = element.getValue();
+            if (model!=null) {
+            	setModel(model);
+            }
+            fsr.close();
+			logger.info("VehicleTracking Initialization Completed Successfully");
+
+		} catch (SAXException | JAXBException | IOException se) {
+			logger.log(Level.SEVERE, "Error parsing xml directory file. Working with no data.", se);
+		} finally {
+				try {
+					if (fsr!=null)
+						fsr.close();
+					if (schemaStream!=null)
+						schemaStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+		
 	}
 
 	public static VTService getVTService() {
@@ -71,6 +125,12 @@ public class VTService {
 		}
 	}
 	
+	
+	/*
+	 * Returns the list of all vehicles in the system.
+	 * To allow the end-user to modify the list, we copy it, without giving the reference to our map.
+	 * 
+	 */
 	public List<Vehicle> getVehicles(){
 		List<Vehicle> vs = new ArrayList<>();
 		for(Vehicle v : vehicles.values()) {
@@ -79,13 +139,23 @@ public class VTService {
 		return vs;
 	}
 	
+	/*
+	 * Get vehicles in one node
+	 * 
+	 */
 	public List<Vehicle> getVehiclesFromNode(String node) {	
 		return graphApp.getVehicles(node);
 	}
 
+	/*
+	 * Allow to add a new Vehicle in the system.
+	 * First are checked if it has the required information (if validated, it must have) and then, if a path exist, create the vehicle and add it to the system
+	 * Then the new vehicle is returned
+	 * This function can raise BadRequest exception and Forbidden exception.
+	 */
 	public synchronized Vehicle createVehicle(Vehicle v) {
 		//TODO There is a better way to avoid race condition?
-		//ACTUALLY I DO NOT CHECK IF THE ENTRY POINT IS A ROUTE AND IS ENDPOINT, should I?
+		//TODO ACTUALLY I DO NOT CHECK IF THE ENTRY POINT IS A ROUTE AND IS ENDPOINT, should I?
 		if(v.getCurrentPosition()==null || v.getDestination() == null || v.getPlateNumber() == null) {
 			//anyway, if Vehicle is validated, this code is never executed
 			logger.log(Level.WARNING, "The vehicle entered has no required information [BAD REQUEST]");

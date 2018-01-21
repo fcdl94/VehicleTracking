@@ -9,3 +9,11 @@ The area model must be specified in an XML document, for which a schema has to b
 
 ## IMPORTANT
 In order to try the system use the build.xml file and run the compile task (auto generate classes from xsd)
+You also must have in /opt/dp2/shared/lib the libraries for JavaRX
+
+## TomCat
+In ANT scripts must be configured the location of TOMCAT application (I had troubles with CATALINA_HOME variable)
+The to run the TomCat server, open build-proj.xml ANT file and run start-tomcat
+
+## Service
+To deploy the service you must open build-proj.xml ANT file and run deployWS
