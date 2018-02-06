@@ -8,18 +8,24 @@ import java.util.logging.Logger;
 
 import it.polito.dp2.vehicle.model.Node;
 import it.polito.dp2.vehicle.model.NodeRef;
-import it.polito.dp2.vehicle.model.Vehicle;
 
 public class NodeApp {
 	
 	protected ArrayList<Edge> edges;
-	protected LinkedList<Vehicle> vehicles;
+	protected LinkedList<VehicleApp> vehicles;
 	protected Node node;
 	protected ArrayList<String> ports;
 	protected static Logger logger = Logger.getLogger(VTService.class.getName());
-	 
+	protected int futureVehicles; 
+	/*
+	 *	The variable futureVehicles is important to compute the vehicles that will pass from that node. 
+	 *	It is limiting, but it is the only way to keep the system safe from overcrowded nodes.
+	 *  The other way is to use only the current vehicles but if 3 vehicles ask for the same node and only 1 position is left, it is a problem because we cannot detect it
+	*/
+	
 	public NodeApp(Node node) {
 		this.node = node;
+		this.futureVehicles = 0;
 		edges = new ArrayList<>();
 		vehicles = new LinkedList<>();
 		ports = new ArrayList<String>(node.getPort());
@@ -38,7 +44,7 @@ public class NodeApp {
 		}
 	}
 
-	public boolean addVehicle(Vehicle v) {
+	public boolean addVehicle(VehicleApp v) {
 		if( checkConstraint() ) {
 			logger.log(Level.INFO, "Added Vehicle " + v.getPlateNumber() + " to node " + node.getName());
 			vehicles.add(v);
@@ -48,11 +54,11 @@ public class NodeApp {
 		return false;
 	}
 	
-	public void removeVehicle(Vehicle v) {
+	public void removeVehicle(VehicleApp v) {
 		vehicles.remove(v);
 	}
 	
-	public List<Vehicle> getVehicles(){
+	public List<VehicleApp> getVehicles(){
 		return vehicles;
 	}
 	
@@ -80,5 +86,13 @@ public class NodeApp {
 
 	protected String getID() {
 		return node.getID();
+	}
+
+	public void incrementFutureVehicles() {
+		futureVehicles++;
+	}
+	
+	public void decrementFutureVehicles() {
+		futureVehicles--;
 	}
 }

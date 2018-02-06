@@ -15,7 +15,6 @@
 	<property name="resources.dir" location="${root.location}/${serviceName}/WebContent" />
 	<property name="web.lib.dir" location="${resources.dir}/WEB-INF/lib" />
 	<property name="ext.lib.dir" location="/opt/dp2/shared/lib" />
-	<property name="gen.dir" location="${root.location}/generated" />
 	<property name="gen-tomcat-service.dir" location="${root.location}/target"/>
 	<property name="gen-war.dir" location="${root.location}/war" />
 	<property name="debug" value="true" />
@@ -40,7 +39,6 @@
 	<target name="init" depends="clean">
 		<!-- make directories -->
 	    <mkdir dir="${build.dir}"/>
-		<mkdir dir="${gen.dir}"/>
 		<mkdir dir="${gen-tomcat-service.dir}"/>		
 		<mkdir dir="${gen-war.dir}"/>
 	</target>  
@@ -80,7 +78,7 @@
         	<fileset dir="${build.dir}"/>
       	</copy>
 		<!-- copy xsd to WEB-INF/classes/xsd directory -->
-    	<copy file="xds/vehicleTracking.xsd" toDir="${gen-tomcat-service.dir}/WEB-INF/classes/xsd" overwrite="true" />
+    	<copy file="xsd/vehicleTracking.xsd" toDir="${gen-tomcat-service.dir}/WEB-INF/classes/xsd" overwrite="true" />
 		<!-- copy lib files to WEB-INF/lib directory -->
     	<copy toDir="${gen-tomcat-service.dir}/WEB-INF/lib" overwrite="true">
         	<fileset dir="${lib.dir}">
@@ -89,13 +87,14 @@
       	</copy> 
 		<!-- make war archive -->
 		<jar destfile="${gen-war.dir}/${serviceName}.war" basedir="${gen-tomcat-service.dir}"/>
+		<delete dir="${gen-tomcat-service.dir}"/>
+		<delete dir="${build.dir}" />
 	</target>
 
 	
 	<!--DELETE BUILD AND GENERATED DIRECTORIES-->
 	<target name="clean" description="Clean build and generated">
 		<delete dir="${build.dir}" />
-		<delete dir="${gen.dir}" />
 		<delete dir="${gen-tomcat-service.dir}"/>		
 	</target>
 	

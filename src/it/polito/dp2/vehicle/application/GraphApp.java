@@ -16,17 +16,14 @@ import it.polito.dp2.vehicle.model.Graph;
 import it.polito.dp2.vehicle.model.Node;
 import it.polito.dp2.vehicle.model.NodeRef;
 import it.polito.dp2.vehicle.model.ParkingArea;
-import it.polito.dp2.vehicle.model.Path;
-import it.polito.dp2.vehicle.model.PathNode;
 import it.polito.dp2.vehicle.model.Road;
-import it.polito.dp2.vehicle.model.Vehicle;
 
 public class GraphApp {
 
 	private ConcurrentSkipListMap<String, NodeApp> nodes;
 	private Graph graph;
 	private static Logger logger = Logger.getLogger(VTService.class.getName());
-	public static Path NO_PATH = new Path();
+	public static PathApp NO_PATH = new PathApp();
 	
 	public GraphApp(Graph graph) {
 		nodes = new ConcurrentSkipListMap<>();
@@ -37,9 +34,19 @@ public class GraphApp {
 		for(Connection c : graph.getConnection()) createEdge(c);
 		
 	}
-
 	
-	public List<Vehicle> getVehicles(String node){
+	public Graph getGraph() {	
+		return graph;
+	}	
+
+	public NodeApp getNode(String node) {
+		if(nodes.containsKey(node)) {
+			return nodes.get(node);
+		}
+		return null;
+	}
+	
+	public List<VehicleApp> getVehicles(String node){
 		if(nodes.containsKey(node)) {
 			return nodes.get(node).getVehicles();
 		}
@@ -50,10 +57,10 @@ public class GraphApp {
 		}
 	}
 	
-	public boolean addVehicle(Vehicle v) {
+	public boolean addVehicle(VehicleApp v) {
 		NodeApp nap;
-		if( v.getCurrentPosition() != null && nodes.containsKey(v.getCurrentPosition().getNode()) ) {
-			 nap = nodes.get(v.getCurrentPosition().getNode());
+		if( v.getPosition() != null && nodes.containsKey(v.getPosition().getID()) ) {
+			 nap = v.getPosition();
 			 return nap.addVehicle(v);
 		}
 		else {
@@ -61,12 +68,10 @@ public class GraphApp {
 			logger.log(Level.WARNING, "Vehicle " + v.getPlateNumber() + "have no current position");
 			return false;
 		}
-	}
+	}	
 	
-	
-	
-	public Path getPath(NodeRef position, String destination) {
-		Path p;
+	public PathApp getPath(NodeRef position, String destination) {
+		PathApp p;
 		NodeApp from;
 		NodeApp to;
 		//evaluate all possible exception in arguments
@@ -90,57 +95,69 @@ public class GraphApp {
 		return p;
 	}
 		
-	private Path BreadthFirst(NodeApp from, NodeApp to) {
+	private synchronized PathApp BreadthFirst(NodeApp from, NodeApp to) {
+		
 		List<NodeApp> queue = new LinkedList<>();
 		HashSet<String> closed = new HashSet<>();
-		HashSet<String> open = new HashSet<>();
+		HashSet<String> open = new HashSet<>(); //This list is useful only to check faster if a vehicle is already in "to visit" list
 		Map<NodeApp, Edge> parents = new HashMap<>();
 		
+		//I take the starting node and put it into the "To visit" list, i.e. queue
 		NodeApp parent;
 		queue.add(from);
 		
+		//I loop untile the "to visit" is empty or the solution is found (actual node to visit (parent) == destination (to) )
 		while(!queue.isEmpty()) {
-			parent = queue.get(0);
+			//take and remove the first element, the high priority node to visit
+			parent = queue.remove(0);
+			//remove it from the opened and put it into the closed, make this here prevent considering edges in the same node, making infinite loops in the algorithms
+			closed.add(parent.getID());
 			if(parent == to) {
+				//the solution has been found, clean, format and return it
 				return buildSolution(from, to, parents);
 			}
+			//for all the edges reachable from the node visited
 			for(Edge edg : parent.getEdges()) {
-				if(edg.getTo().checkConstraint()) { //check it is crossable
-					if(!closed.contains(edg.getTo().getID())) { //check not already visited
-						if(!open.contains(edg.getTo().getID())) { //check not already listed
-							//TODO intelligence about the load balance must be put in previous if
-							queue.add(edg.getTo());
-							open.add(edg.getTo().getID());
-							parents.put(edg.getTo(), edg);
+				if(edg.getTo().checkConstraint()) { //check if it is crossable
+					if(!closed.contains(edg.getTo().getID())) { //check if not already visited
+						if(!open.contains(edg.getTo().getID())) { //check if not already listed
+							//TODO intelligence about the load balance must be put in previous if (otherwise, we will visit the same node until it is full)
+							queue.add(edg.getTo());	//add to the "to visit" list the node
+							open.add(edg.getTo().getID()); //add to open list
+							parents.put(edg.getTo(), edg); //put in parents map the information that the node can be reached from the node we are visiting
 						}
 					}
 				}
 			}
-			closed.add(parent.getID());
-			queue.remove(0);
+			//we have concluded the visit on this node
 		}
 		return NO_PATH;
 	}
 	
-	private Path buildSolution(NodeApp from, NodeApp to,  Map<NodeApp, Edge> parents) {
-		Path p = new Path();
-		List<PathNode> pNodes = p.getNode();
+	private PathApp buildSolution(NodeApp from, NodeApp to,  Map<NodeApp, Edge> parents) {
+		PathApp p = new PathApp();
+		/*List<PathNode> pNodes = p.getNode();
 		PathNode pNode;
-		NodeApp current = to;
 		Edge e;
+		//we start from the last node and we go up through parents until the from node
+		NodeApp current = to;
 		while(current != from) {
-			//TODO I must add a vehicle in the nodes
+			//TODO add information that is a vehicle that will pass in the node
 			pNode = new PathNode();
+			//take the edges that binds parent with current node
 			e = parents.get(current);
+			//fill information for the path node
 			pNode.setFrom(e.getnrFrom());
 			pNode.setTo(e.getnrTo());
-			pNodes.add(0, pNode);
+			pNodes.add(0, pNode); //add to the head, this is useful for numbering, the last added (starting point) will be the first in the list
+			e.getTo().incrementFutureVehicles(); //increment the counter of the vehicles that will pass on that node
 			current = e.getFrom();
 		}
 		for(int i = 0; i < pNodes.size(); i++) {
 			pNodes.get(i).setSequenceNum(i);
 		}
-		
+		from.incrementFutureVehicles();
+		*/
 		return p;
 	}
 
@@ -177,7 +194,5 @@ public class GraphApp {
 		
 		nap.createEdge(other, c.getFrom(), c.getTo());
 		
-	}
-
-	
+	}	
 }
