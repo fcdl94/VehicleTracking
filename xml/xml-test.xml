@@ -7,7 +7,7 @@
             <port>Port1</port>
             <port>Port2</port>
             <endpoint>Port1</endpoint>
-            <maxVehicle>2</maxVehicle>
+            <maxVehicle>1</maxVehicle>
         </node>
         <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road2">
             <name>Street 2</name>
@@ -113,6 +113,16 @@
             </from>
             <to>
                 <node>road5</node>
+                <port>Port1</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>road3</node>
+                <port>Port0</port>
+            </from>
+            <to>
+                <node>area2</node>
                 <port>Port1</port>
             </to>
         </connection>

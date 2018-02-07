@@ -52,10 +52,10 @@ class PathTest {
 		VTService vtservice = VTService.getVTService();
 		 Vehicle nVeh = new Vehicle();
 		 NodeRef nNodeRef = new NodeRef();
-		 nNodeRef.setNode("road1");
+		 nNodeRef.setNode("road2");
 		 nNodeRef.setPort("Port0");
 		 nVeh.setCurrentPosition(nNodeRef);
-		 nVeh.setDestination("road2");
+		 nVeh.setDestination("area2");
 		 nVeh.setID(BigInteger.valueOf(0));
 		 nVeh.setPlateNumber("NVR1R2");
 		 
@@ -70,12 +70,12 @@ class PathTest {
 			 fail("Forbidden");
 		 }
 		 
-		 String[] path = {"road4","road2"};
+		 String[] path = {"road3","area2"};
 		 int i=0;
 		 System.out.println("Vehicle goes from: ");
 		 for(PathNode pn : nVeh.getPath().getNode()) {
 			 System.out.println("\t Node " + pn.getFrom().getNode() + "  to " + pn.getTo().getNode());
-			 //assertEquals(path[i],pn.getTo().getNode());
+			 assertEquals(path[i],pn.getTo().getNode());
 			 i++;
 		 }
 		 return;
@@ -88,7 +88,7 @@ class PathTest {
 		 Vehicle nVeh = new Vehicle();
 		 NodeRef nNodeRef = new NodeRef();
 		 nVeh.setCurrentPosition(nNodeRef);
-		 nVeh.setDestination("road2");
+		 nVeh.setDestination("area1");
 		 nVeh.setID(BigInteger.valueOf(0));
 		 nVeh.setPlateNumber("NVR1R2");
 		 
@@ -106,6 +106,31 @@ class PathTest {
 		 return;
 	}
 	
+	@Test
+	void testBadRequestPath2() {
+		
+		VTService vtservice = VTService.getVTService();
+		 Vehicle nVeh = new Vehicle();
+		 NodeRef nNodeRef = new NodeRef();
+		 nNodeRef.setNode("road1");
+		 nNodeRef.setPort("Port0");
+		 nVeh.setCurrentPosition(nNodeRef);
+		 nVeh.setDestination("road2");
+		 nVeh.setID(BigInteger.valueOf(0));
+		 
+		 try {
+			 nVeh = vtservice.createVehicle(nVeh);
+			 fail("Bad Request must be raised");
+		 }
+		 catch (BadRequestException e){
+			 assertTrue(true);
+		 }
+		 catch (ForbiddenException e) {
+			 fail("Forbidden but Bad Request must be raised");
+		 }
+
+		 return;
+	}
 	@Test
 	void testForbiddenPath() {
 		
@@ -149,4 +174,49 @@ class PathTest {
 		 return;
 	}
 
+	@Test
+	void TestForbiddenFutureWalk() {
+		VTService vtservice = VTService.getVTService();
+		 Vehicle nVeh = new Vehicle();
+		 NodeRef nNodeRef = new NodeRef();
+		 nNodeRef.setNode("road4");
+		 nNodeRef.setPort("Port0");
+		 nVeh.setCurrentPosition(nNodeRef);
+		 nVeh.setDestination("road1");
+		 nVeh.setID(BigInteger.valueOf(0));
+		 nVeh.setPlateNumber("VEH1");
+		 
+		 try {
+			 nVeh = vtservice.createVehicle(nVeh);	
+		 }
+		 catch (BadRequestException e){
+			 fail("it is not bad requested");
+			 return;
+		 }
+		 catch (ForbiddenException e) {
+			 fail("it is not forbidden");
+			 return;
+		 }
+		 
+		 nVeh = new Vehicle();
+		 nNodeRef = new NodeRef();
+		 nNodeRef.setNode("area1");
+		 nNodeRef.setPort("Port0");
+		 nVeh.setCurrentPosition(nNodeRef);
+		 nVeh.setDestination("road1");
+		 nVeh.setID(BigInteger.valueOf(0));
+		 nVeh.setPlateNumber("VEH2");
+		 try {
+			 nVeh = vtservice.createVehicle(nVeh);
+			 fail("it shoudl be forbidden");
+		 }
+		 catch (BadRequestException e){
+			 fail("it is not bad requested");
+			 return;
+		 }
+		 catch (ForbiddenException e) {
+			 assertTrue(true);
+			 return;
+		 }
+	}
 }

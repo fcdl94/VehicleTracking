@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
@@ -17,7 +18,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
-import it.polito.dp2.vehicle.application.GraphApp;
 import it.polito.dp2.vehicle.application.VTService;
 import it.polito.dp2.vehicle.model.Graph;
 import it.polito.dp2.vehicle.model.Model;
@@ -32,21 +32,23 @@ class VTServiceTest {
 	Model model;
 	
 
+	@SuppressWarnings("unchecked")
 	@BeforeAll
 	void unmarhsall() {
 		JAXBContext jc;
+		JAXBElement<Model> jaxbModel;
 		try {
 			jc = JAXBContext.newInstance( "it.polito.dp2.vehicle.model" );
 			Unmarshaller um = jc.createUnmarshaller();
-			model = (Model) um.unmarshal( new File( "xsd/xml-gen-test.xml" ) );
-			
+			jaxbModel = (JAXBElement<Model>) um.unmarshal( new File( "xml/xml-test.xml" ) );
+			model = jaxbModel.getValue();
 			} catch (JAXBException e) {
 			e.printStackTrace();
 		}
 		 System.out.println("Model made!");
 		 
-			VTService vtservice = VTService.getVTService();
-			vtservice.setModel(model);
+		VTService vtservice = VTService.getVTService();
+		vtservice.setModel(model);
 	}
 	
 	@Test
@@ -54,12 +56,11 @@ class VTServiceTest {
 				
 		VTService vtservice = VTService.getVTService();
 	
-		List<Vehicle> vl = vtservice.getVehiclesFromNode("road1");
+		List<Vehicle> vl = vtservice.getVehiclesFromNode("area2");
 		
-		//dependent by the MODEL!!
 		assertEquals(vl.size(), 2);
 
-		assertTrue(vl.get(0).getPlateNumber().equals("V4P0IT"));
+		assertTrue(vl.get(0).getPlateNumber().equals("V3P6IT"));
 	}
 	
 	@Test
@@ -67,13 +68,12 @@ class VTServiceTest {
 		VTService vtservice = VTService.getVTService();
 		List<Vehicle> vs = vtservice.getVehicles();
 		
-		
 		int flag = 0;
 		 for(Vehicle v : vs) {
 			 System.out.println("Vehicle " + v.getPlateNumber() + " is present");
-			 if(v.getPlateNumber().equals("V8P10IT")) {
+			 if(v.getPlateNumber().equals("V3P6IT")) {
 				 flag++;
-				 }
+			}
 		 }
 		 
 		assertTrue(flag==1);
@@ -85,11 +85,11 @@ class VTServiceTest {
 		
 		 Vehicle nVeh = new Vehicle();
 		 NodeRef nNodeRef = new NodeRef();
-		 nNodeRef.setNode("road3");
+		 nNodeRef.setNode("road1");
 		 nNodeRef.setPort("Port0");
 		 nVeh.setCurrentPosition(nNodeRef);
-		 nVeh.setDestination("road5");
-		 nVeh.setID(BigInteger.valueOf(0));
+		 nVeh.setDestination("road2");
+		 //nVeh.setID(BigInteger.valueOf(0));
 		 nVeh.setPlateNumber("ABABAB");
 		 
 		 try {
@@ -111,8 +111,8 @@ class VTServiceTest {
 		 }
 		 
 		boolean flag = false;
-		 for(Vehicle v : vtservice.getVehiclesFromNode("road3")) {
-			 if(v.getPlateNumber().equals(v.getPlateNumber())) {
+		 for(Vehicle v : vtservice.getVehiclesFromNode("road1")) {
+			 if(v.getPlateNumber().equals(nVeh.getPlateNumber())) {
 				 flag = true;
 				 }
 		 }
@@ -121,7 +121,7 @@ class VTServiceTest {
 		 
 		 return;
 	}
-	
+
 	
 	private static Model genModel() {
 		Model model = new Model();

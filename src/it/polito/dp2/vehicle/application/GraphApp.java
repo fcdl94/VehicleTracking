@@ -9,12 +9,9 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ws.rs.BadRequestException;
-
 import it.polito.dp2.vehicle.model.Connection;
 import it.polito.dp2.vehicle.model.Graph;
 import it.polito.dp2.vehicle.model.Node;
-import it.polito.dp2.vehicle.model.NodeRef;
 import it.polito.dp2.vehicle.model.ParkingArea;
 import it.polito.dp2.vehicle.model.Road;
 
@@ -23,7 +20,7 @@ public class GraphApp {
 	private ConcurrentSkipListMap<String, NodeApp> nodes;
 	private Graph graph;
 	private static Logger logger = Logger.getLogger(VTService.class.getName());
-	public static PathApp NO_PATH = new PathApp();
+	public static PathApp NO_PATH = PathApp.NO_PATH;
 	
 	public GraphApp(Graph graph) {
 		nodes = new ConcurrentSkipListMap<>();
@@ -70,25 +67,19 @@ public class GraphApp {
 		}
 	}	
 	
-	public PathApp getPath(NodeRef position, String destination) {
+	public PathApp getPath(NodeApp from,NodeApp to) {
 		PathApp p;
-		NodeApp from;
-		NodeApp to;
+
 		//evaluate all possible exception in arguments
-		if( position==null || destination==null ) throw new BadRequestException();
-		if(position.getNode() == null || position.getPort() == null) throw new BadRequestException();
+		if( from==null || to==null ) return NO_PATH;
 		
-		if(!nodes.containsKey(position.getNode()) || !nodes.containsKey(destination) )
-			throw new BadRequestException();
+		//I am considering that: 
+		// 1. The nodes in which I am respects the constraints, otherwise, I cannot be there
+		// 2. The starting port is not considered in the Path evaluation because it is not relevant to the future positions
+		// 3. The starting node and destination node are already checked to be valid (exist in the model). This can be assumed as always true since I take them always from GraphApp.
 		
-		from = nodes.get(position.getNode());
-		to = nodes.get(destination);
-		
-		if(!from.containsPort(position.getPort())) throw new BadRequestException();
-		
+		//I return NO_PATH if the starting point is the same of the destination.
 		if(from==to) return NO_PATH;
-		if(!from.checkConstraint()) return NO_PATH;
-		//Now we know all data are correct, proceed with path evaluation
 		
 		p = BreadthFirst(from, to);
 		
@@ -106,20 +97,21 @@ public class GraphApp {
 		NodeApp parent;
 		queue.add(from);
 		
-		//I loop untile the "to visit" is empty or the solution is found (actual node to visit (parent) == destination (to) )
+		//I loop until the "to visit" is empty or the solution is found (actual node to visit (parent) == destination (to) )
 		while(!queue.isEmpty()) {
 			//take and remove the first element, the high priority node to visit
 			parent = queue.remove(0);
 			//remove it from the opened and put it into the closed, make this here prevent considering edges in the same node, making infinite loops in the algorithms
 			closed.add(parent.getID());
+			
 			if(parent == to) {
-				//the solution has been found, clean, format and return it
-				return buildSolution(from, to, parents);
+				//the solution has been found, clean, return it as new PathApp
+				return new PathApp(from, to, parents);
 			}
 			//for all the edges reachable from the node visited
 			for(Edge edg : parent.getEdges()) {
-				if(edg.getTo().checkConstraint()) { //check if it is crossable
-					if(!closed.contains(edg.getTo().getID())) { //check if not already visited
+				if(!closed.contains(edg.getTo().getID())) {  //check if not already visited
+					if(edg.getTo().checkConstraint()) { //check if it is crossable
 						if(!open.contains(edg.getTo().getID())) { //check if not already listed
 							//TODO intelligence about the load balance must be put in previous if (otherwise, we will visit the same node until it is full)
 							queue.add(edg.getTo());	//add to the "to visit" list the node
@@ -132,33 +124,6 @@ public class GraphApp {
 			//we have concluded the visit on this node
 		}
 		return NO_PATH;
-	}
-	
-	private PathApp buildSolution(NodeApp from, NodeApp to,  Map<NodeApp, Edge> parents) {
-		PathApp p = new PathApp();
-		/*List<PathNode> pNodes = p.getNode();
-		PathNode pNode;
-		Edge e;
-		//we start from the last node and we go up through parents until the from node
-		NodeApp current = to;
-		while(current != from) {
-			//TODO add information that is a vehicle that will pass in the node
-			pNode = new PathNode();
-			//take the edges that binds parent with current node
-			e = parents.get(current);
-			//fill information for the path node
-			pNode.setFrom(e.getnrFrom());
-			pNode.setTo(e.getnrTo());
-			pNodes.add(0, pNode); //add to the head, this is useful for numbering, the last added (starting point) will be the first in the list
-			e.getTo().incrementFutureVehicles(); //increment the counter of the vehicles that will pass on that node
-			current = e.getFrom();
-		}
-		for(int i = 0; i < pNodes.size(); i++) {
-			pNodes.get(i).setSequenceNum(i);
-		}
-		from.incrementFutureVehicles();
-		*/
-		return p;
 	}
 
 	private void createNodeApp(Node n) {

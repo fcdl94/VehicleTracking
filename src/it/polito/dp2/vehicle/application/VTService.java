@@ -26,7 +26,6 @@ import org.xml.sax.SAXException;
 
 import it.polito.dp2.vehicle.model.Graph;
 import it.polito.dp2.vehicle.model.Model;
-import it.polito.dp2.vehicle.model.State;
 import it.polito.dp2.vehicle.model.Vehicle;
 
 public class VTService {
@@ -111,7 +110,7 @@ public class VTService {
 			for (int i =0; i< vehicles.size(); i++) {
 				v = vehicles.get(i);
 				//Supposing valid model, v must have an ID, valid current position, valid destination
-				VehicleApp vapp = new VehicleApp(v, graphApp);
+				VehicleApp vapp = new VehicleApp(v, v.getID(), graphApp, false);
 				this.vehicles.put(v.getID(), vapp);
 				
 				if(currVehicleIndex.compareTo(v.getID()) <= 0) {
@@ -121,7 +120,9 @@ public class VTService {
 			}
 		}
 	}
+	
 	public Model getModel() {
+		//TODO recompute the model including all the vehicles
 		return model;
 	}
 	
@@ -131,8 +132,7 @@ public class VTService {
 	
 	/*
 	 * Returns the list of all vehicles in the system.
-	 * To allow the end-user to modify the list, we copy it, without giving the reference to our map.
-	 * 
+	 * To do not allow the end-user to modify the list, we copy it, without giving the reference to our map.
 	 */
 	public List<Vehicle> getVehicles(){
 		List<Vehicle> vs = new ArrayList<>();
@@ -169,38 +169,22 @@ public class VTService {
 		}
 		
 		VehicleApp nv;
+		BigInteger index = currVehicleIndex;
 		try {
-		 nv =  new VehicleApp(v, graphApp);
+		 nv =  new VehicleApp(v, index, graphApp);
 		}
 		catch (BadRequestException bre) {
 			logger.log(Level.WARNING, "The vehicle has wrong references [BAD REQUEST]");
 			throw bre;
 		}
+		catch (ForbiddenException bre) {
+			logger.log(Level.WARNING, bre.getMessage() + " [FORBIDDEN]");
+			throw bre;
+		}
 		
-		//GET THE PATH from GraphApp and set to vehicle;
-		PathApp p = graphApp.getPath(v.getCurrentPosition(), v.getDestination());
-		//if path is null, vehicle is not allowed to enter the system, otherwise it can
-		if(p != GraphApp.NO_PATH) {
-			//request can be accepted and the vehicle can enter the system
-			nv.setPath(p);
-			//set in transit state
-			nv.setState(State.TRANSIT);
-			//SET ID and increment vehicle count
-			BigInteger index = currVehicleIndex;
-			currVehicleIndex = currVehicleIndex.add(BigInteger.ONE);
-			nv.setID(index);
-			//SET ENTRY TIME and last update;
-
-			//save into the map
-			vehicles.put(index, nv);
-			//add to the graph and decrement the future vehicles
-			//TODO graphApp.addVehicle(nv);
-			
-			return nv.getVehicle();
-		}
-		else {
-			throw new ForbiddenException("There is no path acceptable between requested nodes.");
-		}
+		currVehicleIndex = currVehicleIndex.add(BigInteger.ONE);
+		vehicles.put(index, nv);
+		return nv.getVehicle();
 	}
 
 

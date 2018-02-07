@@ -62,6 +62,14 @@ public class NodeApp {
 		return vehicles;
 	}
 	
+	public void incrementFutureVehicles() {
+		futureVehicles++;
+	}
+	
+	public void decrementFutureVehicles() {
+		futureVehicles--;
+	}
+	
 	/*
 	 * Useful to check if the Node contains the port (only for checking correctness)
 	 * 	
@@ -88,11 +96,4 @@ public class NodeApp {
 		return node.getID();
 	}
 
-	public void incrementFutureVehicles() {
-		futureVehicles++;
-	}
-	
-	public void decrementFutureVehicles() {
-		futureVehicles--;
-	}
 }

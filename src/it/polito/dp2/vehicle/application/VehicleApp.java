@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.GregorianCalendar;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.ForbiddenException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -20,33 +21,79 @@ public class VehicleApp {
 	private PathApp path;
 	private GraphApp graphApp;
 	
-	VehicleApp(Vehicle v, GraphApp ga){
+	public VehicleApp(Vehicle v, BigInteger index, GraphApp ga){
+		this(v, index, ga, true);
+	}
+	
+	public VehicleApp(Vehicle v, BigInteger index, GraphApp ga, boolean computePath){
 		vehicle = new Vehicle();
-		this.graphApp = ga;
+		graphApp = ga;
 		
-		
+		//checks the starting node (and its port) and destination node really exists
 		position = graphApp.getNode(v.getCurrentPosition().getNode());
 		destination = graphApp.getNode(v.getDestination());
 		if(position==null || destination==null || !position.containsPort(v.getCurrentPosition().getPort())) {
 			throw new BadRequestException();
 		}
+
+		//setting the plate of the model
+		//PLATE
+		vehicle.setPlateNumber(v.getPlateNumber());
+		
+		//try to add the vehicle in the system. If it cannot be added (constraint not respected) it will return false
+		if(!position.addVehicle(this)) {
+			throw new ForbiddenException("The vehicle cannot be addded");
+		}	
+		
+		//setting the fields of the model
+		//INDEX
+		vehicle.setID(index);
+	
+		//POSITIONS
+		//Current
 		NodeRef nr = new NodeRef();
 		nr.setNode(v.getCurrentPosition().getNode());
 		nr.setPort(v.getCurrentPosition().getPort());
 		vehicle.setCurrentPosition(nr);
-		//copy Dest
+		//Destination
 		vehicle.setDestination(v.getDestination());
-		//copy Plate
-		vehicle.setPlateNumber(v.getPlateNumber());
+
+		//TIMES
 		XMLGregorianCalendar xmlGC = getXMLGregorianCalendarNow();
 		vehicle.setEntryTime(xmlGC);
 		vehicle.setLastUpdate(xmlGC);
+
+		if(computePath) {
+			//GET THE PATH from GraphApp;
+			PathApp p = graphApp.getPath(position, destination);
+			//if path is null, vehicle is not allowed to enter the system, otherwise it can
+			if(p != GraphApp.NO_PATH) {
+				//request can be accepted and the vehicle can enter the system
+				setPath(p);
+				//set in transit state	
+				vehicle.setState(State.TRANSIT);
+			}
+			else {
+				throw new ForbiddenException("There is no path acceptable between requested nodes.");
+			}
+		}
+		else {
+			path = null;
+			vehicle.setState(State.PARKED);
+		}
 		
-		position.addVehicle(this);
 	}
 
+	public void updatePosition(NodeApp position) {
+		this.position = position;
+	}
+	
+	public void setDestination(NodeApp destination) {
+		this.destination = destination;
+	}
+	
 	public Vehicle getVehicle() {
-		//TODO convert the vehicle as the model needs
+		//convert the vehicle as the model needs
 		return vehicle;
 	}
 
@@ -54,16 +101,8 @@ public class VehicleApp {
 		return position;
 	}
 
-	public void setPosition(NodeApp position) {
-		this.position = position;
-	}
-
 	public NodeApp getDestination() {
 		return destination;
-	}
-
-	public void setDestination(NodeApp destination) {
-		this.destination = destination;
 	}
 
 	public PathApp getPath() {
@@ -71,21 +110,13 @@ public class VehicleApp {
 	}
 
 	public void setPath(PathApp path) {
+		vehicle.setPath(path.getPath());
 		this.path = path;
-	}
-	
-	public void setState(State state) {
-		vehicle.setState(state);
 	}
 	
 	public BigInteger getID() {
 		return vehicle.getID();
 	}
-	
-	public void setID(BigInteger index) {
-		vehicle.setID(index);
-	}
-	
 	
 	private XMLGregorianCalendar getXMLGregorianCalendarNow() 
     {
