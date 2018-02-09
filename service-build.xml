@@ -79,6 +79,8 @@
       	</copy>
 		<!-- copy xsd to WEB-INF/classes/xsd directory -->
     	<copy file="xsd/vehicleTracking.xsd" toDir="${gen-tomcat-service.dir}/WEB-INF/classes/xsd" overwrite="true" />
+		<!-- copy xsd to WEB-INF/classes/xsd directory -->
+    	<copy file="xml/xml-gen.xml" toDir="${gen-tomcat-service.dir}/WEB-INF/classes/xml" overwrite="true" />
 		<!-- copy lib files to WEB-INF/lib directory -->
     	<copy toDir="${gen-tomcat-service.dir}/WEB-INF/lib" overwrite="true">
         	<fileset dir="${lib.dir}">

@@ -6,9 +6,7 @@
             <port>Port0</port>
             <port>Port1</port>
             <port>Port2</port>
-            <port>Port3</port>
-            <port>Port4</port>
-            <endpoint>Port3</endpoint>
+            <endpoint>Port1</endpoint>
             <maxVehicle>11</maxVehicle>
         </node>
         <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road2">
@@ -17,273 +15,111 @@
             <port>Port1</port>
             <port>Port2</port>
             <port>Port3</port>
-            <port>Port4</port>
-            <endpoint>Port3</endpoint>
-            <maxVehicle>4</maxVehicle>
+            <maxVehicle>12</maxVehicle>
         </node>
         <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road3">
             <name>Street 3</name>
             <port>Port0</port>
             <port>Port1</port>
             <port>Port2</port>
-            <endpoint>Port0</endpoint>
-            <maxVehicle>2</maxVehicle>
+            <endpoint>Port2</endpoint>
+            <maxVehicle>26</maxVehicle>
         </node>
         <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road4">
             <name>Street 4</name>
             <port>Port0</port>
             <port>Port1</port>
             <port>Port2</port>
+            <port>Port3</port>
             <endpoint>Port2</endpoint>
-            <maxVehicle>8</maxVehicle>
+            <maxVehicle>28</maxVehicle>
         </node>
         <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road5">
             <name>Street 5</name>
             <port>Port0</port>
             <port>Port1</port>
             <port>Port2</port>
-            <port>Port3</port>
-            <port>Port4</port>
-            <maxVehicle>5</maxVehicle>
-        </node>
-        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road6">
-            <name>Street 6</name>
-            <port>Port0</port>
-            <port>Port1</port>
-            <port>Port2</port>
-            <port>Port3</port>
-            <endpoint>Port3</endpoint>
-            <maxVehicle>5</maxVehicle>
-        </node>
-        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road7">
-            <name>Street 7</name>
-            <port>Port0</port>
-            <port>Port1</port>
-            <port>Port2</port>
-            <endpoint>Port1</endpoint>
-            <maxVehicle>12</maxVehicle>
-        </node>
-        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road8">
-            <name>Street 8</name>
-            <port>Port0</port>
-            <port>Port1</port>
-            <port>Port2</port>
-            <maxVehicle>9</maxVehicle>
-        </node>
-        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road9">
-            <name>Street 9</name>
-            <port>Port0</port>
-            <port>Port1</port>
-            <port>Port2</port>
-            <port>Port3</port>
-            <port>Port4</port>
-            <maxVehicle>8</maxVehicle>
-        </node>
-        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road10">
-            <name>Street 10</name>
-            <port>Port0</port>
-            <port>Port1</port>
-            <port>Port2</port>
-            <port>Port3</port>
-            <endpoint>Port3</endpoint>
-            <maxVehicle>9</maxVehicle>
-        </node>
-        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road11">
-            <name>Street 11</name>
-            <port>Port0</port>
-            <port>Port1</port>
-            <port>Port2</port>
-            <port>Port3</port>
-            <maxVehicle>15</maxVehicle>
-        </node>
-        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road12">
-            <name>Street 12</name>
-            <port>Port0</port>
-            <port>Port1</port>
-            <port>Port2</port>
-            <port>Port3</port>
-            <port>Port4</port>
-            <maxVehicle>2</maxVehicle>
-        </node>
-        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road13">
-            <name>Street 13</name>
-            <port>Port0</port>
-            <port>Port1</port>
-            <port>Port2</port>
-            <endpoint>Port2</endpoint>
-            <maxVehicle>8</maxVehicle>
-        </node>
-        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road14">
-            <name>Street 14</name>
-            <port>Port0</port>
-            <port>Port1</port>
-            <port>Port2</port>
-            <endpoint>Port1</endpoint>
-            <maxVehicle>13</maxVehicle>
-        </node>
-        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Road" ID="road15">
-            <name>Street 15</name>
-            <port>Port0</port>
-            <port>Port1</port>
-            <port>Port2</port>
-            <maxVehicle>10</maxVehicle>
+            <endpoint>Port0</endpoint>
+            <maxVehicle>30</maxVehicle>
         </node>
         <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ParkingArea" ID="area1">
             <name>Parking Area 1</name>
             <port>Port0</port>
             <port>Port1</port>
             <port>Port2</port>
-            <port>Port3</port>
-            <port>Port4</port>
-            <maxVehicle>15</maxVehicle>
+            <maxVehicle>3</maxVehicle>
         </node>
         <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ParkingArea" ID="area2">
             <name>Parking Area 2</name>
             <port>Port0</port>
             <port>Port1</port>
             <port>Port2</port>
-            <port>Port3</port>
-            <maxVehicle>9</maxVehicle>
-        </node>
-        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ParkingArea" ID="area3">
-            <name>Parking Area 3</name>
-            <port>Port0</port>
-            <port>Port1</port>
-            <port>Port2</port>
-            <port>Port3</port>
-            <port>Port4</port>
-            <maxVehicle>15</maxVehicle>
-        </node>
-        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ParkingArea" ID="area4">
-            <name>Parking Area 4</name>
-            <port>Port0</port>
-            <port>Port1</port>
-            <port>Port2</port>
-            <port>Port3</port>
-            <port>Port4</port>
-            <maxVehicle>9</maxVehicle>
-        </node>
-        <node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ParkingArea" ID="area5">
-            <name>Parking Area 5</name>
-            <port>Port0</port>
-            <port>Port1</port>
-            <port>Port2</port>
-            <maxVehicle>15</maxVehicle>
+            <maxVehicle>11</maxVehicle>
         </node>
         <connection>
             <from>
                 <node>road1</node>
-                <port>Port1</port>
+                <port>Port0</port>
             </from>
             <to>
                 <node>road3</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road1</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>road7</node>
                 <port>Port2</port>
             </to>
         </connection>
         <connection>
             <from>
                 <node>road1</node>
-                <port>Port3</port>
-            </from>
-            <to>
-                <node>road9</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road1</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road11</node>
                 <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road1</node>
-                <port>Port4</port>
-            </from>
-            <to>
-                <node>road14</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road1</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>area3</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road2</node>
-                <port>Port0</port>
             </from>
             <to>
                 <node>road4</node>
-                <port>Port2</port>
+                <port>Port3</port>
             </to>
         </connection>
         <connection>
             <from>
-                <node>road2</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>road8</node>
+                <node>road1</node>
                 <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road2</node>
-                <port>Port2</port>
             </from>
             <to>
-                <node>road11</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road2</node>
-                <port>Port4</port>
-            </from>
-            <to>
-                <node>area3</node>
-                <port>Port4</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road2</node>
-                <port>Port4</port>
-            </from>
-            <to>
-                <node>area5</node>
+                <node>area1</node>
                 <port>Port1</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>road1</node>
+                <port>Port1</port>
+            </from>
+            <to>
+                <node>area2</node>
+                <port>Port2</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>road2</node>
+                <port>Port0</port>
+            </from>
+            <to>
+                <node>road3</node>
+                <port>Port0</port>
             </to>
         </connection>
         <connection>
             <from>
                 <node>road3</node>
                 <port>Port0</port>
+            </from>
+            <to>
+                <node>road5</node>
+                <port>Port1</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>road5</node>
+                <port>Port2</port>
             </from>
             <to>
                 <node>road1</node>
@@ -292,7 +128,27 @@
         </connection>
         <connection>
             <from>
+                <node>road5</node>
+                <port>Port2</port>
+            </from>
+            <to>
                 <node>road3</node>
+                <port>Port1</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>road5</node>
+                <port>Port0</port>
+            </from>
+            <to>
+                <node>area2</node>
+                <port>Port1</port>
+            </to>
+        </connection>
+        <connection>
+            <from>
+                <node>area2</node>
                 <port>Port2</port>
             </from>
             <to>
@@ -302,621 +158,11 @@
         </connection>
         <connection>
             <from>
-                <node>road3</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road8</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road3</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road14</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road3</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>area1</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road4</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road5</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road4</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road6</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road4</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road7</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road4</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road9</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road5</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>road1</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road5</node>
-                <port>Port3</port>
-            </from>
-            <to>
-                <node>road8</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road5</node>
-                <port>Port4</port>
-            </from>
-            <to>
-                <node>road11</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road5</node>
-                <port>Port3</port>
-            </from>
-            <to>
-                <node>road14</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road5</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>area5</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road6</node>
-                <port>Port3</port>
-            </from>
-            <to>
-                <node>road10</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road6</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>road13</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road6</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>area3</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road7</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road1</node>
-                <port>Port4</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road7</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road2</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road7</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>road3</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road7</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>road8</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road7</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road12</node>
-                <port>Port3</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road8</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>road7</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road8</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>road9</node>
-                <port>Port3</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road9</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>road2</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road10</node>
-                <port>Port3</port>
-            </from>
-            <to>
-                <node>road1</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road10</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road2</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road10</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road3</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road10</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road12</node>
-                <port>Port4</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road10</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>area4</node>
-                <port>Port3</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road11</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>road1</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road11</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>road6</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road11</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>road8</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road11</node>
-                <port>Port3</port>
-            </from>
-            <to>
-                <node>area3</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road11</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>area4</node>
-                <port>Port4</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road12</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road1</node>
-                <port>Port4</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road12</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>road6</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road12</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road8</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road12</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>road10</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road12</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road11</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road12</node>
-                <port>Port4</port>
-            </from>
-            <to>
-                <node>road13</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road13</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road1</node>
-                <port>Port4</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road13</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>road6</node>
-                <port>Port3</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road13</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road8</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road13</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>road12</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road13</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>area1</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road14</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>road2</node>
-                <port>Port3</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road14</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road10</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road14</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>road12</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road14</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>road13</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road14</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>area4</node>
-                <port>Port3</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road15</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road3</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road15</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>road4</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road15</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road8</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road15</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>area1</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>road15</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>area2</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area1</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road2</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area1</node>
-                <port>Port4</port>
-            </from>
-            <to>
-                <node>road3</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area1</node>
-                <port>Port4</port>
-            </from>
-            <to>
-                <node>road6</node>
-                <port>Port3</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area1</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>road7</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area1</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>road15</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
                 <node>area2</node>
                 <port>Port1</port>
             </from>
             <to>
-                <node>road3</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area2</node>
-                <port>Port3</port>
-            </from>
-            <to>
-                <node>road8</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area2</node>
-                <port>Port3</port>
-            </from>
-            <to>
-                <node>road9</node>
+                <node>road5</node>
                 <port>Port2</port>
             </to>
         </connection>
@@ -926,271 +172,41 @@
                 <port>Port0</port>
             </from>
             <to>
-                <node>road10</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area2</node>
-                <port>Port3</port>
-            </from>
-            <to>
-                <node>road15</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area2</node>
-                <port>Port3</port>
-            </from>
-            <to>
-                <node>area4</node>
-                <port>Port4</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area3</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road3</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area3</node>
-                <port>Port4</port>
-            </from>
-            <to>
-                <node>road5</node>
-                <port>Port3</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area3</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road8</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area3</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road9</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area3</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road13</node>
-                <port>Port2</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area3</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>road14</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area3</node>
-                <port>Port3</port>
-            </from>
-            <to>
-                <node>area2</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area3</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>area5</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area4</node>
-                <port>Port4</port>
-            </from>
-            <to>
                 <node>area1</node>
-                <port>Port4</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area5</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>road2</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area5</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>road5</node>
-                <port>Port3</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area5</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road7</node>
-                <port>Port0</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area5</node>
-                <port>Port1</port>
-            </from>
-            <to>
-                <node>road10</node>
-                <port>Port3</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area5</node>
-                <port>Port0</port>
-            </from>
-            <to>
-                <node>area1</node>
-                <port>Port1</port>
-            </to>
-        </connection>
-        <connection>
-            <from>
-                <node>area5</node>
-                <port>Port2</port>
-            </from>
-            <to>
-                <node>area4</node>
                 <port>Port0</port>
             </to>
         </connection>
     </graph>
     <vehicles>
         <vehicle ID="0">
-            <currentPosition>
-                <node>road12</node>
-                <port>Port3</port>
-            </currentPosition>
-            <destination>road12</destination>
+            <currentPosition>road5</currentPosition>
+            <destination>road5</destination>
             <state>parked</state>
-            <plateNumber>V0P11IT</plateNumber>
+            <plateNumber>V0P4IT</plateNumber>
         </vehicle>
         <vehicle ID="1">
-            <currentPosition>
-                <node>road10</node>
-                <port>Port0</port>
-            </currentPosition>
-            <destination>road10</destination>
-            <state>parked</state>
-            <plateNumber>V1P9IT</plateNumber>
-        </vehicle>
-        <vehicle ID="2">
-            <currentPosition>
-                <node>road8</node>
-                <port>Port1</port>
-            </currentPosition>
-            <destination>road8</destination>
-            <state>parked</state>
-            <plateNumber>V2P7IT</plateNumber>
-        </vehicle>
-        <vehicle ID="3">
-            <currentPosition>
-                <node>road8</node>
-                <port>Port1</port>
-            </currentPosition>
-            <destination>road8</destination>
-            <state>parked</state>
-            <plateNumber>V3P7IT</plateNumber>
-        </vehicle>
-        <vehicle ID="4">
-            <currentPosition>
-                <node>road1</node>
-                <port>Port0</port>
-            </currentPosition>
-            <destination>road1</destination>
-            <state>parked</state>
-            <plateNumber>V4P0IT</plateNumber>
-        </vehicle>
-        <vehicle ID="5">
-            <currentPosition>
-                <node>road4</node>
-                <port>Port1</port>
-            </currentPosition>
-            <destination>road4</destination>
-            <state>parked</state>
-            <plateNumber>V5P3IT</plateNumber>
-        </vehicle>
-        <vehicle ID="6">
-            <currentPosition>
-                <node>road1</node>
-                <port>Port3</port>
-            </currentPosition>
-            <destination>road1</destination>
-            <state>parked</state>
-            <plateNumber>V6P0IT</plateNumber>
-        </vehicle>
-        <vehicle ID="7">
-            <currentPosition>
-                <node>area1</node>
-                <port>Port0</port>
-            </currentPosition>
+            <currentPosition>area1</currentPosition>
             <destination>area1</destination>
             <state>parked</state>
-            <plateNumber>V7P15IT</plateNumber>
+            <plateNumber>V1P5IT</plateNumber>
         </vehicle>
-        <vehicle ID="8">
-            <currentPosition>
-                <node>road11</node>
-                <port>Port0</port>
-            </currentPosition>
-            <destination>road11</destination>
+        <vehicle ID="2">
+            <currentPosition>road5</currentPosition>
+            <destination>road5</destination>
             <state>parked</state>
-            <plateNumber>V8P10IT</plateNumber>
+            <plateNumber>V2P4IT</plateNumber>
         </vehicle>
-        <vehicle ID="9">
-            <currentPosition>
-                <node>road9</node>
-                <port>Port0</port>
-            </currentPosition>
-            <destination>road9</destination>
+        <vehicle ID="3">
+            <currentPosition>area2</currentPosition>
+            <destination>area2</destination>
             <state>parked</state>
-            <plateNumber>V9P8IT</plateNumber>
+            <plateNumber>V3P6IT</plateNumber>
+        </vehicle>
+        <vehicle ID="4">
+            <currentPosition>road5</currentPosition>
+            <destination>road5</destination>
+            <state>parked</state>
+            <plateNumber>V4P4IT</plateNumber>
         </vehicle>
     </vehicles>
 </model>

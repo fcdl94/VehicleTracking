@@ -2,6 +2,8 @@ package it.polito.dp2.vehicle.application;
 
 import java.math.BigInteger;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
@@ -9,12 +11,12 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import it.polito.dp2.vehicle.model.NodeRef;
 import it.polito.dp2.vehicle.model.State;
 import it.polito.dp2.vehicle.model.Vehicle;
 
 public class VehicleApp {
 
+	private static Logger logger = Logger.getLogger(VTService.class.getName());
 	private Vehicle vehicle;
 	private NodeApp position;
 	private NodeApp destination;
@@ -30,9 +32,10 @@ public class VehicleApp {
 		graphApp = ga;
 		
 		//checks the starting node (and its port) and destination node really exists
-		position = graphApp.getNode(v.getCurrentPosition().getNode());
+		position = graphApp.getNode(v.getCurrentPosition());
 		destination = graphApp.getNode(v.getDestination());
-		if(position==null || destination==null || !position.containsPort(v.getCurrentPosition().getPort())) {
+		if(position==null || destination==null) {
+			logger.log(Level.WARNING, "The position or destination of vehicle " + v.getPlateNumber() + " doesn't exist");
 			throw new BadRequestException();
 		}
 
@@ -41,9 +44,12 @@ public class VehicleApp {
 		vehicle.setPlateNumber(v.getPlateNumber());
 		
 		//try to add the vehicle in the system. If it cannot be added (constraint not respected) it will return false
-		if(!position.addVehicle(this)) {
-			throw new ForbiddenException("The vehicle cannot be addded");
+		if(!position.checkConstraint()) {
+			logger.log(Level.INFO, "The position of vehicle " + v.getPlateNumber() + " is full");
+			throw new ForbiddenException("The vehicle cannot be added");
 		}	
+		//if the constraint are passed, I can enter
+		position.addVehicle(this);
 		
 		//setting the fields of the model
 		//INDEX
@@ -51,10 +57,7 @@ public class VehicleApp {
 	
 		//POSITIONS
 		//Current
-		NodeRef nr = new NodeRef();
-		nr.setNode(v.getCurrentPosition().getNode());
-		nr.setPort(v.getCurrentPosition().getPort());
-		vehicle.setCurrentPosition(nr);
+		vehicle.setCurrentPosition(v.getCurrentPosition());
 		//Destination
 		vehicle.setDestination(v.getDestination());
 
@@ -74,6 +77,7 @@ public class VehicleApp {
 				vehicle.setState(State.TRANSIT);
 			}
 			else {
+				logger.log(Level.INFO, "There is no path between " + position.getID()+ " and " + destination.getID());
 				throw new ForbiddenException("There is no path acceptable between requested nodes.");
 			}
 		}
@@ -84,8 +88,49 @@ public class VehicleApp {
 		
 	}
 
-	public void updatePosition(NodeApp position) {
+	public boolean updatePosition(NodeApp position) {
+		this.position.removeVehicle(this);
 		this.position = position;
+		//I consider that a vehicle already there can fit in the node
+		position.addVehicle(this);
+		
+		vehicle.setLastUpdate(getXMLGregorianCalendarNow());
+		vehicle.setCurrentPosition(position.getID());
+		
+		//if path is not existent, return null
+		if(path==null) {
+			return false;
+		}
+		
+		//Update path will update also the information on the nodes (future vehicles counter)
+		//If the vehicle is no more following the path, a new one must be computed and the old one destroyed
+		if( path.updatePath(position) ) {
+			
+			if(position == destination) {
+				vehicle.setState(State.PARKED);
+				vehicle.setPath(null);
+				path = null;
+			}
+			return true;
+		}
+		else {
+			//Remove old path
+			path.removePath();
+			//compute new paths
+			path = graphApp.getPath(position, destination);
+			if(path != GraphApp.NO_PATH) {
+				//a path exists and vehicle can go to destination
+				setPath(path);
+			}
+			else {
+				//this can be an issue: if the vehicle goes into a position from which it cannot reach the destination, the behavior is unpredictable
+				vehicle.setState(State.PARKED);
+				vehicle.setPath(null);
+				logger.log(Level.INFO, "There is no path between " + position.getID()+ " and " + destination.getID());
+				throw new ForbiddenException("There is no path acceptable between requested nodes.");
+			}
+			return false;
+		}
 	}
 	
 	public void setDestination(NodeApp destination) {

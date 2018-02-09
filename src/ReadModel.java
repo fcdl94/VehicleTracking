@@ -2,12 +2,10 @@ import java.io.File;
 import java.math.BigInteger;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import it.polito.dp2.vehicle.application.VTService;
 import it.polito.dp2.vehicle.model.Model;
-import it.polito.dp2.vehicle.model.NodeRef;
 import it.polito.dp2.vehicle.model.Vehicle;
 
 public class ReadModel {
@@ -53,10 +51,7 @@ public class ReadModel {
 		
 		
 		 Vehicle nVeh = new Vehicle();
-		 NodeRef nNodeRef = new NodeRef();
-		 nNodeRef.setNode("road3");
-		 nNodeRef.setPort("Port0");
-		 nVeh.setCurrentPosition(nNodeRef);
+		 nVeh.setCurrentPosition("road3");
 		 nVeh.setDestination("area3");
 		 nVeh.setID(BigInteger.valueOf(0));
 		 nVeh.setPlateNumber(plate);
@@ -72,10 +67,7 @@ public class ReadModel {
 		VTService vtservice = VTService.getVTService();
 		
 		 Vehicle nVeh = new Vehicle();
-		 NodeRef nNodeRef = new NodeRef();
-		 nNodeRef.setNode("road4");
-		 nNodeRef.setPort("Port1");
-		 nVeh.setCurrentPosition(nNodeRef);
+		 nVeh.setCurrentPosition("road4");
 		 nVeh.setDestination("area4");
 		 nVeh.setID(BigInteger.valueOf(0));
 		 nVeh.setPlateNumber(plate);

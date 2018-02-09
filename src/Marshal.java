@@ -1,17 +1,9 @@
-import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 
 import java.io.File;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.UnmarshalException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.ValidationEvent;
-import javax.xml.bind.ValidationEventHandler;
-import javax.xml.bind.ValidationEventLocator;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 
 import it.polito.dp2.vehicle.model.Model;
 import it.polito.dp2.vehicle.model.ObjectFactory;
@@ -35,7 +27,7 @@ public class Marshal {
             	output = new File(args[0]);
         	else {
         		//there is no arguments at all
-        		output = new File("xml/xml-test.xml");
+        		output = new File("xml/xml-gen.xml");
         	}
         	
             if( args.length >= 4 ) {

@@ -64,5 +64,42 @@ public class PathApp {
 
 		return p;
 	}
+
+	//false means that is impossible to update this path, so keep it as it was
+	public boolean updatePath(NodeApp position) {
+		boolean ret;
+	
+		if(nodes.contains(position)) {
+			ret = true;
+			//delete the already passed nodes
+			while(!nodes.get(0).equals(position)) {
+				nodes.get(0).decrementFutureVehicles();
+				nodes.remove(0);
+				edges.remove(0);
+				path.getNode().remove(0);
+			}
+			position.decrementFutureVehicles();
+			//renumbering
+			for(int i=0;i<edges.size(); i++) {
+				path.getNode().get(i).setSequenceNum(i+1);
+			}
+			
+		}
+		else {
+			ret = false;
+		}	
+		return ret;
+	}
+	
+	//this function has to be called when the path should be destroyed
+	public void removePath() {
+		//destroy the old path, cleaning all the nodes
+		for(int i=0; i<nodes.size(); i++) {
+			nodes.get(i).decrementFutureVehicles();
+		}
+		nodes.clear();
+		edges.clear();
+		path.getNode().clear();
+	}
 	
 }

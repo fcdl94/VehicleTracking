@@ -45,13 +45,18 @@ public class NodeApp {
 	}
 
 	public boolean addVehicle(VehicleApp v) {
+		boolean ret;
 		if( checkConstraint() ) {
 			logger.log(Level.INFO, "Added Vehicle " + v.getPlateNumber() + " to node " + node.getName());
-			vehicles.add(v);
-			return true;
+			ret = true;
 		}
-		logger.log(Level.INFO, "Unable to add vehicle " + v.getPlateNumber() + " to node " + node.getName());
-		return false;
+		else {
+			logger.log(Level.INFO, "Adding a vehicle " + v.getPlateNumber() + " even if the node "+ node.getName() + " is full");
+			ret = false;
+		}
+		//I add the vehicle anyway, but I'll signal it with the return value
+		vehicles.add(v);
+		return ret;
 	}
 	
 	public void removeVehicle(VehicleApp v) {

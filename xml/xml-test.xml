@@ -219,46 +219,31 @@
     </graph>
     <vehicles>
         <vehicle ID="0">
-            <currentPosition>
-                <node>road5</node>
-                <port>Port1</port>
-            </currentPosition>
+            <currentPosition>road5</currentPosition>
             <destination>road5</destination>
             <state>parked</state>
             <plateNumber>V0P4IT</plateNumber>
         </vehicle>
         <vehicle ID="1">
-            <currentPosition>
-                <node>road5</node>
-                <port>Port2</port>
-            </currentPosition>
+            <currentPosition>road5</currentPosition>
             <destination>road5</destination>
             <state>parked</state>
             <plateNumber>V1P4IT</plateNumber>
         </vehicle>
         <vehicle ID="2">
-            <currentPosition>
-                <node>road5</node>
-                <port>Port1</port>
-            </currentPosition>
+            <currentPosition>road5</currentPosition>
             <destination>road5</destination>
             <state>parked</state>
             <plateNumber>V2P4IT</plateNumber>
         </vehicle>
         <vehicle ID="3">
-            <currentPosition>
-                <node>area2</node>
-                <port>Port0</port>
-            </currentPosition>
+            <currentPosition>area2</currentPosition>
             <destination>area2</destination>
             <state>parked</state>
             <plateNumber>V3P6IT</plateNumber>
         </vehicle>
         <vehicle ID="4">
-            <currentPosition>
-                <node>area2</node>
-                <port>Port0</port>
-            </currentPosition>
+            <currentPosition>area2</currentPosition>
             <destination>area2</destination>
             <state>parked</state>
             <plateNumber>V4P6IT</plateNumber>

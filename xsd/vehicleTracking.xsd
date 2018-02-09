@@ -8,10 +8,9 @@
 			<selector xpath="vehicleComplete/vehicle/path" />
 			<field xpath="node" />
 		</keyref>
-		<keyref name="vechicleCompleteRefKey" refer="s:portKey">
+		<keyref name="vechicleCompleteRefKey" refer="s:nodeKey">
 			<selector xpath="vehicleComplete/vehicle" />
-			<field xpath="currentPosition/node" />
-			<field xpath="currentPosition/port" />
+			<field xpath="currentPosition" />
 		</keyref>
 		<keyref name="vechicleCompleteRefKeyDestination" refer="s:nodeKey">
 			<selector xpath="vehicleComplete/vehicle" />
@@ -152,7 +151,7 @@
 	
 	<complexType name="Vehicle" >
 		<sequence>
-			<element name="currentPosition" type="s:NodeRef" />
+			<element name="currentPosition" type="string" />
 			<element name="destination" type="string" />
 			<element name="state" type="s:State" minOccurs="0" />
 			<element ref="s:path" minOccurs="0" />

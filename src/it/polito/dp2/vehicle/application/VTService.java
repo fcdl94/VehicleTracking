@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
+import javax.ws.rs.NotFoundException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -98,10 +99,8 @@ public class VTService {
 	 */
 	public void setModel(Model model) {
 		this.model = model;
-		
-		//FIRST generate the graph
-		if (graphApp == null)
-			graphApp = new GraphApp(model.getGraph());
+		vehicles = new ConcurrentSkipListMap<>();
+		graphApp = new GraphApp(model.getGraph());
 		
 		//Then add the vehicle to the systems only if present in the model
 		if(model.getVehicles()!=null ) {
@@ -154,6 +153,19 @@ public class VTService {
 	}
 
 	/*
+	 * Return a vehicle given its ID
+	 * 
+	 */
+	public Vehicle getVehicle(BigInteger id) {
+		if(vehicles.containsKey(id)) {
+			return vehicles.get(id).getVehicle();
+		}
+		else {
+			throw new NotFoundException();
+		}
+	}
+	
+	/*
 	 * Allow to add a new Vehicle in the system.
 	 * First are checked if it has the required information (if validated, it must have) and then, if a path exist, create the vehicle and add it to the system
 	 * Then the new vehicle is returned
@@ -161,8 +173,8 @@ public class VTService {
 	 */
 	public Vehicle createVehicle(Vehicle v) {
 		//TODO ACTUALLY I DO NOT CHECK IF THE ENTRY POINT IS A ROUTE AND IS ENDPOINT, should I?
-		if(v.getCurrentPosition()==null || v.getCurrentPosition().getNode() == null || 
-				v.getCurrentPosition().getPort() == null || v.getDestination() == null || v.getPlateNumber() == null) {
+		
+		if(v==null || v.getCurrentPosition()==null || v.getDestination() == null || v.getPlateNumber() == null) {
 			//anyway, if Vehicle is validated, this code is never executed
 			logger.log(Level.WARNING, "The vehicle does not have required information [BAD REQUEST]");
 			throw new BadRequestException();
@@ -187,5 +199,24 @@ public class VTService {
 		return nv.getVehicle();
 	}
 
+	/*
+	 * Given the node's id where the vehicle is, 
+	 * 	  if the node is in the path: 
+	 *  	return true meaning vehicle unchanged, 
+	 *    otherwise 
+	 *      return false meaning the vehicle has new path 
+	 */
+	public boolean updateVehicle(BigInteger vid, String nid) {
+		NodeApp nap = graphApp.getNode(nid);
+		VehicleApp vap = vehicles.get(vid);
+		if(nap == null || vap == null) {
+			logger.log(Level.WARNING, "The vehicle or the node cannot be found [NOT FOUND]");
+			throw new NotFoundException();
+		}
+		
+		return vap.updatePosition(nap);
+		
+	}
+	
 
 }

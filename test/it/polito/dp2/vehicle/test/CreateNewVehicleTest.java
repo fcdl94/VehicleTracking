@@ -19,15 +19,15 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import it.polito.dp2.vehicle.application.VTService;
 import it.polito.dp2.vehicle.model.Model;
-import it.polito.dp2.vehicle.model.NodeRef;
 import it.polito.dp2.vehicle.model.PathNode;
 import it.polito.dp2.vehicle.model.Vehicle;
 
 @TestInstance(Lifecycle.PER_CLASS)
-class PathTest {
+class CreateNewVehicleTest {
 	
 	static Model model;
 	
+	@SuppressWarnings("unchecked")
 	@BeforeAll
 	void startup() {
 		JAXBContext jc;
@@ -51,10 +51,7 @@ class PathTest {
 		
 		VTService vtservice = VTService.getVTService();
 		 Vehicle nVeh = new Vehicle();
-		 NodeRef nNodeRef = new NodeRef();
-		 nNodeRef.setNode("road2");
-		 nNodeRef.setPort("Port0");
-		 nVeh.setCurrentPosition(nNodeRef);
+		 nVeh.setCurrentPosition("road2");
 		 nVeh.setDestination("area2");
 		 nVeh.setID(BigInteger.valueOf(0));
 		 nVeh.setPlateNumber("NVR1R2");
@@ -86,8 +83,7 @@ class PathTest {
 		
 		VTService vtservice = VTService.getVTService();
 		 Vehicle nVeh = new Vehicle();
-		 NodeRef nNodeRef = new NodeRef();
-		 nVeh.setCurrentPosition(nNodeRef);
+		 nVeh.setCurrentPosition("");
 		 nVeh.setDestination("area1");
 		 nVeh.setID(BigInteger.valueOf(0));
 		 nVeh.setPlateNumber("NVR1R2");
@@ -111,10 +107,7 @@ class PathTest {
 		
 		VTService vtservice = VTService.getVTService();
 		 Vehicle nVeh = new Vehicle();
-		 NodeRef nNodeRef = new NodeRef();
-		 nNodeRef.setNode("road1");
-		 nNodeRef.setPort("Port0");
-		 nVeh.setCurrentPosition(nNodeRef);
+		 nVeh.setCurrentPosition("road1");
 		 nVeh.setDestination("road2");
 		 nVeh.setID(BigInteger.valueOf(0));
 		 
@@ -136,10 +129,7 @@ class PathTest {
 		
 		VTService vtservice = VTService.getVTService();
 		 Vehicle nVeh = new Vehicle();
-		 NodeRef nNodeRef = new NodeRef();
-		 nNodeRef.setNode("road3");
-		 nNodeRef.setPort("Port0");
-		 nVeh.setCurrentPosition(nNodeRef);
+		 nVeh.setCurrentPosition("road3");
 		 nVeh.setDestination("road5");
 		 nVeh.setID(BigInteger.valueOf(0));
 		 nVeh.setPlateNumber("ABABAB");
@@ -178,10 +168,7 @@ class PathTest {
 	void TestForbiddenFutureWalk() {
 		VTService vtservice = VTService.getVTService();
 		 Vehicle nVeh = new Vehicle();
-		 NodeRef nNodeRef = new NodeRef();
-		 nNodeRef.setNode("road4");
-		 nNodeRef.setPort("Port0");
-		 nVeh.setCurrentPosition(nNodeRef);
+		 nVeh.setCurrentPosition("road4");
 		 nVeh.setDestination("road1");
 		 nVeh.setID(BigInteger.valueOf(0));
 		 nVeh.setPlateNumber("VEH1");
@@ -199,10 +186,7 @@ class PathTest {
 		 }
 		 
 		 nVeh = new Vehicle();
-		 nNodeRef = new NodeRef();
-		 nNodeRef.setNode("area1");
-		 nNodeRef.setPort("Port0");
-		 nVeh.setCurrentPosition(nNodeRef);
+		 nVeh.setCurrentPosition("area1");
 		 nVeh.setDestination("road1");
 		 nVeh.setID(BigInteger.valueOf(0));
 		 nVeh.setPlateNumber("VEH2");

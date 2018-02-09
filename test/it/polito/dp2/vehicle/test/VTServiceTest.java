@@ -22,7 +22,6 @@ import it.polito.dp2.vehicle.application.VTService;
 import it.polito.dp2.vehicle.model.Graph;
 import it.polito.dp2.vehicle.model.Model;
 import it.polito.dp2.vehicle.model.Node;
-import it.polito.dp2.vehicle.model.NodeRef;
 import it.polito.dp2.vehicle.model.PathNode;
 import it.polito.dp2.vehicle.model.Vehicle;
 import it.polito.dp2.vehicle.model.Vehicles;
@@ -84,10 +83,7 @@ class VTServiceTest {
 		VTService vtservice = VTService.getVTService();
 		
 		 Vehicle nVeh = new Vehicle();
-		 NodeRef nNodeRef = new NodeRef();
-		 nNodeRef.setNode("road1");
-		 nNodeRef.setPort("Port0");
-		 nVeh.setCurrentPosition(nNodeRef);
+		 nVeh.setCurrentPosition("road1");
 		 nVeh.setDestination("road2");
 		 //nVeh.setID(BigInteger.valueOf(0));
 		 nVeh.setPlateNumber("ABABAB");
@@ -123,6 +119,7 @@ class VTServiceTest {
 	}
 
 	
+	@SuppressWarnings("unused")
 	private static Model genModel() {
 		Model model = new Model();
 		
@@ -145,11 +142,8 @@ class VTServiceTest {
 		model.setGraph(graph);
 		
 		Vehicle v = new Vehicle();
-		NodeRef nr = new NodeRef();
-		nr.setNode("node1");
-		nr.setPort("port1");
-		
-		v.setCurrentPosition(nr);
+
+		v.setCurrentPosition("node1");
 		v.setDestination("node2");
 		v.setID(BigInteger.valueOf(0));
 		v.setPlateNumber("ABABABA");

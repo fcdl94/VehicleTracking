@@ -66,12 +66,8 @@ public class ModelGenerator {
 		for (int i = 0; i< vehicles; i++) {
 			v = new Vehicle();
 			int pos = random.nextInt(graph.getNode().size());
-			NodeRef nr = new NodeRef();
-
-			nr.setNode( graph.getNode().get(pos).getID());
-			int portNum = random.nextInt(graph.getNode().get(pos).getPort().size());
-			nr.setPort(  graph.getNode().get(pos).getPort().get(portNum));
-			v.setCurrentPosition(nr);
+			
+			v.setCurrentPosition(graph.getNode().get(pos).getID());
 			v.setDestination(graph.getNode().get(pos).getID());
 			v.setID(BigInteger.valueOf(i));
 			v.setState(State.PARKED);
