@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<vehicle xmlns="http://www.vechicleTrackingSystem.org/model">
+  <currentPosition>road2</currentPosition>
+  <destination>area2</destination>
+  <plateNumber>VT101BS</plateNumber>
+</vehicle>

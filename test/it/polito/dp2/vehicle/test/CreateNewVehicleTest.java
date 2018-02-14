@@ -13,6 +13,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -29,7 +30,7 @@ class CreateNewVehicleTest {
 	
 	@SuppressWarnings("unchecked")
 	@BeforeAll
-	void startup() {
+	static void makeModel() {
 		JAXBContext jc;
 		try {
 			jc = JAXBContext.newInstance( "it.polito.dp2.vehicle.model" );
@@ -42,6 +43,11 @@ class CreateNewVehicleTest {
 			e.printStackTrace();
 		}
 		System.out.println("Model made!");
+	}
+	
+	@BeforeEach
+	void startup() {
+		
 		VTService vtservice = VTService.getVTService();
 		vtservice.setModel(model);
 	}
@@ -203,4 +209,69 @@ class CreateNewVehicleTest {
 			 return;
 		 }
 	}
+	
+	@Test
+	void settingIdTest() {
+		VTService vtservice = VTService.getVTService();
+		 Vehicle nVeh = new Vehicle();
+		 nVeh.setCurrentPosition("road4");
+		 nVeh.setDestination("road1");
+		 nVeh.setID(BigInteger.valueOf(0));
+		 nVeh.setPlateNumber("VEH1");
+	
+		 //this is an approximation due to the test-model. In real cases it is not right
+		 int indexCurr = vtservice.getVehicles().size();
+		 
+		 try {
+			 nVeh = vtservice.createVehicle(nVeh);	
+		 }
+		 catch (BadRequestException e){
+			 fail("it is not bad requested");
+			 return;
+		 }
+		 catch (ForbiddenException e) {
+			 fail("it is not forbidden");
+			 return;
+		 }
+		 
+		 assertEquals(indexCurr, nVeh.getID().intValue());
+	}
+	
+	
+	@Test
+	void settingId2Test() {
+		VTService vtservice = VTService.getVTService();
+		 Vehicle nVeh1 = new Vehicle();
+		 nVeh1.setCurrentPosition("road4");
+		 nVeh1.setDestination("road1");
+		 nVeh1.setID(BigInteger.valueOf(0));
+		 nVeh1.setPlateNumber("VEH1");
+	
+		 Vehicle nVeh2 = new Vehicle();
+		 nVeh2.setCurrentPosition("road2");
+		 nVeh2.setDestination("road4");
+		 nVeh2.setID(BigInteger.valueOf(0));
+		 nVeh2.setPlateNumber("VEH2");
+		 
+		 //this is an approximation due to the test-model. In real cases it is not right
+		 int indexCurr = vtservice.getVehicles().size();
+		 
+		 try {
+			 nVeh1 = vtservice.createVehicle(nVeh1);
+			 nVeh2 = vtservice.createVehicle(nVeh2);
+		 }
+		 catch (BadRequestException e){
+			 fail("it is not bad requested");
+			 return;
+		 }
+		 catch (ForbiddenException e) {
+			 fail("it is not forbidden");
+			 return;
+		 }
+		 
+		 assertEquals(indexCurr, nVeh1.getID().intValue());
+		 assertEquals(indexCurr + 1, nVeh2.getID().intValue());
+		 
+	}
+	
 }

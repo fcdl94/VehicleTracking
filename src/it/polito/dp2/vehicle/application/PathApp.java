@@ -43,27 +43,6 @@ public class PathApp {
 	public Path getPath() {
 		return path;
 	}
-	
-	//this function only makes the Path as the model asks
-	private static Path buildPath(List<Edge> edges) {
-		Path p = new Path();
-		List<PathNode> pNodes = p.getNode();
-		PathNode pNode;
-	
-		for(int i=0; i< edges.size(); i++) {
-			
-			pNode = new PathNode();
-			//put it as the ith node
-			pNode.setSequenceNum(i+1);
-			
-			//fill information for the path node
-			pNode.setFrom(edges.get(i).getnrFrom());
-			pNode.setTo(edges.get(i).getnrTo());
-			pNodes.add(pNode); //add to the head, this is useful for numbering, the last added (starting point) will be the first in the list
-		}
-
-		return p;
-	}
 
 	//false means that is impossible to update this path, so keep it as it was
 	public boolean updatePath(NodeApp position) {
@@ -100,6 +79,28 @@ public class PathApp {
 		nodes.clear();
 		edges.clear();
 		path.getNode().clear();
+	}
+	
+	
+	//this function only makes the Path as the model asks
+	private static Path buildPath(List<Edge> edges) {
+		Path p = new Path();
+		List<PathNode> pNodes = p.getNode();
+		PathNode pNode;
+	
+		for(int i=0; i< edges.size(); i++) {
+			
+			pNode = new PathNode();
+			//put it as the ith node
+			pNode.setSequenceNum(i+1);
+			
+			//fill information for the path node
+			pNode.setFrom(edges.get(i).getnrFrom());
+			pNode.setTo(edges.get(i).getnrTo());
+			pNodes.add(pNode); //add to the head, this is useful for numbering, the last added (starting point) will be the first in the list
+		}
+
+		return p;
 	}
 	
 }

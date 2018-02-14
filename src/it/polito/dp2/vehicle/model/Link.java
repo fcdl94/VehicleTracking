@@ -10,24 +10,22 @@ package it.polito.dp2.vehicle.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Connection complex type.
+ * <p>Java class for Link complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Connection">
+ * &lt;complexType name="Link">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="from" type="{http://www.vechicleTrackingSystem.org/model}NodeRef"/>
- *         &lt;element name="to" type="{http://www.vechicleTrackingSystem.org/model}NodeRef"/>
- *       &lt;/sequence>
+ *       &lt;attribute name="href" type="{http://www.w3.org/2001/XMLSchema}anyURI" />
+ *       &lt;attribute name="rel" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -36,66 +34,61 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Connection", propOrder = {
-    "from",
-    "to"
-})
-@XmlSeeAlso({
-    PathNode.class
-})
-public class Connection {
+@XmlType(name = "Link")
+public class Link {
 
-    @XmlElement(required = true)
-    protected NodeRef from;
-    @XmlElement(required = true)
-    protected NodeRef to;
+    @XmlAttribute(name = "href")
+    @XmlSchemaType(name = "anyURI")
+    protected String href;
+    @XmlAttribute(name = "rel")
+    protected String rel;
 
     /**
-     * Gets the value of the from property.
+     * Gets the value of the href property.
      * 
      * @return
      *     possible object is
-     *     {@link NodeRef }
+     *     {@link String }
      *     
      */
-    public NodeRef getFrom() {
-        return from;
+    public String getHref() {
+        return href;
     }
 
     /**
-     * Sets the value of the from property.
+     * Sets the value of the href property.
      * 
      * @param value
      *     allowed object is
-     *     {@link NodeRef }
+     *     {@link String }
      *     
      */
-    public void setFrom(NodeRef value) {
-        this.from = value;
+    public void setHref(String value) {
+        this.href = value;
     }
 
     /**
-     * Gets the value of the to property.
+     * Gets the value of the rel property.
      * 
      * @return
      *     possible object is
-     *     {@link NodeRef }
+     *     {@link String }
      *     
      */
-    public NodeRef getTo() {
-        return to;
+    public String getRel() {
+        return rel;
     }
 
     /**
-     * Sets the value of the to property.
+     * Sets the value of the rel property.
      * 
      * @param value
      *     allowed object is
-     *     {@link NodeRef }
+     *     {@link String }
      *     
      */
-    public void setTo(NodeRef value) {
-        this.to = value;
+    public void setRel(String value) {
+        this.rel = value;
     }
 
 }

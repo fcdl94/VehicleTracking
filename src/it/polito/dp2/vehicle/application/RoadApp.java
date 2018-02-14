@@ -26,8 +26,8 @@ public class RoadApp extends NodeApp{
 	/*
 	 * Useful to check if the port asked for entering the system is actually an endpoint or not
 	 */
-	public boolean isEndpoint(String port) {
-		if(road.getEndpoint().equals(port)) return true;
+	public boolean isEndpoint() {
+		if(road.getEndpoint() != null) return true;
 		else return false;
 	}
 	

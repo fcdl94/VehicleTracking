@@ -1,8 +1,10 @@
 package it.polito.dp2.vehicle.application;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,10 +13,10 @@ import it.polito.dp2.vehicle.model.NodeRef;
 
 public class NodeApp {
 	
-	protected ArrayList<Edge> edges;
-	protected LinkedList<VehicleApp> vehicles;
+	protected List<Edge> edges;
+	protected Set<VehicleApp> vehicles;
 	protected Node node;
-	protected ArrayList<String> ports;
+	protected List<String> ports;
 	protected static Logger logger = Logger.getLogger(VTService.class.getName());
 	protected int futureVehicles; 
 	/*
@@ -26,9 +28,9 @@ public class NodeApp {
 	public NodeApp(Node node) {
 		this.node = node;
 		this.futureVehicles = 0;
-		edges = new ArrayList<>();
-		vehicles = new LinkedList<>();
-		ports = new ArrayList<String>(node.getPort());
+		edges = Collections.synchronizedList(new ArrayList<>());
+		vehicles = new CopyOnWriteArraySet<>();
+		ports = Collections.synchronizedList(new ArrayList<String>(node.getPort()));
 		logger.log(Level.INFO, "Added Node " + node.getName());
 	}
 	
@@ -44,7 +46,7 @@ public class NodeApp {
 		}
 	}
 
-	public boolean addVehicle(VehicleApp v) {
+	public synchronized boolean addVehicle(VehicleApp v) {
 		boolean ret;
 		if( checkConstraint() ) {
 			logger.log(Level.INFO, "Added Vehicle " + v.getPlateNumber() + " to node " + node.getName());
@@ -63,15 +65,15 @@ public class NodeApp {
 		vehicles.remove(v);
 	}
 	
-	public List<VehicleApp> getVehicles(){
+	public Set<VehicleApp> getVehicles(){
 		return vehicles;
 	}
 	
-	public void incrementFutureVehicles() {
+	public synchronized void incrementFutureVehicles() {
 		futureVehicles++;
 	}
 	
-	public void decrementFutureVehicles() {
+	public synchronized void decrementFutureVehicles() {
 		futureVehicles--;
 	}
 	

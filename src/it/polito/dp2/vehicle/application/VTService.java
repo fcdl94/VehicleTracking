@@ -8,6 +8,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +33,6 @@ import it.polito.dp2.vehicle.model.Vehicle;
 public class VTService {
 
 	private ConcurrentSkipListMap<BigInteger, VehicleApp> vehicles;
-	private Model model;
 	private GraphApp graphApp;
 	private BigInteger currVehicleIndex;
 	private static Logger logger = Logger.getLogger(VTService.class.getName());
@@ -98,9 +98,10 @@ public class VTService {
 	 * This function should be used at startup to load the model in the system
 	 */
 	public void setModel(Model model) {
-		this.model = model;
+		//this.model = model;
 		vehicles = new ConcurrentSkipListMap<>();
 		graphApp = new GraphApp(model.getGraph());
+		currVehicleIndex = BigInteger.ZERO;
 		
 		//Then add the vehicle to the systems only if present in the model
 		if(model.getVehicles()!=null ) {
@@ -119,12 +120,7 @@ public class VTService {
 			}
 		}
 	}
-	
-	public Model getModel() {
-		//TODO recompute the model including all the vehicles
-		return model;
-	}
-	
+		
 	public Graph getGraph() {
 		return graphApp.getGraph();
 	}
@@ -146,7 +142,11 @@ public class VTService {
 	 */
 	public List<Vehicle> getVehiclesFromNode(String node) {	
 		LinkedList<Vehicle> vcs = new LinkedList<>();
-		for(VehicleApp va :  graphApp.getVehicles(node)) {
+		Set<VehicleApp> vfn = graphApp.getVehicles(node);
+		if(vfn==null) {
+			throw new NotFoundException();
+		}
+		for(VehicleApp va :  vfn) {
 			vcs.add(va.getVehicle());
 		}
 		return vcs;
@@ -176,25 +176,28 @@ public class VTService {
 		
 		if(v==null || v.getCurrentPosition()==null || v.getDestination() == null || v.getPlateNumber() == null) {
 			//anyway, if Vehicle is validated, this code is never executed
-			logger.log(Level.WARNING, "The vehicle does not have required information [BAD REQUEST]");
+			logger.log(Level.INFO, "The vehicle does not have required information [BAD REQUEST]");
 			throw new BadRequestException();
 		}
 		
 		VehicleApp nv;
-		BigInteger index = currVehicleIndex;
+		BigInteger index;
+		synchronized(currVehicleIndex) {
+			index = currVehicleIndex;
+			currVehicleIndex = currVehicleIndex.add(BigInteger.ONE);
+		}
 		try {
-		 nv =  new VehicleApp(v, index, graphApp);
+			nv =  new VehicleApp(v, index, graphApp);
 		}
 		catch (BadRequestException bre) {
-			logger.log(Level.WARNING, "The vehicle has wrong references [BAD REQUEST]");
+			logger.log(Level.INFO, "The vehicle has wrong references [BAD REQUEST]");
 			throw bre;
 		}
 		catch (ForbiddenException bre) {
-			logger.log(Level.WARNING, bre.getMessage() + " [FORBIDDEN]");
+			logger.log(Level.INFO, bre.getMessage() + " [FORBIDDEN]");
 			throw bre;
 		}
 		
-		currVehicleIndex = currVehicleIndex.add(BigInteger.ONE);
 		vehicles.put(index, nv);
 		return nv.getVehicle();
 	}
@@ -206,16 +209,67 @@ public class VTService {
 	 *    otherwise 
 	 *      return false meaning the vehicle has new path 
 	 */
-	public boolean updateVehicle(BigInteger vid, String nid) {
+	public boolean updateVehiclePosition(BigInteger vid, String nid) {
 		NodeApp nap = graphApp.getNode(nid);
 		VehicleApp vap = vehicles.get(vid);
 		if(nap == null || vap == null) {
-			logger.log(Level.WARNING, "The vehicle or the node cannot be found [NOT FOUND]");
+			logger.log(Level.INFO, "The vehicle or the node cannot be found [NOT FOUND]");
 			throw new NotFoundException();
 		}
 		
 		return vap.updatePosition(nap);
+	}
+	
+	/*
+	 * This function is useful to modify the vehicle destination
+	 * 
+	 */
+	public Vehicle updateVehicle(BigInteger vid, Vehicle v) {
+		VehicleApp vap = vehicles.get(vid);
 		
+		if(v==null || v.getCurrentPosition()==null || v.getDestination() == null || v.getPlateNumber() == null) {
+			//anyway, if Vehicle is validated, this code is never executed
+			logger.log(Level.INFO, "The vehicle does not have required information [BAD REQUEST]");
+			throw new BadRequestException();
+		}
+		
+		if(vap == null) {
+			logger.log(Level.INFO, "The vehicle cannot be found [NOT FOUND]");
+			throw new NotFoundException();
+		}
+		
+		if( !v.getPlateNumber().equals(vap.getPlateNumber())){
+			logger.log(Level.INFO, "The vehicle contains uncoherent information [FORBIDDEN]");
+			throw new ForbiddenException();
+		}
+		
+		vap.update(v);
+		
+		
+		return vap.getVehicle();
+	}
+
+	/*
+	 * The other solution of the delete is to supply a path to the vehicle to exit the system
+	 * 
+	 */
+	public boolean deleteVehicle(BigInteger vid) {
+		VehicleApp vap = vehicles.get(vid);
+		
+		if(vap==null) {
+			throw new NotFoundException();
+		}
+		
+		if(vap.getPosition() instanceof RoadApp) {
+			RoadApp rap = (RoadApp) vap.getPosition();
+			if(rap.isEndpoint()) {
+				vap.remove();
+				vehicles.remove(vid);
+				return true;
+			}
+		}
+				
+		return false;
 	}
 	
 

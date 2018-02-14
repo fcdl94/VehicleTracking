@@ -8,7 +8,7 @@ public class ModelGenerator {
 
 	private static final int MIN_PORT_NUM = 3;
 	private static final int BAS_PORT_NUM = 2;
-	private static final int MAX_VEHICLES = 5;
+	private static final int MAX_VEHICLES = 25;
 	int parks, routes;
 	int prob;
 	int vehicles;
@@ -81,19 +81,21 @@ public class ModelGenerator {
 		Road r ;
 		ParkingArea p;
 		int portNum;
+		long maxVeh;
 		for (int i = 1; i<=routes; i++) {
 			r = new Road();
 			r.setID("road"+ i);
 			r.setName("Street " + i);
-			r.setMaxVehicle(new BigInteger(MAX_VEHICLES, random).add(BigInteger.ONE));
+			maxVeh = random.nextInt(MAX_VEHICLES-5) + 5;
+			r.setMaxVehicle(BigInteger.valueOf(maxVeh));
 			
 			portNum = MIN_PORT_NUM + random.nextInt(BAS_PORT_NUM);
 			
 			List<String> ports = r.getPort();
 			for(int j = 0; j < portNum; j++ ) {
-				ports.add("Port"+j);
-				if(random.nextInt(100) < 20) {
-					r.setEndpoint( "Port"+j ); //20% of probability to be an end-point
+				ports.add("port"+j);
+				if(random.nextInt(100) < 10) {
+					r.setEndpoint( "port"+j ); //20% of probability to be an end-point
 				}
 			}
 			nodes.add(r);
@@ -103,13 +105,14 @@ public class ModelGenerator {
 			p = new ParkingArea();
 			p.setID("area"+ i);
 			p.setName("Parking Area " + i);
-			p.setMaxVehicle(new BigInteger(4, random));
+			maxVeh = random.nextInt(MAX_VEHICLES-5) + 5;
+			p.setMaxVehicle(BigInteger.valueOf(maxVeh));
 			
 			portNum = MIN_PORT_NUM + random.nextInt(BAS_PORT_NUM);
 			
 			List<String> ports = p.getPort();
 			for(int j = 0; j < portNum; j++ ) {
-				ports.add("Port"+j);
+				ports.add("port"+j);
 			}
 			nodes.add(p);
 		}

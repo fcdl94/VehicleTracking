@@ -1,0 +1,6 @@
+HATEOAS
+
+To supply HATEOAS feature, I added in the model of each vehicle, only in the creation time, the link of the resource.
+
+For vehicles that are already existing at startup, the link is not supplied due to the fact that at creation time we do not know the server address.
+

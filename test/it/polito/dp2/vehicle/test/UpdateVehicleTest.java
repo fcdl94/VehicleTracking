@@ -12,6 +12,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,14 +23,12 @@ import it.polito.dp2.vehicle.model.Path;
 import it.polito.dp2.vehicle.model.PathNode;
 import it.polito.dp2.vehicle.model.Vehicle;
 
+class UpdateVehicleTest {
 
-class UpdateVehiclePositionTest {
-
-static Model model;
+	static Model model;
 	
-	@SuppressWarnings("unchecked")
-	@BeforeEach
-	void startup() {
+	@BeforeAll
+	static void makeModel() {
 		JAXBContext jc;
 		try {
 			jc = JAXBContext.newInstance( "it.polito.dp2.vehicle.model" );
@@ -42,15 +41,17 @@ static Model model;
 			e.printStackTrace();
 		}
 		System.out.println("Model made!");
+	}
+	
+	@BeforeEach
+	void startup() {
 		VTService vtservice = VTService.getVTService();
 		vtservice.setModel(model);
 	}
-
+		
 	@Test
-	void testUpdateWithNodeInPath() {
-		
+	void changePositionTestInPath() {
 		VTService vtservice = VTService.getVTService();
-		
 		Vehicle nVeh = new Vehicle();
 		Path path;
 		
@@ -58,7 +59,7 @@ static Model model;
 		nVeh.setDestination("area2");
 		nVeh.setID(BigInteger.valueOf(0));
 		nVeh.setPlateNumber("NVR1R2");
-		 
+		
 		try {
 		 nVeh = vtservice.createVehicle(nVeh);
 		}
@@ -78,8 +79,11 @@ static Model model;
 			 System.out.println("\t Node " + pn.getFrom().getNode() + "  to " + pn.getTo().getNode());
 		 }
 		
-		vtservice.updateVehiclePosition(nVeh.getID(), nextNode.getNode());
+		nVeh.setCurrentPosition(nextNode.getNode());
 		
+		vtservice.updateVehicle(nVeh.getID(), nVeh);
+		
+		System.out.println("Vehicle NOW goes from: ");
 		 for(PathNode pn : nVeh.getPath().getNode()) {
 			 System.out.println("\t Node " + pn.getFrom().getNode() + "  to " + pn.getTo().getNode());
 		 }
@@ -92,12 +96,57 @@ static Model model;
 	}
 	
 	@Test
-	void testUpdateWithNodeNotInPath() {
-		
+	void changePositionTestNotInPath() {
 		VTService vtservice = VTService.getVTService();
-		
 		Vehicle nVeh = new Vehicle();
-		Path path1, path2;
+		Path path;
+		
+		nVeh.setCurrentPosition("road2");
+		nVeh.setDestination("area2");
+		nVeh.setID(BigInteger.valueOf(0));
+		nVeh.setPlateNumber("NVR1R2");
+		
+		try {
+		 nVeh = vtservice.createVehicle(nVeh);
+		}
+		catch (BadRequestException e){
+			fail("Bad Request");
+			return;
+		}
+		catch (ForbiddenException e) {
+			fail("Forbidden");
+		}
+		
+
+		String nextNode = "road4";
+		
+		System.out.println("Vehicle goes from: ");
+		for(PathNode pn : nVeh.getPath().getNode()) {
+			 System.out.println("\t Node " + pn.getFrom().getNode() + "  to " + pn.getTo().getNode());
+		 }
+		
+		nVeh.setCurrentPosition(nextNode);
+		
+		vtservice.updateVehicle(nVeh.getID(), nVeh);
+		
+		 for(PathNode pn : nVeh.getPath().getNode()) {
+			 System.out.println("\t Node " + pn.getFrom().getNode() + "  to " + pn.getTo().getNode());
+		 }
+		
+		path = nVeh.getPath();
+		String actualNode = path.getNode().get(0).getFrom().getNode();
+		
+		assertEquals(nextNode, actualNode);
+		
+		return;
+	}
+	
+	
+	@Test
+	void changeDestinatonTestWithPathExistent() {
+		VTService vtservice = VTService.getVTService();
+		Vehicle nVeh = new Vehicle();
+		Path path;
 		
 		nVeh.setCurrentPosition("road2");
 		nVeh.setDestination("area2");
@@ -108,90 +157,126 @@ static Model model;
 			 nVeh = vtservice.createVehicle(nVeh);
 			}
 		catch (BadRequestException e){
-				fail("Bad Request");
-				return;
-			}
+			fail("Bad Request");
+			return;
+		}
 		catch (ForbiddenException e) {
-				fail("Forbidden");
-			}
+			fail("Forbidden");
+		}
 		
-		path1 = nVeh.getPath();
+		String newDest = "road4";
+		
 		System.out.println("Vehicle goes from: ");
 		for(PathNode pn : nVeh.getPath().getNode()) {
 			 System.out.println("\t Node " + pn.getFrom().getNode() + "  to " + pn.getTo().getNode());
-		}
+		 }
 		
-		//set a node out of the path (road2, road3, area2)
-		vtservice.updateVehiclePosition(nVeh.getID(), "road5");
+		nVeh.setDestination(newDest);
 		
-		path2 = nVeh.getPath();
-		System.out.println("Vehicle goes from: ");
-		for(PathNode pn : nVeh.getPath().getNode()) {
+		nVeh = vtservice.updateVehicle(nVeh.getID(), nVeh);
+		
+		System.out.println("Vehicle NOW goes from: ");
+		 for(PathNode pn : nVeh.getPath().getNode()) {
 			 System.out.println("\t Node " + pn.getFrom().getNode() + "  to " + pn.getTo().getNode());
-		}
-				
-		assertTrue( path1 != path2);
+		 }
+		
+		 assertEquals(newDest, nVeh.getDestination());
+		
+		return;
 	}
 	
 	@Test
-	void testOldPathDeleted() {
-		
+	void changeDestinatonTestWithPathNull() {
 		VTService vtservice = VTService.getVTService();
-		
 		Vehicle nVeh = new Vehicle();
-	
-		nVeh.setCurrentPosition("road1");
-		nVeh.setDestination("road2");
+		Path path;
+		
+		String destination = "area2";
+		
+		nVeh.setCurrentPosition("road2");
+		nVeh.setDestination(destination);
 		nVeh.setID(BigInteger.valueOf(0));
-		nVeh.setPlateNumber("NV1R1R2");
+		nVeh.setPlateNumber("NVR1R2");
 		
 		try {
 			 nVeh = vtservice.createVehicle(nVeh);
 			}
 		catch (BadRequestException e){
-				fail("Bad Request");
-				return;
-			}
+			fail("Bad Request");
+			return;
+		}
 		catch (ForbiddenException e) {
-				fail("Forbidden");
-			}
+			fail("Forbidden");
+		}
+		
+		String newDest = "road4";
 		
 		System.out.println("Vehicle goes from: ");
 		for(PathNode pn : nVeh.getPath().getNode()) {
 			 System.out.println("\t Node " + pn.getFrom().getNode() + "  to " + pn.getTo().getNode());
-		}
+		 }
 		
-		//set next node in the path (road1, road4, road2)
-		vtservice.updateVehiclePosition(nVeh.getID(), "road4");
+		nVeh.setCurrentPosition(destination);
+		
+		nVeh = vtservice.updateVehicle(nVeh.getID(), nVeh);
+		
+		assertTrue(nVeh.getPath()==null);
+		System.out.println("Vehicle arrived at " + destination);
+		
+		
+		nVeh.setDestination(newDest);
 
-		System.out.println("Vehicle goes from: ");
+		nVeh = vtservice.updateVehicle(nVeh.getID(), nVeh);
+		
+		System.out.println("Vehicle NOW goes from: ");
 		for(PathNode pn : nVeh.getPath().getNode()) {
 			 System.out.println("\t Node " + pn.getFrom().getNode() + "  to " + pn.getTo().getNode());
 		}
 		
-		nVeh = new Vehicle();		
-		nVeh.setCurrentPosition("road1");
-		nVeh.setDestination("road2");
-		nVeh.setID(BigInteger.valueOf(0));
-		nVeh.setPlateNumber("NV2R1R2");
+		assertTrue(nVeh.getPath()!=null);
+
 		
-		try {
-			 nVeh = vtservice.createVehicle(nVeh);
-			 System.out.println("Vehicle goes from: ");
-			for(PathNode pn : nVeh.getPath().getNode()) {
-				 System.out.println("\t Node " + pn.getFrom().getNode() + "  to " + pn.getTo().getNode());
-			}
-			 assertTrue( true );
-			}
-		catch (BadRequestException e){
-				fail("Bad Request");
-				return;
-			}
-		catch (ForbiddenException e) {
-				fail("Forbidden");
-			}
-		
-		
+		return;
 	}
 	
+	@Test
+	void changePositionAndDestinationTest() {
+		VTService vtservice = VTService.getVTService();
+		Vehicle nVeh = new Vehicle();
+		Path path;
+		
+		String destination = "area2";
+		
+		nVeh.setCurrentPosition("road2");
+		nVeh.setDestination(destination);
+		nVeh.setID(BigInteger.valueOf(0));
+		nVeh.setPlateNumber("NVR1R2");
+
+		try {
+			 nVeh = vtservice.createVehicle(nVeh);
+			}
+		catch (BadRequestException e){
+			fail("Bad Request");
+			return;
+		}
+		catch (ForbiddenException e) {
+			fail("Forbidden");
+		}
+		
+		String newDest = "road4";
+		String newPos = "road3";
+		
+		nVeh.setCurrentPosition(newPos);
+		nVeh.setDestination(newDest);
+		
+		nVeh = vtservice.updateVehicle(nVeh.getID(), nVeh);
+		
+		System.out.println("Vehicle NOW goes from: ");
+		for(PathNode pn : nVeh.getPath().getNode()) {
+			 System.out.println("\t Node " + pn.getFrom().getNode() + "  to " + pn.getTo().getNode());
+		}
+		
+		assertEquals(nVeh.getPath().getNode().get(0).getFrom().getNode(), newPos);
+	}
+
 }

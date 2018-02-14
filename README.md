@@ -17,3 +17,6 @@ The to run the TomCat server, open build-proj.xml ANT file and run start-tomcat
 
 ## Service
 To deploy the service you must open build-proj.xml ANT file and run deployWS
+
+## To build the client
+The client is in the client folder. To build it uses the build.xml file. First generate the classes relative to the xsd and next run it.

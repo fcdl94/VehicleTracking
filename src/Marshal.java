@@ -10,10 +10,10 @@ import it.polito.dp2.vehicle.model.ObjectFactory;
 
 public class Marshal {
 	
-	 private static int NUM_ROADS = 5;
-	 private static int NUM_AREAS = 2;
+	 private static int NUM_ROADS = 20;
+	 private static int NUM_AREAS = 10;
 	 private static int SEED = 127;
-	 private static int VEHICLES = 5;
+	 private static int VEHICLES = 0;
 	 private static ObjectFactory of = new ObjectFactory();
 	 
 	 public static void main( String[] args ) {

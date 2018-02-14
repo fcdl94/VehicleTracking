@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,30 +44,16 @@ public class GraphApp {
 		return null;
 	}
 	
-	public List<VehicleApp> getVehicles(String node){
+	public Set<VehicleApp> getVehicles(String node){
 		if(nodes.containsKey(node)) {
 			return nodes.get(node).getVehicles();
 		}
 		else {
-			logger.log(Level.WARNING, "The asked node " + node + " doesn't exist");
-			//TODO Should be better raise an exception
+			logger.log(Level.INFO, "The asked node " + node + " doesn't exist");
 			return null;
 		}
 	}
-	
-	public boolean addVehicle(VehicleApp v) {
-		NodeApp nap;
-		if( v.getPosition() != null && nodes.containsKey(v.getPosition().getID()) ) {
-			 nap = v.getPosition();
-			 return nap.addVehicle(v);
-		}
-		else {
-			//TODO should be better raise an exception
-			logger.log(Level.WARNING, "Vehicle " + v.getPlateNumber() + "have no current position");
-			return false;
-		}
-	}	
-	
+		
 	public PathApp getPath(NodeApp from,NodeApp to) {
 		PathApp p;
 
@@ -87,6 +74,8 @@ public class GraphApp {
 	}
 		
 	private synchronized PathApp BreadthFirst(NodeApp from, NodeApp to) {
+	//the synchronization is done at this level because otherwise the constraint on the Node could be violated.	
+		
 		
 		List<NodeApp> queue = new LinkedList<>();
 		HashSet<String> closed = new HashSet<>();
@@ -113,7 +102,7 @@ public class GraphApp {
 				if(!closed.contains(edg.getTo().getID())) {  //check if not already visited
 					if(edg.getTo().checkConstraint()) { //check if it is crossable
 						if(!open.contains(edg.getTo().getID())) { //check if not already listed
-							//TODO intelligence about the load balance must be put in previous if (otherwise, we will visit the same node until it is full)
+							// intelligence about the load balance must be put in previous if (otherwise, we will visit the same node until it is full)
 							queue.add(edg.getTo());	//add to the "to visit" list the node
 							open.add(edg.getTo().getID()); //add to open list
 							parents.put(edg.getTo(), edg); //put in parents map the information that the node can be reached from the node we are visiting
