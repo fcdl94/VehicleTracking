@@ -92,7 +92,6 @@ public class VehicleClient {
 		Thread.sleep(2000);
 		deleteVehicle();
 		
-		
 	}
 	
 	private void createVehicle() throws ConnectionException{
