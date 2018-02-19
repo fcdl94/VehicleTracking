@@ -1,8 +1,0 @@
-CONCURRENCY
-
-For the creation of vehicles the main problem are related to path computation. In fact, if two vehicles compute together the path, they may violate constraints on some node.
-To prevent any issue on vehicles, all the operation on a vehicle object are synchronized (gets, update, updatePosition and delete). This means that also the path, that is related to one
-and only one vehicle, is modified synchronized.
-
-To prevent issue in read operations for VTService and for the Nodes, all the maps, lists and sets use synchronized implementations
-
