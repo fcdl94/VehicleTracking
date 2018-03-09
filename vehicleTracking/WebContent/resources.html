@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Vehicle Tracking REST DOC</title>
+    <style>
+        #resource, #method, h1 {
+            font-family: Roboto, Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            td, th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            #method {
+                border-top: 2px solid #aaa;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            tr:hover {
+                background-color: #ddd;
+            }
+
+            th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #B22222;
+                color: white;
+            }
+    </style>
+</head>
+<body>
+    <h1>The resource table</h1>
+    <table id="resource" style="width:100%">
+        <thead>
+            <tr>
+                <th>URL</th>
+                <th>Representation</th>
+                <th>Meaning</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>/vehicles</td>
+                <td>Vehicles</td>
+                <td>The set of all the vehicles in the system</td>
+            </tr>
+            <tr>
+                <td>/vehicles/{id}</td>
+                <td>Vehicle</td>
+                <td>A single vehicle</td>
+            </tr>
+            <tr>
+                <td>/model</td>
+                <td>Graph</td>
+                <td>The representation of all nodes and their connections</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h1>The methods table</h1>
+    <table id="method" style="width:100%">
+        <thead>
+            <tr>
+                <th>Resource URL</th>
+                <th>Method</th>
+                <th>Parameters</th>
+                <th>Status</th>
+                <th>Response body</th>
+                <th>Meaning</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Vehicles GET -->
+            <tr>
+                <td>/vehicles</td>
+                <td>GET</td>
+                <td>Optionally a Node identifier</td>
+                <td>200 Ok</td>
+                <td>Vehicles</td>
+                <td>It returns the set of all the vehicles in the node or in the system</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>404 Not found</td>
+                <td></td>
+                <td>The specified node cannot be found</td>
+            </tr>
+            <!-- Vehicles POST -->
+            <tr id="method">
+                <td></td>
+                <td>POST</td>
+                <td>Vehicle (only position, destination and plateNumber fields are useful)</td>
+                <td>200 Ok</td>
+                <td>Vehicle</td>
+                <td>It creates a new vehicle and return it along with the path to follow</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>400 Bad Request</td>
+                <td></td>
+                <td>The vehicle in the request body have missing or wrong information</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>403 Forbidden</td>
+                <td></td>
+                <td>The vehicle could not be added because it isn't possibile compute a path</td>
+            </tr>
+            <!-- Vehicles/id GET -->
+            <tr id="method">
+                <td>/vehicles/{id}</td>
+                <td>GET</td>
+                <td></td>
+                <td>200 Ok</td>
+                <td>Vehicle</td>
+                <td>It returns the vehicle with the given id</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>404 Not Found</td>
+                <td></td>
+                <td>The id specified does not correspond to any vehicle</td>
+            </tr>
+            <!-- Vehicles/id POST -->
+            <tr id="method">
+                <td></td>
+                <td>POST</td>
+                <td>Node identifier</td>
+                <td>200 Ok</td>
+                <td>Vehicle</td>
+                <td>The vehicle wasn't following the path, so a new path is computed and the whole vehicle returned</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>204 No Content</td>
+                <td></td>
+                <td>The vehicle is following the path, the information is updated on the server</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>400 Bad Request</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>403 Forbidden</td>
+                <td></td>
+                <td>The new path cannot be computed</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>404 Not Found</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!-- Vehicles/id PUT -->
+            <tr id="method">
+                <td></td>
+                <td>PUT</td>
+                <td>Vehicle (only position and destination fields are useful)</td>
+                <td>200 Ok</td>
+                <td>Vehicle</td>
+                <td>The vehicle is updated and returned, along with the new path</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>400 Bad Request</td>
+                <td></td>
+                <td>The vehicle in the request body have missing or wrong information</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>403 Forbidden</td>
+                <td></td>
+                <td>The vehicle could not be added because it isn't possibile compute a path</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>404 Not Found</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!-- Vehicles/id DELETE -->
+            <tr id="method">
+                <td></td>
+                <td>DELETE</td>
+                <td></td>
+                <td>204 No content</td>
+                <td></td>
+                <td>The vehicle exits the system and it is deleted from server</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>403 Forbidden</td>
+                <td></td>
+                <td>The vehicle cannot exit the system (not into endpoint road) </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>404 Not Found</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!-- Graph GET -->
+            <tr id="method">
+                <td>/model</td>
+                <td>GET</td>
+                <td></td>
+                <td>200 Ok</td>
+                <td>Graph</td>
+                <td>It returns the list of all nodes and their connection</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
