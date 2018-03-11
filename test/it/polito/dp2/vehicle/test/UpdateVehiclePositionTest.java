@@ -12,6 +12,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,8 +29,8 @@ class UpdateVehiclePositionTest {
 static Model model;
 	
 	@SuppressWarnings("unchecked")
-	@BeforeEach
-	void startup() {
+	@BeforeAll
+	static void makeModel() {
 		JAXBContext jc;
 		try {
 			jc = JAXBContext.newInstance( "it.polito.dp2.vehicle.model" );
@@ -42,6 +43,10 @@ static Model model;
 			e.printStackTrace();
 		}
 		System.out.println("Model made!");
+	}
+	
+	@BeforeEach
+	void startup() {
 		VTService vtservice = VTService.getVTService();
 		vtservice.setModel(model);
 	}

@@ -3,7 +3,6 @@ package it.polito.dp2.vehicle.test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
-import java.math.BigInteger;
 import java.util.List;
 
 import javax.ws.rs.BadRequestException;
@@ -14,38 +13,40 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import it.polito.dp2.vehicle.application.VTService;
-import it.polito.dp2.vehicle.model.Graph;
 import it.polito.dp2.vehicle.model.Model;
-import it.polito.dp2.vehicle.model.Node;
 import it.polito.dp2.vehicle.model.PathNode;
 import it.polito.dp2.vehicle.model.Vehicle;
-import it.polito.dp2.vehicle.model.Vehicles;
 
 @TestInstance(Lifecycle.PER_CLASS)
 class VTServiceTest {
-	Model model;
 	
+	private static Model model;
 
 	@SuppressWarnings("unchecked")
 	@BeforeAll
-	void unmarhsall() {
+	static void makeModel() {
 		JAXBContext jc;
-		JAXBElement<Model> jaxbModel;
 		try {
 			jc = JAXBContext.newInstance( "it.polito.dp2.vehicle.model" );
 			Unmarshaller um = jc.createUnmarshaller();
-			jaxbModel = (JAXBElement<Model>) um.unmarshal( new File( "xml/xml-test.xml" ) );
-			model = jaxbModel.getValue();
+			JAXBElement<Model> jmod;
+			jmod = (JAXBElement<Model>) um.unmarshal( new File( "xml/xml-test.xml" ) );
+			model = jmod.getValue();
+			
 			} catch (JAXBException e) {
 			e.printStackTrace();
 		}
-		 System.out.println("Model made!");
-		 
+		System.out.println("Model made!");
+	}
+	
+	@BeforeEach
+	void startup() {
 		VTService vtservice = VTService.getVTService();
 		vtservice.setModel(model);
 	}
@@ -116,43 +117,5 @@ class VTServiceTest {
 		 assertTrue(flag);
 		 
 		 return;
-	}
-
-	
-	@SuppressWarnings("unused")
-	private static Model genModel() {
-		Model model = new Model();
-		
-		Graph graph = new Graph();
-		
-		Node n = new Node();
-		n.setID("node1");
-		n.setName("Nodo 1");
-		n.getPort().add("port1");
-		n.getPort().add("port2");
-		graph.getNode().add(n);
-		
-		n = new Node();
-		n.setID("node2");
-		n.setName("Nodo 2");
-		n.getPort().add("port1");
-		n.getPort().add("port2");
-		graph.getNode().add(n);
-		
-		model.setGraph(graph);
-		
-		Vehicle v = new Vehicle();
-
-		v.setCurrentPosition("node1");
-		v.setDestination("node2");
-		v.setID(BigInteger.valueOf(0));
-		v.setPlateNumber("ABABABA");
-		
-		Vehicles vs = new Vehicles();
-		vs.getVehicle().add(v);
-		
-		model.setVehicles(vs);
-		return model;
-	}
-	
+	}	
 }

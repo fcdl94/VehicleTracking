@@ -1,0 +1,2 @@
+GitHub prevent to upload a void folder. This file is only useful to upload the folder on Git to let the system works.
+If you want, you can delete this file once the project is downloaded.

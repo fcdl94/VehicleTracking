@@ -27,6 +27,7 @@ class UpdateVehicleTest {
 
 	static Model model;
 	
+	@SuppressWarnings("unchecked")
 	@BeforeAll
 	static void makeModel() {
 		JAXBContext jc;
@@ -146,7 +147,6 @@ class UpdateVehicleTest {
 	void changeDestinatonTestWithPathExistent() {
 		VTService vtservice = VTService.getVTService();
 		Vehicle nVeh = new Vehicle();
-		Path path;
 		
 		nVeh.setCurrentPosition("road2");
 		nVeh.setDestination("area2");
@@ -189,7 +189,6 @@ class UpdateVehicleTest {
 	void changeDestinatonTestWithPathNull() {
 		VTService vtservice = VTService.getVTService();
 		Vehicle nVeh = new Vehicle();
-		Path path;
 		
 		String destination = "area2";
 		
@@ -243,7 +242,6 @@ class UpdateVehicleTest {
 	void changePositionAndDestinationTest() {
 		VTService vtservice = VTService.getVTService();
 		Vehicle nVeh = new Vehicle();
-		Path path;
 		
 		String destination = "area2";
 		
