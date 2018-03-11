@@ -83,10 +83,10 @@
             <tr>
                 <td>/vehicles</td>
                 <td>GET</td>
-                <td>Optionally a Node identifier</td>
+                <td>Query Parameter named node : a String that is the identificator of a node. This is optional</td>
                 <td>200 Ok</td>
                 <td>Vehicles</td>
-                <td>It returns the set of all the vehicles in the node or in the system</td>
+                <td>It returns the set of all the vehicles in the node (if specified) or in the system</td>
             </tr>
             <tr>
                 <td></td>
@@ -100,7 +100,7 @@
             <tr id="method">
                 <td></td>
                 <td>POST</td>
-                <td>Vehicle (only position, destination and plateNumber fields are useful)</td>
+                <td>Body Parameter: Vehicle (only position, destination and plateNumber fields are useful) in XML</td>
                 <td>200 Ok</td>
                 <td>Vehicle</td>
                 <td>It creates a new vehicle and return it along with the path to follow</td>
@@ -142,7 +142,7 @@
             <tr id="method">
                 <td></td>
                 <td>POST</td>
-                <td>Node identifier</td>
+                <td>Body Parameter: a node identifier in text/plain</td>
                 <td>200 Ok</td>
                 <td>Vehicle</td>
                 <td>The vehicle wasn't following the path, so a new path is computed and the whole vehicle returned</td>
@@ -183,7 +183,7 @@
             <tr id="method">
                 <td></td>
                 <td>PUT</td>
-                <td>Vehicle (only position and destination fields are useful)</td>
+                <td>Body Parameter: Vehicle (only position and destination fields are useful) in XML</td>
                 <td>200 Ok</td>
                 <td>Vehicle</td>
                 <td>The vehicle is updated and returned, along with the new path</td>

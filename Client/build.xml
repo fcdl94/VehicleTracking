@@ -57,8 +57,8 @@
 		</javac>
 	</target>
 	
-	<!-- define the "run.client" target -->
-	<target name="run-client" depends="build-client">
+	<!-- define the "run-client" target -->
+	<target name="run-client-one" depends="build-client">
 		<java classname="${client.class}" fork="true">
 			<classpath>
 				<path refid="lib.classpath" />
@@ -67,7 +67,7 @@
 		</java>
 	</target>
 	
-	<!-- define the "run.hello" target -->
+	<!-- define the "run-admin" target -->
 		<target name="run-admin" depends="build-client">
 			<java classname="${admin.class}" fork="true">
 				<classpath>

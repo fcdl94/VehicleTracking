@@ -1,30 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vechicleTrackingSystem.org/model" xmlns:s="http://www.vechicleTrackingSystem.org/model" elementFormDefault="qualified">
 
-<!-- merge a vehicle (embeds the path) and graph definition for the response of admission request -->
-<!-- We chose to have a response with embedded both the vehicle's path and the relative information of the graph (partial) -->
-	<element name="vehicleComplete" type="s:VehicleComplete" >
-		<keyref name="pathRefKey" refer="s:nodeKey">
-			<selector xpath="vehicleComplete/vehicle/path" />
-			<field xpath="node" />
-		</keyref>
-		<keyref name="vechicleCompleteRefKey" refer="s:nodeKey">
-			<selector xpath="vehicleComplete/vehicle" />
-			<field xpath="currentPosition" />
-		</keyref>
-		<keyref name="vechicleCompleteRefKeyDestination" refer="s:nodeKey">
-			<selector xpath="vehicleComplete/vehicle" />
-			<field xpath="destination" />
-		</keyref>
-	</element>
-	
-	<complexType name="VehicleComplete">
-			<sequence>
-				<element ref="s:vehicle" />
-				<element ref="s:graph" />				
-			</sequence>
-	</complexType>
-	
 <!-- element to be load at startup, I will call it model to represent the fact that is the model of the system, representing it status at a given time -->
 <!-- I'm assuming that vehicle at startup have no path to follow -->
 	<element name="model" type="s:Model">
@@ -126,6 +102,7 @@
 
 <!-- vehicle definition -->
 	<!-- each vehicle has 
+		SELF that is the link to the resource itself
 		position (a NodeRef referencing the node+port in graph)
 		destination (string that reference a node) 
 		state indicating if the vehicle is parked or in transit
@@ -151,7 +128,7 @@
 	
 	<complexType name="Vehicle" >
 		<sequence>
-			<element name="link" type="s:Link" minOccurs="0" />
+			<element name="self" type="s:Self" minOccurs="0" />
 			<element name="currentPosition" type="string" />
 			<element name="destination" type="string" />
 			<element name="state" type="s:State" minOccurs="0" />
@@ -200,9 +177,8 @@
 	</complexType>
 
 <!-- LINK Def -->
-	<complexType name="Link">
+	<complexType name="Self">
 		<attribute name="href" type="anyURI"/>
-		<attribute name="rel" type="string" />
 	</complexType>
 
 

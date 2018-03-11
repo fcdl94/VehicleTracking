@@ -1375,7 +1375,8 @@ number, the entry point, the time of the last update of the position that are
 relevant for the administration. It has also information about the status:
 position, destination and state (parked, in transit). Those are useful to
 compute the path, that is an ordered list of connection that the vehicle must
-cross to reach the destination.<o:p></o:p></span></p>
+cross to reach the destination. Another important information is link to the resource
+itlsef that is useful for HATEOAS property of the System<o:p></o:p></span></p>
 
 <h1><span lang=EN-US style='mso-ansi-language:EN-US'>The server<o:p></o:p></span></h1>
 
@@ -1384,14 +1385,14 @@ was developed by implementing three layers. <o:p></o:p></span></p>
 
 <p class=MsoListParagraphCxSpFirst style='text-indent:-18.0pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span
 lang=EN-US style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
-Symbol;mso-ansi-language:EN-US'><span style='mso-list:Ignore'>·<span
+Symbol;mso-ansi-language:EN-US'><span style='mso-list:Ignore'>ï¿½<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>The
 resource layer, the one that deal with Tomcat and the client calls.<o:p></o:p></span></p>
 
 <p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span
 lang=EN-US style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
-Symbol;mso-ansi-language:EN-US'><span style='mso-list:Ignore'>·<span
+Symbol;mso-ansi-language:EN-US'><span style='mso-list:Ignore'>ï¿½<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>The
 application layer, the one really implementing the logic of the system. It <span
@@ -1401,7 +1402,7 @@ that the system lives.<o:p></o:p></span></p>
 
 <p class=MsoListParagraphCxSpLast style='text-indent:-18.0pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span
 lang=EN-US style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
-Symbol;mso-ansi-language:EN-US'><span style='mso-list:Ignore'>·<span
+Symbol;mso-ansi-language:EN-US'><span style='mso-list:Ignore'>ï¿½<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>The
 model layer in which there are the annotated class for JAXB translation. The
@@ -1579,9 +1580,10 @@ resource table:<o:p></o:p></span></p>
 this document, you can find a <a href="resources.html">documentation</a> that
 contains the mapping between operations and methods.<o:p></o:p></span></p>
 
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>To achieve
-the HATEOAS property in the system, I added to vehicle model a field that
-contains the link to the resource itself.<o:p></o:p></span></p>
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>To get the
+HATEOAS property in the system, I added to vehicle model a link that
+contains the URL to the resource itself following the IANA convention.
+Every vehicle that is created has a "self" field that is a link pointing to itself.<o:p></o:p></span></p>
 
 <h1><span lang=EN-US style='mso-ansi-language:EN-US'>Vehicle Client<o:p></o:p></span></h1>
 

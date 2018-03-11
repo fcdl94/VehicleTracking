@@ -1,4 +1,4 @@
-package it.polito.dp2.vehicle.resource;
+package it.polito.dp2.vehicle.utils;
 // This validator performs JAXB unmarshalling with validation
 // against the schema
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;

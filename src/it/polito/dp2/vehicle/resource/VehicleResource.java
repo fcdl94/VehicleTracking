@@ -27,7 +27,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import it.polito.dp2.vehicle.application.VTService;
-import it.polito.dp2.vehicle.model.Link;
+import it.polito.dp2.vehicle.model.Self;
 import it.polito.dp2.vehicle.model.ObjectFactory;
 import it.polito.dp2.vehicle.model.Vehicle;
 import it.polito.dp2.vehicle.model.Vehicles;
@@ -209,8 +209,8 @@ public class VehicleResource {
 	
 	
 	private static void addLink(Vehicle v, UriInfo uriInfo, boolean isChildNode) {
-		if(v.getLink() == null) {
-			Link l = new Link();
+		if(v.getSelf() == null) {
+			Self l = new Self();
 			UriBuilder builder = uriInfo.getAbsolutePathBuilder();
 			
 			URI u ;
@@ -218,9 +218,8 @@ public class VehicleResource {
 			else u = builder.build();
 			
 			l.setHref(u.toString());
-			l.setRel("self");
 			
-			v.setLink(l);
+			v.setSelf(l);
 		}
 	}
 	

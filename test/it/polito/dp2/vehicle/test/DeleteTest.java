@@ -3,7 +3,6 @@ package it.polito.dp2.vehicle.test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
-import java.math.BigInteger;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
@@ -18,7 +17,6 @@ import org.junit.jupiter.api.Test;
 
 import it.polito.dp2.vehicle.application.VTService;
 import it.polito.dp2.vehicle.model.Model;
-import it.polito.dp2.vehicle.model.Path;
 import it.polito.dp2.vehicle.model.Vehicle;
 
 class DeleteTest {
@@ -53,7 +51,6 @@ class DeleteTest {
 	void correctDeleteTest() {
 		VTService vtservice = VTService.getVTService();
 		Vehicle nVeh = new Vehicle();
-		Path path;
 		
 		nVeh.setCurrentPosition("road2");
 		nVeh.setDestination("road3");
@@ -86,7 +83,6 @@ class DeleteTest {
 	void incorrectPositionDeleteTest() {
 		VTService vtservice = VTService.getVTService();
 		Vehicle nVeh = new Vehicle();
-		Path path;
 		
 		nVeh.setCurrentPosition("road3");
 		nVeh.setDestination("road2");
@@ -119,7 +115,6 @@ class DeleteTest {
 	void notInPositionDeleteTest() {
 		VTService vtservice = VTService.getVTService();
 		Vehicle nVeh = new Vehicle();
-		Path path;
 		
 		nVeh.setCurrentPosition("road2");
 		nVeh.setDestination("road3");

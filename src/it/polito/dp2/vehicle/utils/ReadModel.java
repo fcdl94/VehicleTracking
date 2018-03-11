@@ -1,3 +1,4 @@
+package it.polito.dp2.vehicle.utils;
 import java.io.File;
 import java.math.BigInteger;
 
@@ -10,11 +11,13 @@ import it.polito.dp2.vehicle.model.Vehicle;
 
 public class ReadModel {
 
+	private static String filename = "xml/xml-gen.xml";
+	
 	public static void main(String[] args) throws Throwable {
 		JAXBContext jc = JAXBContext.newInstance( "it.polito.dp2.vehicle.model" );
 		Unmarshaller um = jc.createUnmarshaller();
 		
-		 Model model = (Model) um.unmarshal( new File( "xml/xml-gen.xml" ) );
+		 Model model = (Model) um.unmarshal( new File( filename ) );
 		 
 		 System.out.println("Marhsalling done!");
 		 

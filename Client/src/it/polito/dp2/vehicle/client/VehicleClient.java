@@ -123,7 +123,7 @@ public class VehicleClient {
 	}
 	
 	private boolean postPosition(String nextPos) throws ConnectionException {
-		WebTarget target = client.target(vehicle.getLink().getHref());
+		WebTarget target = client.target(vehicle.getSelf().getHref());
 		
 		Response resp = target.request()
 				   .accept(MediaType.APPLICATION_XML)
@@ -149,7 +149,7 @@ public class VehicleClient {
 	}
 	
 	private void putVehicle() throws ConnectionException {
-		WebTarget target = client.target(vehicle.getLink().getHref());
+		WebTarget target = client.target(vehicle.getSelf().getHref());
 		
 		vehicle.setCurrentPosition(position);
 		vehicle.setDestination(destination);
@@ -173,7 +173,7 @@ public class VehicleClient {
 	
 	private void deleteVehicle() throws ConnectionException{
 		
-		WebTarget target = client.target(vehicle.getLink().getHref());
+		WebTarget target = client.target(vehicle.getSelf().getHref());
 		Response resp = target.request()
 				   .delete();
 		

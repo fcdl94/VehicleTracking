@@ -1,3 +1,4 @@
+package it.polito.dp2.vehicle.utils;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Random;
@@ -60,7 +61,8 @@ public class ModelGenerator {
 	
 
 	private void fillVehicles(Graph graph, List<Vehicle> vecs) {
-		//Bugged, I'm not checking the max capacity of the node in which I am allocating the vehicle
+		//WARNING I'm not checking the max capacity of the node in which I am allocating the vehicle
+		//THUS it can be generated nodes with too much vehicles, exceeding the constraint
 		Vehicle v;
 		
 		for (int i = 0; i< vehicles; i++) {
@@ -120,7 +122,7 @@ public class ModelGenerator {
 	}
 	
 	private void fillConnections(Graph graph) {
-		/* For the moment this is bugged, a node can be isolated */
+		//WARNING It can be generated an isolated node, it means a node without incoming link.
 		List<Connection> conn = graph.getConnection();
 		Connection ct;
 		int pfr, pto;

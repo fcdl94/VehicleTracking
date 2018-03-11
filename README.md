@@ -26,6 +26,17 @@ You must configure the CATALINA_HOME variable in order to point the installation
 The project uses Swagger to build automatically the documentation of REST APIs. Swagger libraries are in the lib folder that is included in the project.
 Swagger version is 1.5.
 
+## How to generate a random model
+The marshal class is able to create a model given this ordered argument list:
+     File, the name of output file;
+     Road number, number of roads to be generated;
+     Area number, number of parking areas to be generated;
+     Vehicle number, number of vehicles to be generated;
+     Seed, the seed to initialize the Random class.
+
+If those are not specified, Marshal class will use the default values.
+This class can be run as a standard Java program.
+
 ## Service
 To test the server you have first to run TomCat and then to build and deploy the Web Service.
 Then to run the TomCat server you can use:

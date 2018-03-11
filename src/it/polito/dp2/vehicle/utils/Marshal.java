@@ -1,3 +1,4 @@
+package it.polito.dp2.vehicle.utils;
 
 import java.io.File;
 import javax.xml.bind.JAXBContext;
@@ -16,6 +17,17 @@ public class Marshal {
 	 private static int VEHICLES = 0;
 	 private static ObjectFactory of = new ObjectFactory();
 	 
+	 
+	 /*
+	  * Argument list:
+	  * 	File
+	  * 	Road number
+	  * 	Area number
+	  *     Vehicle number
+	  *     Seed
+	  *     
+	  *     They are all optional
+	  */
 	 public static void main( String[] args ) {
         try {
             // create a JAXBContext capable of handling classes generated into
