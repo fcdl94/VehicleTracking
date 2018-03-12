@@ -16,6 +16,12 @@ import it.polito.dp2.vehicle.model.Node;
 import it.polito.dp2.vehicle.model.ParkingArea;
 import it.polito.dp2.vehicle.model.Road;
 
+/**
+ * GraphApp is a class keeping the information and a reference to the Node.
+ * This wrap all the method that requires to interact with many nodes, as the Path computation.
+ * 
+ * @see {@link NodeApp},   {@link Graph}
+ */
 public class GraphApp {
 
 	private ConcurrentSkipListMap<String, NodeApp> nodes;
@@ -23,6 +29,10 @@ public class GraphApp {
 	private static Logger logger = Logger.getLogger(VTService.class.getName());
 	public static PathApp NO_PATH = PathApp.NO_PATH;
 	
+	/**
+	 * The constructor takes the Graph model as input and process it creating the nodes and then the link between them
+	 * @param graph This is the Graph Model to be instantiated
+	 */
 	public GraphApp(Graph graph) {
 		nodes = new ConcurrentSkipListMap<>();
 		this.graph = graph;
@@ -33,10 +43,19 @@ public class GraphApp {
 		
 	}
 	
+	/**
+	 * This function returns the Graph Model
+	 * @return graph 
+	 */
 	public Graph getGraph() {	
 		return graph;
 	}	
 
+	/**
+	 * This function returns a NodeApp given the ID of the Node
+	 * @param node the ID of the node correspondent to NodeApp
+	 * @return NodeApp if a node with that ID exist, otherwise NULL 
+	 */
 	public NodeApp getNode(String node) {
 		if(nodes.containsKey(node)) {
 			return nodes.get(node);
@@ -44,6 +63,11 @@ public class GraphApp {
 		return null;
 	}
 	
+	/**
+	 * Returns the set of vehicles from a single node.
+	 * @param node the ID of the node correspondent to NodeApp
+	 * @return The set of vehicles if a node with that ID exist, otherwise NULL 
+	 */
 	public Set<VehicleApp> getVehicles(String node){
 		if(nodes.containsKey(node)) {
 			return nodes.get(node).getVehicles();
@@ -53,7 +77,18 @@ public class GraphApp {
 			return null;
 		}
 	}
-		
+	
+	
+	/**
+	 * This method returns a Path starting from NodeApp from to NodeApp to.
+	 * If a Path cannot be computed, it return PathApp.NO_PATH
+	 * 
+	 * @see {@link getNode} method to get the NodeApp from its Node ID
+	 * 
+	 * @param from  the starting NodeApp
+	 * @param to the destination NodeApp
+	 * @return the right PathApp or NO_PATH if no path exists
+	 */
 	public PathApp getPath(NodeApp from,NodeApp to) {
 		PathApp p;
 
@@ -72,10 +107,17 @@ public class GraphApp {
 		
 		return p;
 	}
-		
+	
+	/**
+	 * This function performs the BreathFirst from the node From to node to.
+	 * When the node to is found, the method stops and create a new PathApp that is returned
+	 * 
+	 * @param from
+	 * @param to
+	 * @return
+	 */
 	private synchronized PathApp BreadthFirst(NodeApp from, NodeApp to) {
-	//the synchronization is done at this level because otherwise the constraint on the Node could be violated.	
-		
+	//the synchronization is done at this level because otherwise the constraint on the Node could be violated.		
 		
 		List<NodeApp> queue = new LinkedList<>();
 		HashSet<String> closed = new HashSet<>();

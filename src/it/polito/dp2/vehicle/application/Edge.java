@@ -2,6 +2,11 @@ package it.polito.dp2.vehicle.application;
 
 import it.polito.dp2.vehicle.model.NodeRef;
 
+/**
+ * This class represents an unidirectional link between two nodes.
+ * It is useful to compute Path and to represent link between nodes.
+ * 
+ */
 public class Edge {
 
 	private NodeApp from, to;

@@ -30,6 +30,13 @@ import it.polito.dp2.vehicle.model.Graph;
 import it.polito.dp2.vehicle.model.Model;
 import it.polito.dp2.vehicle.model.Vehicle;
 
+/**
+ * This class implements a singleton, application gateway for the Application package.
+ * This class represents the Vehicle Tracking service and offers all the method able to handle the vehicles and the model.
+ * 
+ * @author Fabio Cermelli
+ *
+ */
 public class VTService {
 
 	private ConcurrentSkipListMap<BigInteger, VehicleApp> vehicles;
@@ -40,6 +47,11 @@ public class VTService {
 	// Singleton PATTERN
 	private static VTService istance = new VTService();
 
+	/**
+	 * The constructor tries to build the model from an xml that is found in the WAR package and is called xml-gen.xml.
+	 * It the xml cannot be found, the VTservice is made anyway but it is expected that a model will be load with {@linkplain public void setModel(Model model)}.
+	 * 
+	 */
 	private VTService() {
 		vehicles = new ConcurrentSkipListMap<>();
 		currVehicleIndex = BigInteger.valueOf(0);
@@ -94,7 +106,7 @@ public class VTService {
 		return istance;
 	}
 
-	/*
+	/**
 	 * This function should be used at startup to load the model in the system
 	 */
 	public void setModel(Model model) {
@@ -125,7 +137,7 @@ public class VTService {
 		return graphApp.getGraph();
 	}
 	
-	/*
+	/**
 	 * Returns the list of all vehicles in the system.
 	 * To do not allow the end-user to modify the list, we copy it, without giving the reference to our map.
 	 */
@@ -137,7 +149,7 @@ public class VTService {
 		return vs;
 	}
 	
-	/*
+	/**
 	 * Get vehicles in one node
 	 */
 	public List<Vehicle> getVehiclesFromNode(String node) {	
@@ -152,9 +164,8 @@ public class VTService {
 		return vcs;
 	}
 
-	/*
+	/**
 	 * Return a vehicle given its ID
-	 * 
 	 */
 	public Vehicle getVehicle(BigInteger id) {
 		if(vehicles.containsKey(id)) {
@@ -165,11 +176,13 @@ public class VTService {
 		}
 	}
 	
-	/*
+	/**
 	 * Allow to add a new Vehicle in the system.
-	 * First are checked if it has the required information (if validated, it must have) and then, if a path exist, create the vehicle and add it to the system
-	 * Then the new vehicle is returned
+	 * First it is checked if it has the required information (if validated from schema, it must have) and then, create the vehicle and add it to the system
+	 *  
 	 * This function can raise BadRequest exception and Forbidden exception.
+	 *
+     * @return the created vehicle model
 	 */
 	public Vehicle createVehicle(Vehicle v) {
 		//TODO ACTUALLY I DO NOT CHECK IF THE ENTRY POINT IS A ROUTE AND IS ENDPOINT, should I?
@@ -202,12 +215,16 @@ public class VTService {
 		return nv.getVehicle();
 	}
 
-	/*
+	/**
 	 * Given the node's id where the vehicle is, 
 	 * 	  if the node is in the path: 
 	 *  	return true meaning vehicle unchanged, 
 	 *    otherwise 
 	 *      return false meaning the vehicle has new path 
+	 *      
+	 * @param vid BigInteger that represents the ID of the vehicle
+	 * @param nid String that represent the node ID of the node where the vehicle is
+	 * @return true if the vehicle is in the path, false if a new path has been computed
 	 */
 	public boolean updateVehiclePosition(BigInteger vid, String nid) {
 		NodeApp nap = graphApp.getNode(nid);
@@ -220,9 +237,12 @@ public class VTService {
 		return vap.updatePosition(nap);
 	}
 	
-	/*
-	 * This function is useful to modify the vehicle destination
+	/**
+	 * This function is useful to modify the vehicle destination or current position and compute a new path between them
 	 * 
+	 * @param vid BigInteger that represents the ID of the vehicle
+	 * @param v Vehicle that carries the information needed (needed fields are current position and destination)
+	 * @return the vehicle model
 	 */
 	public Vehicle updateVehicle(BigInteger vid, Vehicle v) {
 		VehicleApp vap = vehicles.get(vid);
@@ -249,11 +269,13 @@ public class VTService {
 		return vap.getVehicle();
 	}
 
-	/*
-	 * The other solution of the delete is to supply a path to the vehicle to exit the system
+	/**
+	 * The method implements the deleting of a vehicle only if the vehicle is on end-point road.
 	 * 
 	 */
 	public boolean deleteVehicle(BigInteger vid) {
+		//The other solution may was that the delete supplies a path to the vehicle to exit the system
+		
 		VehicleApp vap = vehicles.get(vid);
 		
 		if(vap==null) {
@@ -264,7 +286,7 @@ public class VTService {
 			RoadApp rap = (RoadApp) vap.getPosition();
 			if(rap.isEndpoint()) {
 				vap.remove();
-				vehicles.remove(vid);
+				vehicles.remove(vid); //to keep the vehicle in the system for auditing purposes, comment this method or use another map and add it to that.
 				return true;
 			}
 		}

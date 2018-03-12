@@ -6,6 +6,12 @@ import java.util.logging.Level;
 import it.polito.dp2.vehicle.model.Node;
 import it.polito.dp2.vehicle.model.ParkingArea;
 
+/**
+ * This class extend the NodeApp and represent a ParkingArea
+ * @author Fabio Cermelli
+ * @see {@linkplain NodeApp}
+ *
+ */
 public class ParkingAreaApp extends NodeApp{
 
 	private ParkingArea parking;

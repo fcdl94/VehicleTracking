@@ -31,11 +31,20 @@ public class AdministratorClient {
 		}
 	}
 
+	/**
+	 * The constructor is useful to make a new Client object
+	 */
 	public AdministratorClient() {
 		// build the client Jersey object 
 		client = ClientBuilder.newClient();	
 	}
 	
+	/**
+	 * This is the method that implements the real Job.
+	 * It only executes the getVehicle operation
+	 * 
+	 * @throws Exception
+	 */
 	public void start() throws Exception {
 		
 		//get the list of the vehicles and print it.
@@ -47,7 +56,7 @@ public class AdministratorClient {
 			
 	}
 	
-	List<Vehicle> getVehicles(){
+	private List<Vehicle> getVehicles(){
 		
 		WebTarget target = client.target(getBaseURI());
 		// perform a get request using mediaType=APPLICATION_XML

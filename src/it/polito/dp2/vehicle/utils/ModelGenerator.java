@@ -5,6 +5,13 @@ import java.util.Random;
 
 import it.polito.dp2.vehicle.model.*;
 
+/**
+ * This class implements a random Model Generator. 
+ *  
+ * 
+ * @author Fabio Cermelli
+ *
+ */
 public class ModelGenerator {
 
 	private static final int MIN_PORT_NUM = 3;
@@ -16,13 +23,12 @@ public class ModelGenerator {
 	ObjectFactory ofactory;
 	Random random;
 	
-	/* 
-	 * parkingAreas is the number of node of type parking wanted
-	 * routes is the number of node of type route wanted
-	 * p indicates the probability to have a node connected to another one.
-	 * P must be a number between 0 and 100. 100 means connections with all, 0 means no connections.
+	/**
 	 * 
-	 * The optional parameter seed is intended to allow the generation of the same model with the same seed 
+	 * 
+	 * @param parkingAreas is the number of node of type parking wanted
+	 * @param routes is the number of node of type route wanted
+	 * @param p indicates the probability to have a node connected to another one; must be a number between 0 and 100. 100 means connections with all, 0 means no connections.
 	 * 
 	 */
 	public ModelGenerator(int routes, int parkingAreas, int vehicles, int p) {
@@ -34,6 +40,15 @@ public class ModelGenerator {
 		random = new Random();
 	}
 	
+	/**
+	 * @param parkingAreas is the number of node of type parking wanted
+	 * @param routes is the number of node of type route wanted
+	 * @param p indicates the probability to have a node connected to another one; must be a number between 0 and 100. 100 means connections with all, 0 means no connections.
+	 * 
+	 *  
+	 * @param seed is intended to allow the generation of the same model with the same seed 
+	 * 
+	 */
 	public ModelGenerator(int routes, int parkingAreas, int p, int vehicles, int seed) {
 		this.parks = parkingAreas;
 		this.routes = routes;
@@ -43,6 +58,11 @@ public class ModelGenerator {
 		random = new Random(seed);
 	}
 	
+	/**
+	 * This method returns a random model with N nodes where N = parkingAreas + routes;
+	 * The model generated has V vehicles where V = vehicles
+	 * 
+	 */
 	public Model createRandomModel(){
 		Model model = new Model();
 		
@@ -59,7 +79,12 @@ public class ModelGenerator {
 		return model;
 	}
 	
-
+	/**
+	 * This method generates the vehicle and adds it to the model
+	 * 
+	 * @param graph the model where the nodes can be retrieved
+	 * @param vecs the list of vehicles that has to be filled
+	 */
 	private void fillVehicles(Graph graph, List<Vehicle> vecs) {
 		//WARNING I'm not checking the max capacity of the node in which I am allocating the vehicle
 		//THUS it can be generated nodes with too much vehicles, exceeding the constraint
@@ -79,6 +104,10 @@ public class ModelGenerator {
 		}
 	}
 
+	/**
+	 * This method creates the Node of the graph.
+	 * @param nodes the list to be filled
+	 */
 	private void fillNodes(List<Node> nodes) {		
 		Road r ;
 		ParkingArea p;
@@ -120,7 +149,11 @@ public class ModelGenerator {
 		}
 		
 	}
-	
+	/**
+	 * Given the nodes, it generates the connections between them
+	 * 
+	 * @param graph the model where the connection must be added
+	 */
 	private void fillConnections(Graph graph) {
 		//WARNING It can be generated an isolated node, it means a node without incoming link.
 		List<Connection> conn = graph.getConnection();

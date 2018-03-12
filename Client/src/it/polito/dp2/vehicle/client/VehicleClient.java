@@ -22,32 +22,33 @@ public class VehicleClient {
 	private String position;
 	private String destination;
 	private String plate;
+	private String endPoint;
+
 	private static ObjectFactory obf = new ObjectFactory();
 	
 	private Client client;
 	
-	public static void main(String[] args) {
-		try{
-			VehicleClient vehClient = new VehicleClient();
-			
-			vehClient.start();
-			
-		}catch(Exception ex ){
-			System.err.println("Error during execution of remote operation");
-			System.err.println(ex.getMessage());
-		}
-	}
-
-	public VehicleClient() {
+	/**
+	 * The constructor of a client
+	 */
+	public VehicleClient(String position,String destination, String plate, String endPoint) {
 		//this client is dependent on the model and I assume it know the graph 
-		position = "road2";
-		destination = "area1";
-		plate = "CL001AA";
+		this.position =position;
+		this.destination = destination;
+		this.plate = plate;
+		this.endPoint = endPoint;
 		
 		// build the client Jersey object 
 		client = ClientBuilder.newClient();	
 	}
 	
+	/**
+	 * The method implements the behavior of a standard client. 
+	 * It starts from position and goes to destination.
+	 * While there it asks to go to endPoint, the exit point.
+	 * 
+	 * @throws Exception
+	 */
 	public void start() throws Exception {
 		
 		createVehicle();
@@ -71,7 +72,7 @@ public class VehicleClient {
 		
 		Thread.sleep(750);
 		//I must be sure that is a end-point
-		destination = "road3";
+		destination = endPoint;
 		putVehicle();
 		
 		indexPath = 0;
@@ -93,7 +94,9 @@ public class VehicleClient {
 		deleteVehicle();
 		
 	}
-	
+	/**
+	 * It perform the HTTP operation to create a vehicle
+	 */
 	private void createVehicle() throws ConnectionException{
 	
 		Vehicle v = new Vehicle();
@@ -122,6 +125,10 @@ public class VehicleClient {
 		}
 	}
 	
+	/**
+	 * It performs the HTTP POST operation to update the vehicle position
+	 * 
+	 */
 	private boolean postPosition(String nextPos) throws ConnectionException {
 		WebTarget target = client.target(vehicle.getSelf().getHref());
 		
@@ -148,6 +155,10 @@ public class VehicleClient {
 	
 	}
 	
+	/**
+	 * It performs the HTTP PUT operation to update the vehicle information
+	 * 
+	 */
 	private void putVehicle() throws ConnectionException {
 		WebTarget target = client.target(vehicle.getSelf().getHref());
 		
@@ -171,6 +182,11 @@ public class VehicleClient {
 		
 	}
 	
+	
+	/**
+	 * It performs the HTTP DELETE operation to remove the vehicle from the system
+	 * 
+	 */
 	private void deleteVehicle() throws ConnectionException{
 		
 		WebTarget target = client.target(vehicle.getSelf().getHref());

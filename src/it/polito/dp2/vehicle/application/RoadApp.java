@@ -6,6 +6,12 @@ import java.util.logging.Level;
 import it.polito.dp2.vehicle.model.Node;
 import it.polito.dp2.vehicle.model.Road;
 
+/**
+ * This class extend the NodeApp and represent a Road
+ * @author Fabio Cermelli
+ * @see {@linkplain NodeApp}
+ *
+ */
 public class RoadApp extends NodeApp{
 
 	private Road road;
@@ -23,8 +29,8 @@ public class RoadApp extends NodeApp{
 		}
 	}
 	
-	/*
-	 * Useful to check if the port asked for entering the system is actually an endpoint or not
+	/**
+	 * Useful to check if the port asked for entering the system is actually an end-point or not
 	 */
 	public boolean isEndpoint() {
 		if(road.getEndpoint() != null) return true;

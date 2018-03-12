@@ -14,6 +14,15 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import it.polito.dp2.vehicle.model.State;
 import it.polito.dp2.vehicle.model.Vehicle;
 
+/**
+ * This class represents a vehicle.
+ * This class implements methods useful to perform operation on vehicle as the update of the position and of important fields.
+ * Also, this class wraps the method of Vehicle model class.
+ * 
+ * @see {@link Vehicle}
+ * @author Fabio Cermelli
+ *
+ */
 public class VehicleApp {
 
 	private static Logger logger = Logger.getLogger(VTService.class.getName());
@@ -23,10 +32,33 @@ public class VehicleApp {
 	private PathApp path;
 	private GraphApp graphApp;
 	
+	/**
+	 * The constructor takes the vehicle model, the index and the GraphApp class and makes a vehicle.
+	 * First it checks if the vehicle model is consistent with the graph model.
+	 * Then it clone the vehicle model (and does not save a reference to the parameter).
+	 * 
+	 * In the end, it computes the path of the vehicle and store it.
+	 * 
+	 * @param v it is the vehicle model
+	 * @param index it is the index of the vehicle
+	 * @param ga it is the GraphApp of the system
+	 */
 	public VehicleApp(Vehicle v, BigInteger index, GraphApp ga){
 		this(v, index, ga, true);
 	}
 	
+	/**
+	 * The constructor takes the vehicle model, the index and the GraphApp class and makes a vehicle. 
+	 * First it checks if the vehicle model is consistent with the graph model. 
+	 * Then it clone the vehicle model (and does not save a reference to the parameter).
+	 * 
+	 * In the end, if computePath == true, it computes the path of the vehicle and store it.
+	 * 
+	 * @param v it is the vehicle model
+	 * @param index it is the index of the vehicle
+	 * @param ga it is the GraphApp of the system
+	 * @param computePath if it is true a path is computed, otherwise not.
+	 */
 	public VehicleApp(Vehicle v, BigInteger index, GraphApp ga, boolean computePath){
 		vehicle = new Vehicle();
 		graphApp = ga;
@@ -88,17 +120,22 @@ public class VehicleApp {
 		
 	}
 
-	/*
-	 * This function is able to update the position and/or destination of a vehicle
+	/**
+	 * This function is able to update the position and/or destination of a vehicle. 
 	 * 
 	 * 
-	 * I have four cases of this function
-	 * 	
-	 * 	CurrPos	/ Dest		|			==			|		!=				|
-	 * 					==	|		nothing to do	|		new path		|
-	 * 					!=	|		update path		| 		new path		|
+	 * I have four cases for this function
+	 * 											   Dest
+	 *                      |			==			|		!=				|
+	 * 	CurrPos	        ==	|		nothing to do	|		new path		|
+	 * 	                !=	|		update path		| 		new path		|
 	 * 		
 	 * Also, it is important to consider if a path already exist or not.
+	 * If a path exist we must destroy it and compute a new path.
+	 * 
+	 * This method is synchronized to prevent to be executed more than once on each vehicle (anyway, it should be the normal behavior)
+	 * 
+	 * @param v the Vehicle model (only important fields are destination and currentPosition) 
 	 */
 	public synchronized void update(Vehicle v) {
 		NodeApp npos = graphApp.getNode(v.getCurrentPosition());
@@ -209,6 +246,17 @@ public class VehicleApp {
 		return;	
 	}
 	
+	/**
+	 * This method update the position of the vehicle.
+	 * If a vehicle has a path, it checks if the given position is following that. 
+	 * If yes, the position is updated and the method returns.
+	 * If not, a new path is computed from that position to the destination.
+	 * 
+	 * This method is synchronized to prevent to be executed more than once on each vehicle (anyway, it should be the normal behavior)
+	 * 
+	 * @param position the NodeApp correspondent to the position of the vehicle
+	 * @return true if the path can be updated, false if a new path must be computed
+	 */
 	public synchronized boolean updatePosition(NodeApp position) {
 		if(position == this.position) {
 			return true;
@@ -222,7 +270,7 @@ public class VehicleApp {
 		vehicle.setLastUpdate(getXMLGregorianCalendarNow());
 		vehicle.setCurrentPosition(position.getID());
 		
-		//if path is not existent, return null
+		//if path is not existent, return false
 		if(path==null) {
 			return false;
 		}
@@ -258,6 +306,9 @@ public class VehicleApp {
 		}
 	}
 	
+	/**
+	 *  The method clean the path (if exists) and then delete the vehicle from the Node.
+	 */
 	public synchronized void remove() {
 		//Remove old path
 		if(path != null ) {
