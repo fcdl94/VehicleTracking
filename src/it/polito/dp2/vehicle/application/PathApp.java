@@ -75,6 +75,12 @@ public class PathApp {
 	
 		if(nodes.contains(position)) {
 			ret = true;
+			
+			if(!nodes.get(0).equals(position)) {
+				nodes.remove(0);
+				edges.remove(0);
+				path.getNode().remove(0);
+			}
 			//delete the already passed nodes
 			while(!nodes.get(0).equals(position)) {
 				nodes.get(0).decrementFutureVehicles();
@@ -100,7 +106,7 @@ public class PathApp {
 	 */
 	public void removePath() {
 		//destroy the old path, cleaning all the nodes
-		for(int i=0; i<nodes.size(); i++) {
+		for(int i=1; i<nodes.size(); i++) {
 			nodes.get(i).decrementFutureVehicles();
 		}
 		nodes.clear();

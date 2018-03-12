@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
@@ -35,26 +36,29 @@ import org.xml.sax.SAXParseException;
 @Consumes({"application/xml","text/xml"})
 public class ModelValidationProvider implements MessageBodyReader<JAXBElement<?>> {
 	final String jaxbPackage = "it.polito.dp2.vehicle.model";
-	Unmarshaller unmarshaller;
+	
 	Logger logger;
 	String responseBodyTemplate;
-
+	InputStream schemaStream;
+	JAXBContext jc ;
+	Schema schema;
+	SchemaFactory sf;
 
 	public ModelValidationProvider() {
 		logger = Logger.getLogger(ModelValidationProvider.class.getName());
 
 		try {				
-			InputStream schemaStream = ModelValidationProvider.class.getResourceAsStream("/xsd/vehicleTracking.xsd");
+			schemaStream = ModelValidationProvider.class.getResourceAsStream("/xsd/vehicleTracking.xsd");
 			if (schemaStream == null) {
 				logger.log(Level.SEVERE, "xml schema file Not found.");
 				throw new IOException();
 			}
-            JAXBContext jc = JAXBContext.newInstance( jaxbPackage );
-            unmarshaller = jc.createUnmarshaller();
-            SchemaFactory sf = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
-            Schema schema = sf.newSchema(new StreamSource(schemaStream));
-            unmarshaller.setSchema(schema);
+            //unmarshaller = jc.createUnmarshaller();
+            sf = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
+            schema = sf.newSchema(new StreamSource(schemaStream));
+            //unmarshaller.setSchema(schema);
             
+			jc = JAXBContext.newInstance( jaxbPackage );
 			InputStream templateStream = ModelValidationProvider.class.getResourceAsStream("/html/BadRequestBodyTemplate.html");
 			if (templateStream == null) {
 				logger.log(Level.SEVERE, "html template file Not found.");
@@ -68,8 +72,8 @@ public class ModelValidationProvider implements MessageBodyReader<JAXBElement<?>
 	        }
 			responseBodyTemplate = out.toString();
 
-            logger.log(Level.INFO, "TelDirectoryProvider initialized successfully");
-		} catch (SAXException | JAXBException | IOException se) {
+            logger.log(Level.INFO, "ModelValideationProvider initialized successfully");
+		} catch (IOException | JAXBException | SAXException se) {
 			logger.log(Level.SEVERE, "Error parsing xml directory file. Service will not work properly.", se);
 		}
 	}
@@ -80,11 +84,15 @@ public class ModelValidationProvider implements MessageBodyReader<JAXBElement<?>
 	}
 
 	@Override
-	public JAXBElement<?> readFrom(Class<JAXBElement<?>> type, Type genericType, Annotation[] annotations, MediaType mediaType,
+	public synchronized JAXBElement<?> readFrom(Class<JAXBElement<?>> type, Type genericType, Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
 		try {
+			Unmarshaller unmarshaller;
+			unmarshaller = jc.createUnmarshaller();
+            unmarshaller.setSchema(schema);
 			return (JAXBElement<?>) unmarshaller.unmarshal(entityStream);
+			
 		} catch (JAXBException ex) {
 			logger.log(Level.WARNING, "Request body validation error.", ex);
 			Throwable linked = ex.getLinkedException();

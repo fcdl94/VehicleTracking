@@ -15,9 +15,11 @@
 	<property name="source" value="1.8" />
 	
 	<!-- define client classes and packages -->
-	<property name="client.class" value="it.polito.dp2.vehicle.client.VehicleClient"/>
+	<property name="client-single.class" value="it.polito.dp2.vehicle.client.SingleVehicle"/>
 	<property name="admin.class" value="it.polito.dp2.vehicle.client.AdministratorClient"/>
+	<property name="client-multi.class" value="it.polito.dp2.vehicle.client.MultiVehicle"/>
 
+	
 	<!-- define paths -->
 	<path id="lib.classpath">
 			<pathelement location="${build.dir}" />
@@ -59,7 +61,17 @@
 	
 	<!-- define the "run-client" target -->
 	<target name="run-client-one" depends="build-client">
-		<java classname="${client.class}" fork="true">
+		<java classname="${client-single.class}" fork="true">
+			<classpath>
+				<path refid="lib.classpath" />
+				<pathelement path="${build.dir}" />
+			</classpath>
+		</java>
+	</target>
+	
+	<!-- define the "run-client" target -->
+	<target name="run-client-multi" depends="build-client">
+		<java classname="${client-multi.class}" fork="true">
 			<classpath>
 				<path refid="lib.classpath" />
 				<pathelement path="${build.dir}" />
